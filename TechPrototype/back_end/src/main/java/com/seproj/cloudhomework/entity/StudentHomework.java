@@ -15,7 +15,6 @@ public class StudentHomework {
     int id;
 
     Date commitedTime;
-    String courseId;
     int homeworkId;
     int grade;
     String content;

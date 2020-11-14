@@ -13,9 +13,6 @@ public class HomeworkAnswer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     int id;
-
     int homeworkId;
-    String courseId;
     String content;
-    Date releaseTime;
 }
