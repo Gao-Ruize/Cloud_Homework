@@ -42,7 +42,7 @@ const data = [
 ];
 
 
-export default class teaCourseListPage extends React.Component{
+export default class TeaCourseList extends React.Component{
 
     render(){
         return(

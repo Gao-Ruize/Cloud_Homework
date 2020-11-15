@@ -118,7 +118,7 @@ const data = [
 
 ];
 
-export default class teaAddStudent2CoursePage extends React.Component{
+export default class TeaAddStudent2Course extends React.Component{
     constructor(props){
         super(props);
 

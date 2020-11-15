@@ -18,7 +18,7 @@ const { Title } = Typography;
 //     sem: ['2019-2020', ' Spring']
 // }
 
-export default class teaCourseDetailPage extends React.Component{
+export default class TeaCourseDetail extends React.Component{
     state = {
         current: 'mail',
         courseInfo:{
@@ -88,14 +88,14 @@ export default class teaCourseDetailPage extends React.Component{
                             </Row>
 
                             <Row style = {{paddingTop: 15}} align="top">
-                                <Col span={8}>
+                                <Col span={12}>
                                     <Image
                                         width={400}
                                         height={200}
                                         src={this.state.courseInfo.imgUrl}
                                     />
                                 </Col>
-                                <Col span={16}>
+                                <Col span={12}>
                                     <div>
                                         <Title>{this.state.courseInfo.name}</Title>
                                         <Title level={2}>{this.state.courseInfo.courseID}</Title>

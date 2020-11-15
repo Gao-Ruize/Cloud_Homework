@@ -5,6 +5,7 @@ import {Layout, Menu, Button, Timeline, Descriptions, Space, PageHeader} from 'a
 import {
     HighlightOutlined, TableOutlined, ToTopOutlined, AuditOutlined,
 } from '@ant-design/icons';
+import {history} from "../../Utils/History";
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -19,7 +20,32 @@ const data = {
 }
 
 
-export default class stuCourseDetailPage extends React.Component {
+export default class StuCourseDetail extends React.Component {
+    toStuInfo = () => {
+        history.replace('/stuUserInfo');
+    };
+
+    toStuCourseList = () => {
+        history.replace('/stuCourseList');
+    };
+
+    toStuHomeworkList = () => {
+        history.replace('/stuHomeworkList')
+    };
+
+    stuMenuRedirect = (event) => {
+        let key = event.key;
+        if(key === '1') {
+            this.toStuInfo();
+        }
+        if(key === '2') {
+            this.toStuCourseList();
+        }
+        if(key === '3') {
+            this.toStuHomeworkList();
+        }
+    };
+
     render(){
         return(
             <Layout>
@@ -32,16 +58,16 @@ export default class stuCourseDetailPage extends React.Component {
                         left: 0,
                     }}
                 >
-                    <div className="logo"></div>
+                    <div className="logo"/>
 
-                    <Menu theme="dark" mode="inline" defaultSelectedKeys={['2']}>
-                        <Menu.Item key="1" icon={<AuditOutlined />}>
+                    <Menu theme="dark" mode="inline" defaultSelectedKeys={['2']} onClick = {this.stuMenuRedirect}>
+                        <Menu.Item key="1" icon={<AuditOutlined />} >
                             个人信息
                         </Menu.Item>
-                        <Menu.Item key="2" icon={<TableOutlined />}>
+                        <Menu.Item key="2" icon={<TableOutlined />} >
                             我的课程
                         </Menu.Item>
-                        <Menu.Item key="3" icon={<HighlightOutlined />}>
+                        <Menu.Item key="3" icon={<HighlightOutlined />} >
                             我的作业
                         </Menu.Item>
                     </Menu>

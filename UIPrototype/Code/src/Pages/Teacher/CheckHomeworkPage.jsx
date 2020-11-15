@@ -45,7 +45,7 @@ const data = [
 ];
 
 
-export default class teaSubmitCoursePage extends React.Component{
+export default class TeaCheckHomework extends React.Component{
     constructor(props){
         super(props);
 

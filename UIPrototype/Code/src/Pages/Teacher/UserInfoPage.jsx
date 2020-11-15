@@ -42,7 +42,7 @@ const currencies = [
 ];
 
 
-export default class teaUserInfoPage extends React.Component{
+export default class TeaUserInfo extends React.Component{
     state = {
         user: [{
             "name": "sho",

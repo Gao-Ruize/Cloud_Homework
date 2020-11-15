@@ -18,7 +18,7 @@ const normFile = e => {
 };
 
 
-export default class teaSubmitCoursePage extends React.Component{
+export default class TeaSubmitCourse extends React.Component{
     constructor(props) {
         super(props);
         this.state = {

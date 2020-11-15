@@ -128,7 +128,7 @@ const data = [
     },
 ];
 
-export default class teaHomeworkListPage extends React.Component{
+export default class TeaHomeworkList extends React.Component{
 
     render(){
         return(
