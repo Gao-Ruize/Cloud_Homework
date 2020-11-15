@@ -1,7 +1,7 @@
 import React from 'react';
 import 'antd/dist/antd.css';
 
-import {Layout, Menu, Button, Timeline, Descriptions, Space, PageHeader} from 'antd';
+import {Layout, Menu, Button, Timeline, Descriptions, Space, PageHeader,  Modal} from 'antd';
 import {
     HighlightOutlined, TableOutlined, ToTopOutlined, AuditOutlined,
 } from '@ant-design/icons';
@@ -17,10 +17,31 @@ const data = {
     time: ['周一3-4节',', ', '周二3-4节'],
     status: {sta: '正在进行', color: 'green'},
     sem: ['2019-2020', ' Spring']
-}
+};
 
 
 export default class StuCourseDetail extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            // 从路由获取参数 课程id
+            courseKey: this.props.location.state.courseKey,
+            courseData: [],
+            studentId: localStorage.getItem('ID'),
+            showModal: false,
+            grade: 0
+        };
+        this.getCourseData();
+    }
+
+    closeModal = () => {
+        this.setState({showModal: false});
+    };
+
+    getCourseData = () => {
+
+    };
+
     toStuInfo = () => {
         history.replace('/stuUserInfo');
     };
@@ -46,9 +67,40 @@ export default class StuCourseDetail extends React.Component {
         }
     };
 
+    // 根据 courseId 与 studentID 获取作业，成绩等内容
+    // 通过 type 确定获取哪种作业(all finished unfinished)
+    getAllHomework = () => {
+        history.push('/stuHomeworkList', {type: '1'});
+    };
+
+    getUnfinishedHomework = () => {
+        history.push('/stuHomeworkList', {type: '2'});
+    };
+
+    getFinishedHomework = () => {
+        history.push('/stuHomeworkList', {type: '3'});
+    };
+
+    getGrade = () => {
+        // get grade
+
+        this.setState({showModal: true});
+    };
+
     render(){
         return(
             <Layout>
+
+                <Modal
+                    title="成绩统计"
+                    visible={this.state.showModal}
+                    onOk={this.closeModal}
+                    onCancel={this.closeModal}
+                >
+                    <p>你的当前成绩为：</p>
+                    <p>{this.state.grade}</p>
+                </Modal>
+
                 <Sider
                     theme={"dark"}
                     style={{
@@ -99,16 +151,16 @@ export default class StuCourseDetail extends React.Component {
                                 <Timeline.Item label="2020-11-02 09:12:11">Lab2</Timeline.Item>
                             </Timeline>
                             <Space>
-                                <Button type="primary" size='large'>
+                                <Button type="primary" size='large' onClick={this.getAllHomework}>
                                     查看全部作业
                                 </Button>
-                                <Button type="primary" size='large'>
+                                <Button type="primary" size='large' onClick={this.getUnfinishedHomework}>
                                     查看未完成作业
                                 </Button>
-                                <Button type="primary" size='large'>
+                                <Button type="primary" size='large' onClick={this.getFinishedHomework}>
                                     查看已完成作业
                                 </Button>
-                                <Button type="primary" size='large'>
+                                <Button type="primary" size='large' onClick={this.getGrade}>
                                     查看成绩
                                 </Button>
                             </Space>

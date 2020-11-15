@@ -1,7 +1,7 @@
 import React from 'react';
 import 'antd/dist/antd.css';
 
-import {Layout, Menu, Table, Tag, Space, PageHeader} from 'antd';
+import {Layout, Menu, Table, Tag, Space, PageHeader, Button, Popconfirm} from 'antd';
 import {
 
     HighlightOutlined, TableOutlined, ToTopOutlined, AuditOutlined,
@@ -48,6 +48,13 @@ const data = [
 
 
 export default class StuCourseList extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            courses:[]
+        }
+    }
+
     toStuInfo = () => {
         history.replace('/stuUserInfo');
     };
@@ -71,6 +78,14 @@ export default class StuCourseList extends React.Component {
         if(key === '3') {
             this.toStuHomeworkList();
         }
+    };
+
+    getAllCourses = () => {
+
+    };
+
+    toCourseDetail = (key) => {
+        history.replace('/stuCourseDetail', {courseKey: key});
     };
 
     render(){
@@ -157,9 +172,12 @@ export default class StuCourseList extends React.Component {
                                 title=""
                                 key="action"
                                 render={(text, record) => (
-                                    <Space size="middle">
-                                        <a>查看课程详情</a>
-                                    </Space>
+                                    // <Space size="middle">
+                                    //     <a>查看课程详情</a>
+                                    // </Space>
+                                    <Popconfirm title="查看课程详情？" onConfirm={() => this.toCourseDetail(record.key)}>
+                                        <a>more</a>
+                                    </Popconfirm>
                                 )}
                             />
                         </Table>

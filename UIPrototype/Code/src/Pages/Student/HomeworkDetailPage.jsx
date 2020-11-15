@@ -17,7 +17,7 @@ import {history} from "../../Utils/History";
 
 const { Header, Content, Footer, Sider } = Layout;
 
-const homework = {
+const homeworks = {
     name: '第一次测验',
     releaseTime: '2020-10-09 21:32:00',
     deadline: '2020-10-10 22:00:00',
@@ -30,15 +30,27 @@ const homework = {
         '\n' +
         '    function. (Hint: consider the matrix form of the objective function)',
     demands: '请提交一张图片',
-}
+};
 
 export default class StuHomeworkDetail extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            info: homework,
-        }
+            info: {},
+            id: this.props.location.state.id,
+            test:0,
+        };
     }
+
+    UNSAFE_componentWillMount() {
+        this.getHomework();
+    }
+
+    getHomework = () => {
+        // get homework by id
+        this.setState( {info: homeworks});
+        this.setState({test: 1});
+    };
 
     toStuInfo = () => {
         history.replace('/stuUserInfo');
@@ -50,6 +62,11 @@ export default class StuHomeworkDetail extends React.Component {
 
     toStuHomeworkList = () => {
         history.replace('/stuHomeworkList')
+    };
+
+    toHomeworkDetail = () => {
+        let homeworkId = this.state.id;
+        history.push('/stuHomeworkCommit', {hid: homeworkId});
     };
 
     stuMenuRedirect = (event) => {
@@ -108,8 +125,15 @@ export default class StuHomeworkDetail extends React.Component {
                             <Descriptions.Item label="截止时间">{this.state.info.deadline}</Descriptions.Item>
                             <Descriptions.Item label="提交要求">{this.state.info.demands}</Descriptions.Item>
                             <Descriptions.Item label="详情" span={4}><p style={{whiteSpace:"pre"}}>{this.state.info.content}</p></Descriptions.Item>
-                            <Descriptions.Item>{<Button type={"primary"}
-                                                        size={"large"}>提交作业</Button>}</Descriptions.Item>
+                            <Descriptions.Item>{
+                                <Button type={"primary"}
+                                        size={"large"}
+                                        onClick={this.toHomeworkDetail}
+                                >
+                                    提交作业
+                                </Button>
+                            }
+                            </Descriptions.Item>
                         </Descriptions>
                     </Content>
                     <Footer style={{ textAlign: 'center' }}>云作业平台</Footer>

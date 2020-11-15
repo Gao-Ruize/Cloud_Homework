@@ -52,7 +52,11 @@ export default class StuUserInfo extends React.Component {
                 "name": "sho",
                 "password": "123456",
                 "email": "54749110@sjtu.edu.cn",
-            }]
+            }],
+            cPhone: '',
+            cClass: '',
+            cQq: '',
+            cMail: '',
         };
         this.getUserInfo();
     }
@@ -90,6 +94,25 @@ export default class StuUserInfo extends React.Component {
         }
     };
 
+    storeCPhone = (event) => {
+        this.setState({'cPhone': event.target.value});
+    };
+
+    storeCClass = (event) => {
+        this.setState({'cClass': event.target.value});
+    };
+
+    storeCMail = (event) => {
+        this.setState({'cMail': event.target.value});
+    };
+
+    storeCQq = (event) => {
+        this.setState({'cQq': event.target.value});
+    };
+
+    handleSubmit = () => {
+
+    };
 
     render(){
         return(
@@ -118,7 +141,7 @@ export default class StuUserInfo extends React.Component {
                     </Menu>
 
                 </Sider>
-                
+
                 <Layout className="site-layout" style={{ marginLeft: 200 }}>
                     <Header className="site-layout-background" style={{ padding: 0 }} />
                     <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
@@ -159,6 +182,7 @@ export default class StuUserInfo extends React.Component {
                                             defaultValue="54749110"
                                             variant="outlined"
                                             style={{width: "90%"}}
+                                            onChange={this.storeCPhone}
                                         />
                                     </Grid>
 
@@ -184,6 +208,7 @@ export default class StuUserInfo extends React.Component {
                                             defaultValue="F1803702"
                                             variant="outlined"
                                             style={{width: "90%"}}
+                                            onChange={this.storeCClass}
                                         />
                                     </Grid>
 
@@ -194,6 +219,7 @@ export default class StuUserInfo extends React.Component {
                                             defaultValue="1036788120"
                                             variant="outlined"
                                             style={{width: "90%"}}
+                                            onChange={this.storeCQq}
                                         />
                                     </Grid>
                                     <Grid item xs={6}>
@@ -203,10 +229,12 @@ export default class StuUserInfo extends React.Component {
                                             defaultValue="1036788120@qq.com"
                                             variant="outlined"
                                             style={{width: "90%"}}
+                                            onChange={this.storeCMail}
                                         />
                                     </Grid>
                                     <Grid item xs={6}>
-                                        <Button variant="contained" size="large" color="primary" component="span">
+                                        <Button variant="contained" size="large" color="primary" component="span"
+                                                onClick={this.handleSubmit}>
                                             确认修改
                                         </Button>
                                     </Grid>

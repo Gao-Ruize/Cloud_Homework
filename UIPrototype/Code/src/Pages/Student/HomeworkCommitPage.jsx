@@ -14,10 +14,14 @@ const { Header, Content, Footer, Sider } = Layout;
 const { TextArea } = Input;
 
 export default class StuHomeworkCommit extends React.Component {
-    state = {
-        fileList: [],
-        uploading: false,
-    };
+    constructor(props) {
+        super(props);
+        this.state = {
+            fileList: [],
+            uploading: false,
+            homeworkId: this.props.location.state.hid,
+        }
+    }
 
     toStuInfo = () => {
         history.replace('/stuUserInfo');
@@ -42,6 +46,10 @@ export default class StuHomeworkCommit extends React.Component {
         if(key === '3') {
             this.toStuHomeworkList();
         }
+    };
+
+    backToHomeDetail = () => {
+        history.goBack()
     };
 
     handleUpload = () => {
@@ -109,7 +117,7 @@ export default class StuHomeworkCommit extends React.Component {
                     <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
                         <PageHeader
                             className="site-page-header"
-                            onBack={() => null}
+                            onBack={this.backToHomeDetail}
                             title="提交作业"
                             subTitle="返回到作业详情"
                         />

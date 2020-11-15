@@ -18,6 +18,7 @@ import Avatar from "@material-ui/core/Avatar";
 import {history} from "../../Utils/History";
 
 const { Header, Content, Footer, Sider } = Layout;
+const { Column, ColumnGroup } = Table;
 
 const data = [
     {
@@ -60,27 +61,6 @@ const data = [
 
 const columns = [
     {
-        title: '课程编号',
-        dataIndex: 'courseNum',
-        key: 'courseNum'
-
-    },
-    {
-        title: '课程名称',
-        dataIndex: 'courseName',
-        key: 'courseName'
-    },
-    {
-        title: '作业名称',
-        dataIndex: 'name',
-        key: 'name'
-    },
-    {
-        title: '发布状态',
-        dataIndex: 'openStatus',
-        key: 'openStatus'
-    },
-    {
         title: '详情',
         render: (text, record) =>
             <div>
@@ -92,11 +72,6 @@ const columns = [
             </div>
     },
     {
-        title: '提交状态',
-        dataIndex: 'submitStatus',
-        key: 'submitStatus'
-    },
-    {
         title: '作业成绩',
         dataIndex: 'score',
         key: 'score'
@@ -104,6 +79,19 @@ const columns = [
 ];
 
 export default class StuHomeworkList extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            type: this.props.location.state.type,
+            homework: []
+        };
+    }
+
+    getHomework = () => {
+        let type = this.state.type;
+        // get homework by type
+    };
+
     toStuInfo = () => {
         history.replace('/stuUserInfo');
     };
@@ -165,7 +153,30 @@ export default class StuHomeworkList extends React.Component {
                         subTitle=""
                     />
                     <br />
-                    <Table columns={columns} dataSource={data}/>
+                    <Table dataSource={data}>
+                        <Column title="课程编号" dataIndex="courseNum" key="courseNum" />
+                        <Column title="课程名称" dataIndex="courseName" key="courseName" />
+                        <Column title="作业名称" dataIndex="name" key="name" />
+                        <Column title="发布状态" dataIndex="openStatus" key="openStatus" />
+                        <Column title="课程编号" dataIndex="courseNum" key="courseNum" />
+                        <Column
+                            title="详情"
+                            render={(text, record) => (
+                                <div>
+                                  <a href={'javascript:void(0)'}
+                                     onClick={()=>{
+                                         let id = record.key;
+                                         history.push('/stuHomeworkDetail', {id: id});
+                                     }}
+                                  >
+                                   查看
+                                  </a>
+                                </div>)
+                            }
+                        />
+                        <Column title="提交状态" dataIndex="submitStatus" key="submitStatus" />
+                        <Column title="作业成绩" dataIndex="score" key="score" />
+                    </Table>
                 </Content>
                 <Footer style={{ textAlign: 'center' }}>云作业平台</Footer>
                 </Layout>
