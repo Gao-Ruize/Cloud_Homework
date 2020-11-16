@@ -3,17 +3,16 @@ package com.seproj.cloudhomework.entity;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Data
 @Entity
-@Table(name = "homeworkanswer")
-public class HomeworkAnswer {
+@Table(name = "instruct")
+public class Instruct {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     int id;
-    int homeworkId;
-    String content;
-    String picture;
+    int courseId;
+    int teacherId;
+    int studentId;
 }

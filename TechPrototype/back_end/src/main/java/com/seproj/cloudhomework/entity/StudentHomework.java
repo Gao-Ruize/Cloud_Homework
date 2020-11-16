@@ -18,4 +18,5 @@ public class StudentHomework {
     int homeworkId;
     int grade;
     String content;
+    String picture;
 }

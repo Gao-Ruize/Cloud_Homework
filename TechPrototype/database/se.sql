@@ -22,9 +22,9 @@ DROP TABLE IF EXISTS `course`;
 CREATE TABLE `course` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
-  `courseId` varchar(255) DEFAULT NULL,
-  `courseInfo` varchar(255) DEFAULT NULL,
-  `teacherId` int(11) DEFAULT NULL,
+  `course_id` varchar(255) DEFAULT NULL,
+  `course_info` varchar(255) DEFAULT NULL,
+  `teacher_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -34,10 +34,10 @@ CREATE TABLE `course` (
 DROP TABLE IF EXISTS `homework`;
 CREATE TABLE `homework` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `releaseTime` datetime DEFAULT NULL,
+  `release_time` datetime DEFAULT NULL,
   `deadline` datetime DEFAULT NULL,
   `content` varchar(2000) DEFAULT NULL,
-  `courseId` varchar(255) DEFAULT NULL,
+  `course_id` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -47,8 +47,9 @@ CREATE TABLE `homework` (
 DROP TABLE IF EXISTS `homeworkanswer`;
 CREATE TABLE `homeworkanswer` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `homeworkId` int(11) DEFAULT NULL,
+  `homework_id` int(11) DEFAULT NULL,
   `content` varchar(2000) DEFAULT NULL,
+  `picture` longtext DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -58,7 +59,7 @@ CREATE TABLE `homeworkanswer` (
 DROP TABLE IF EXISTS `notice`;
 CREATE TABLE `notice` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `releaseTime` datetime DEFAULT NULL,
+  `release_time` datetime DEFAULT NULL,
   `content` varchar(2000) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -69,10 +70,11 @@ CREATE TABLE `notice` (
 DROP TABLE IF EXISTS `studenthomework`;
 CREATE TABLE `studenthomework` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `commitedTime` datetime DEFAULT NULL,
-  `homeworkId` int(11) DEFAULT NULL,
+  `commited_time` datetime DEFAULT NULL,
+  `homework_id` int(11) DEFAULT NULL,
   `grade` int(11) DEFAULT NULL,
   `content` varchar(2000) DEFAULT NULL,
+  `picture` longtext DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -88,5 +90,17 @@ CREATE TABLE `user` (
   `email` varchar(255) DEFAULT NULL,
   `phone` varchar(255) DEFAULT NULL,
   `role` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for instruct
+-- ----------------------------
+DROP TABLE IF EXISTS `instruct`;
+CREATE TABLE `instruct` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `course_id` int(11) DEFAULT NULL,
+  `teacher_id` int(11) DEFAULT NULL,
+  `student_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
