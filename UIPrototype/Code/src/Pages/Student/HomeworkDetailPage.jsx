@@ -13,10 +13,11 @@ import {
     VideoCameraOutlined,
     HighlightOutlined, TableOutlined, ToTopOutlined, AuditOutlined,
 } from '@ant-design/icons';
+import {history} from "../../Utils/History";
 
 const { Header, Content, Footer, Sider } = Layout;
 
-const homework = {
+const homeworks = {
     name: '第一次测验',
     releaseTime: '2020-10-09 21:32:00',
     deadline: '2020-10-10 22:00:00',
@@ -29,15 +30,57 @@ const homework = {
         '\n' +
         '    function. (Hint: consider the matrix form of the objective function)',
     demands: '请提交一张图片',
-}
+};
 
-export default class stuHomeworkDetailPage extends React.Component {
+export default class StuHomeworkDetail extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            info: homework,
-        }
+            info: {},
+            id: this.props.location.state.id,
+            test:0,
+        };
     }
+
+    UNSAFE_componentWillMount() {
+        this.getHomework();
+    }
+
+    getHomework = () => {
+        // get homework by id
+        this.setState( {info: homeworks});
+        this.setState({test: 1});
+    };
+
+    toStuInfo = () => {
+        history.replace('/stuUserInfo');
+    };
+
+    toStuCourseList = () => {
+        history.replace('/stuCourseList');
+    };
+
+    toStuHomeworkList = () => {
+        history.replace('/stuHomeworkList')
+    };
+
+    toHomeworkDetail = () => {
+        let homeworkId = this.state.id;
+        history.push('/stuHomeworkCommit', {hid: homeworkId});
+    };
+
+    stuMenuRedirect = (event) => {
+        let key = event.key;
+        if(key === '1') {
+            this.toStuInfo();
+        }
+        if(key === '2') {
+            this.toStuCourseList();
+        }
+        if(key === '3') {
+            this.toStuHomeworkList();
+        }
+    };
 
     render(){
         return(
@@ -51,22 +94,20 @@ export default class stuHomeworkDetailPage extends React.Component {
                         left: 0,
                     }}
                 >
-                    <div className="logo"></div>
+                    <div className="logo"/>
 
-                    <Menu theme="dark" mode="inline" defaultSelectedKeys={['3']}>
-                        <Menu.Item key="1" icon={<AuditOutlined />}>
+                    <Menu theme="dark" mode="inline" defaultSelectedKeys={['3']} onClick = {this.stuMenuRedirect}>
+                        <Menu.Item key="1" icon={<AuditOutlined />} >
                             个人信息
                         </Menu.Item>
-                        <Menu.Item key="2" icon={<TableOutlined />}>
+                        <Menu.Item key="2" icon={<TableOutlined />} >
                             我的课程
                         </Menu.Item>
-                        <Menu.Item key="3" icon={<HighlightOutlined />}>
+                        <Menu.Item key="3" icon={<HighlightOutlined />} >
                             我的作业
                         </Menu.Item>
-                        {/*<Menu.Item key="4" icon={<ToTopOutlined />}>*/}
-                        {/*    上传作业*/}
-                        {/*</Menu.Item>*/}
                     </Menu>
+
                 </Sider>
                 <Layout className="site-layout" style={{ marginLeft: 200 }}>
                     <Header className="site-layout-background" style={{ padding: 0 }} />
@@ -84,8 +125,15 @@ export default class stuHomeworkDetailPage extends React.Component {
                             <Descriptions.Item label="截止时间">{this.state.info.deadline}</Descriptions.Item>
                             <Descriptions.Item label="提交要求">{this.state.info.demands}</Descriptions.Item>
                             <Descriptions.Item label="详情" span={4}><p style={{whiteSpace:"pre"}}>{this.state.info.content}</p></Descriptions.Item>
-                            <Descriptions.Item>{<Button type={"primary"}
-                                                        size={"large"}>提交作业</Button>}</Descriptions.Item>
+                            <Descriptions.Item>{
+                                <Button type={"primary"}
+                                        size={"large"}
+                                        onClick={this.toHomeworkDetail}
+                                >
+                                    提交作业
+                                </Button>
+                            }
+                            </Descriptions.Item>
                         </Descriptions>
                     </Content>
                     <Footer style={{ textAlign: 'center' }}>云作业平台</Footer>

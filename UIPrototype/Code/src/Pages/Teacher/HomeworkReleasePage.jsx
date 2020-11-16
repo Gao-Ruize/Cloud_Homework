@@ -8,7 +8,7 @@ import {
 const { Header, Content, Footer, Sider } = Layout;
 const { TextArea } = Input;
 
-export default class teaHomeworkReleasePage extends React.Component{
+export default class TeaHomeworkRelease extends React.Component{
     constructor(props) {
         super(props);
         this.state = {

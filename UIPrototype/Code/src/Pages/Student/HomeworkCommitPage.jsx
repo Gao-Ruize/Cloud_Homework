@@ -8,14 +8,48 @@ import {
 } from '@ant-design/icons';
 import Meta from "antd/es/card/Meta";
 import Avatar from "@material-ui/core/Avatar";
+import {history} from "../../Utils/History";
 
 const { Header, Content, Footer, Sider } = Layout;
 const { TextArea } = Input;
 
-export default class stuHomeworkCommitPage extends React.Component {
-    state = {
-        fileList: [],
-        uploading: false,
+export default class StuHomeworkCommit extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            fileList: [],
+            uploading: false,
+            homeworkId: this.props.location.state.hid,
+        }
+    }
+
+    toStuInfo = () => {
+        history.replace('/stuUserInfo');
+    };
+
+    toStuCourseList = () => {
+        history.replace('/stuCourseList');
+    };
+
+    toStuHomeworkList = () => {
+        history.replace('/stuHomeworkList')
+    };
+
+    stuMenuRedirect = (event) => {
+        let key = event.key;
+        if(key === '1') {
+            this.toStuInfo();
+        }
+        if(key === '2') {
+            this.toStuCourseList();
+        }
+        if(key === '3') {
+            this.toStuHomeworkList();
+        }
+    };
+
+    backToHomeDetail = () => {
+        history.goBack()
     };
 
     handleUpload = () => {
@@ -28,7 +62,7 @@ export default class stuHomeworkCommitPage extends React.Component {
         this.setState({
             uploading: true,
         });
-    }
+    };
 
     render(){
         const { uploading, fileList } = this.state;
@@ -63,29 +97,27 @@ export default class stuHomeworkCommitPage extends React.Component {
                         left: 0,
                     }}
                 >
-                    <div className="logo"></div>
+                    <div className="logo"/>
 
-                    <Menu theme="dark" mode="inline" defaultSelectedKeys={['3']}>
-                        <Menu.Item key="1" icon={<AuditOutlined />}>
+                    <Menu theme="dark" mode="inline" defaultSelectedKeys={['3']} onClick = {this.stuMenuRedirect}>
+                        <Menu.Item key="1" icon={<AuditOutlined />} >
                             个人信息
                         </Menu.Item>
-                        <Menu.Item key="2" icon={<TableOutlined />}>
+                        <Menu.Item key="2" icon={<TableOutlined />} >
                             我的课程
                         </Menu.Item>
-                        <Menu.Item key="3" icon={<HighlightOutlined />}>
+                        <Menu.Item key="3" icon={<HighlightOutlined />} >
                             我的作业
                         </Menu.Item>
-                        {/*<Menu.Item key="4" icon={<ToTopOutlined />}>*/}
-                        {/*    上传作业*/}
-                        {/*</Menu.Item>*/}
                     </Menu>
+
                 </Sider>
                 <Layout className="site-layout" style={{ marginLeft: 200 }}>
                     <Header className="site-layout-background" style={{ padding: 0 }} />
                     <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
                         <PageHeader
                             className="site-page-header"
-                            onBack={() => null}
+                            onBack={this.backToHomeDetail}
                             title="提交作业"
                             subTitle="返回到作业详情"
                         />

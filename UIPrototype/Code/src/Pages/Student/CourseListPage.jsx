@@ -1,13 +1,14 @@
 import React from 'react';
 import 'antd/dist/antd.css';
 
-import {Layout, Menu, Table, Tag, Space, PageHeader} from 'antd';
+import {Layout, Menu, Table, Tag, Space, PageHeader, Button, Popconfirm} from 'antd';
 import {
 
     HighlightOutlined, TableOutlined, ToTopOutlined, AuditOutlined,
 } from '@ant-design/icons';
 import Meta from "antd/es/card/Meta";
 import Avatar from "@material-ui/core/Avatar";
+import {history} from "../../Utils/History";
 
 const { Header, Content, Footer, Sider } = Layout;
 const { Column, ColumnGroup } = Table;
@@ -46,7 +47,47 @@ const data = [
 ];
 
 
-export default class stuCourseListPage extends React.Component {
+export default class StuCourseList extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            courses:[]
+        }
+    }
+
+    toStuInfo = () => {
+        history.replace('/stuUserInfo');
+    };
+
+    toStuCourseList = () => {
+        history.replace('/stuCourseList');
+    };
+
+    toStuHomeworkList = () => {
+        history.replace('/stuHomeworkList')
+    };
+
+    stuMenuRedirect = (event) => {
+        let key = event.key;
+        if(key === '1') {
+            this.toStuInfo();
+        }
+        if(key === '2') {
+            this.toStuCourseList();
+        }
+        if(key === '3') {
+            this.toStuHomeworkList();
+        }
+    };
+
+    getAllCourses = () => {
+
+    };
+
+    toCourseDetail = (key) => {
+        history.replace('/stuCourseDetail', {courseKey: key});
+    };
+
     render(){
         return(
             <Layout>
@@ -59,22 +100,20 @@ export default class stuCourseListPage extends React.Component {
                         left: 0,
                     }}
                 >
-                    <div className="logo"></div>
+                    <div className="logo"/>
 
-                    <Menu theme="dark" mode="inline" defaultSelectedKeys={['2']}>
-                        <Menu.Item key="1" icon={<AuditOutlined />}>
+                    <Menu theme="dark" mode="inline" defaultSelectedKeys={['2']} onClick = {this.stuMenuRedirect}>
+                        <Menu.Item key="1" icon={<AuditOutlined />} >
                             个人信息
                         </Menu.Item>
-                        <Menu.Item key="2" icon={<TableOutlined />}>
+                        <Menu.Item key="2" icon={<TableOutlined />} >
                             我的课程
                         </Menu.Item>
-                        <Menu.Item key="3" icon={<HighlightOutlined />}>
+                        <Menu.Item key="3" icon={<HighlightOutlined />} >
                             我的作业
                         </Menu.Item>
-                        {/*<Menu.Item key="4" icon={<ToTopOutlined />}>*/}
-                        {/*    上传作业*/}
-                        {/*</Menu.Item>*/}
                     </Menu>
+
                 </Sider>
                 <Layout className="site-layout" style={{ marginLeft: 200 }}>
                     <Header className="site-layout-background" style={{ padding: 0 }} />
@@ -133,9 +172,12 @@ export default class stuCourseListPage extends React.Component {
                                 title=""
                                 key="action"
                                 render={(text, record) => (
-                                    <Space size="middle">
-                                        <a>查看课程详情</a>
-                                    </Space>
+                                    // <Space size="middle">
+                                    //     <a>查看课程详情</a>
+                                    // </Space>
+                                    <Popconfirm title="查看课程详情？" onConfirm={() => this.toCourseDetail(record.key)}>
+                                        <a>more</a>
+                                    </Popconfirm>
                                 )}
                             />
                         </Table>
