@@ -13,6 +13,7 @@ public class Homework {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     int id;
+    String name;
     Date releaseTime;
     Date deadline;
     String content;

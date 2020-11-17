@@ -13,6 +13,5 @@ public class Instruct {
     @Column(name = "id")
     int id;
     int courseId;
-    int teacherId;
     int studentId;
 }

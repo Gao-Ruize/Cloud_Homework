@@ -17,5 +17,6 @@ public class Course {
     String courseId;
     String courseInfo;
     int teacherId;
+    int status;
     
 }
