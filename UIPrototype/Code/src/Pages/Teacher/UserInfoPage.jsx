@@ -6,7 +6,7 @@ import {
     UserOutlined
 } from '@ant-design/icons';
 import {Button, Card, CardContent, CardHeader, Grid, MenuItem, TextField, Typography} from "@material-ui/core";
-
+import {history} from "../../Utils/History";
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -51,6 +51,46 @@ export default class TeaUserInfo extends React.Component{
         }]
     }
 
+    toTeaInfo = () =>{
+        history.replace('/teaUserInfo')
+    }
+
+    toTeaCourseList = () =>{
+        history.replace('/teaCourseList')
+    }
+
+    toTeaSubmitCourse = () =>{
+        history.replace('/teaSubmitCourse')
+    }
+
+    toTeaHomeworkList = ()=>{
+        history.replace('/teaHomeworkList')
+    }
+
+    toTeaHomeworkRelease = ()=>{
+        history.replace('/teaHomeworkRelease')
+    }
+    
+    teaMenuRedirect = (event) =>{
+        let key = event.key;
+        if(key === '1'){
+            this.toTeaInfo();
+        }
+        if(key === '2'){
+            this.toTeaSubmitCourse();
+        }
+        if(key === '3'){
+            this.toTeaCourseList();
+        }
+        if(key === '4'){
+            this.toTeaHomeworkRelease();
+        }
+        if(key === '5'){
+            this.toTeaHomeworkList();
+        }
+    };
+
+
     render(){
         const {user} = this.state
         const formLayout = {
@@ -71,7 +111,7 @@ export default class TeaUserInfo extends React.Component{
                     }}
                 >
                     <div className="logo" />
-                    <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
+                    <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']} onClick = {this.teaMenuRedirect}>
                         <Menu.Item key="1" icon={<UserOutlined />}>
                             个人信息
                         </Menu.Item>

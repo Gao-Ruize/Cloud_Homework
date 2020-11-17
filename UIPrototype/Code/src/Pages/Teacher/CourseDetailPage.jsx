@@ -5,6 +5,8 @@ import {
     TableOutlined, HighlightOutlined,
     FormOutlined, ReadOutlined, UserOutlined
 } from '@ant-design/icons';
+import {history} from "../../Utils/History";
+
 
 const { Header, Content, Footer, Sider } = Layout;
 const { Title } = Typography;
@@ -32,6 +34,53 @@ export default class TeaCourseDetail extends React.Component{
         }
     };
 
+    toTeaInfo = () =>{
+        history.replace('/teaUserInfo')
+    }
+
+    toTeaCourseList = () =>{
+        history.replace('/teaCourseList')
+    }
+
+    toTeaSubmitCourse = () =>{
+        history.replace('/teaSubmitCourse')
+    }
+
+    toTeaHomeworkList = ()=>{
+        history.replace('/teaHomeworkList')
+    }
+
+    toTeaHomeworkRelease = ()=>{
+        history.replace('/teaHomeworkRelease')
+    }
+
+    toTeaCheckHomework = () =>{
+        history.push('/teaCheckHomework')
+    }
+
+    toTeaAddStudent2Course = ()=>{
+        history.push('/teaAddStudent2Course')
+    }
+
+    teaMenuRedirect = (event) =>{
+        let key = event.key;
+        if(key === '1'){
+            this.toTeaInfo();
+        }
+        if(key === '2'){
+            this.toTeaSubmitCourse();
+        }
+        if(key === '3'){
+            this.toTeaCourseList();
+        }
+        if(key === '4'){
+            this.toTeaHomeworkRelease();
+        }
+        if(key === '5'){
+            this.toTeaHomeworkList();
+        }
+    };
+
     render(){
         return(
             <Layout>
@@ -44,7 +93,7 @@ export default class TeaCourseDetail extends React.Component{
                     }}
                 >
                     <div className="logo" />
-                    <Menu theme="dark" mode="inline" defaultSelectedKeys={['3']}>
+                    <Menu theme="dark" mode="inline" defaultSelectedKeys={['3']} onClick = {this.teaMenuRedirect}>
                         <Menu.Item key="1" icon={<UserOutlined />}>
                             个人信息
                         </Menu.Item>
@@ -108,10 +157,9 @@ export default class TeaCourseDetail extends React.Component{
                                 <Col span={24}>
                                     <div className='CTBar' style={{float: 'left'}}>
                                         <Space>
-                                            <Button type="primary" size="large">发布作业</Button>
-                                            <Button type="primary" size="large">批改作业</Button>
-                                            <Button type="primary" size="large">作业详情</Button>
-                                            <Button type="primary" size="large">添加学生</Button>
+                                            <Button type="primary" size="large" onClick={this.toTeaHomeworkRelease}>发布作业</Button>
+                                            <Button type="primary" size="large" onClick={this.toTeaCheckHomework}>批改作业</Button>
+                                            <Button type="primary" size="large" onClick={this.toTeaAddStudent2Course}>添加学生</Button>
                                         </Space>
                                     </div>
                                 </Col>

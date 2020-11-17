@@ -4,6 +4,7 @@ import {
     TableOutlined, HighlightOutlined,
     FormOutlined, ReadOutlined, UserOutlined
 } from '@ant-design/icons';
+import {history} from "../../Utils/History";
 
 const { Header, Content, Footer, Sider } = Layout;
 const { Column, ColumnGroup } = Table;
@@ -43,6 +44,47 @@ const data = [
 
 
 export default class TeaCourseList extends React.Component{
+    toTeaInfo = () =>{
+        history.replace('/teaUserInfo')
+    }
+
+    toTeaCourseList = () =>{
+        history.replace('/teaCourseList')
+    }
+
+    toTeaSubmitCourse = () =>{
+        history.replace('/teaSubmitCourse')
+    }
+
+    toTeaHomeworkList = ()=>{
+        history.replace('/teaHomeworkList')
+    }
+
+    toTeaHomeworkRelease = ()=>{
+        history.replace('/teaHomeworkRelease')
+    }
+
+    getTeaCourseDetail = () =>{
+        let type = this.state.type;
+    }
+    teaMenuRedirect = (event) =>{
+        let key = event.key;
+        if(key === '1'){
+            this.toTeaInfo();
+        }
+        if(key === '2'){
+            this.toTeaSubmitCourse();
+        }
+        if(key === '3'){
+            this.toTeaCourseList();
+        }
+        if(key === '4'){
+            this.toTeaHomeworkRelease();
+        }
+        if(key === '5'){
+            this.toTeaHomeworkList();
+        }
+    };
 
     render(){
         return(
@@ -56,7 +98,7 @@ export default class TeaCourseList extends React.Component{
                     }}
                 >
                     <div className="logo" />
-                    <Menu theme="dark" mode="inline" defaultSelectedKeys={['3']}>
+                    <Menu theme="dark" mode="inline" defaultSelectedKeys={['3']} onClick = {this.teaMenuRedirect}>
                         <Menu.Item key="1" icon={<UserOutlined />}>
                             个人信息
                         </Menu.Item>
@@ -134,7 +176,12 @@ export default class TeaCourseList extends React.Component{
                                 key="action"
                                 render={(text, record) => (
                                     <Space size="middle">
-                                        <a>查看课程详情</a>
+                                        <a href={'javascript:void(0)'}
+                                            onClick={()=>{
+                                                let id = record.key;
+                                            history.push('/teaCourseDetail', {id: id});
+                                     }}
+                                        >查看课程详情</a>
                                     </Space>
                                 )}
                             />

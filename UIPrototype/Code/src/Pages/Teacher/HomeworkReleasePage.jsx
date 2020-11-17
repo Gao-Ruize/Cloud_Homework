@@ -4,9 +4,11 @@ import {
     TableOutlined, HighlightOutlined,
     FormOutlined, ReadOutlined, UserOutlined
 } from '@ant-design/icons';
+import {history} from "../../Utils/History";
 
 const { Header, Content, Footer, Sider } = Layout;
 const { TextArea } = Input;
+
 
 export default class TeaHomeworkRelease extends React.Component{
     constructor(props) {
@@ -20,6 +22,45 @@ export default class TeaHomeworkRelease extends React.Component{
         }
     }
 
+    toTeaInfo = () =>{
+        history.replace('/teaUserInfo')
+    }
+
+    toTeaCourseList = () =>{
+        history.replace('/teaCourseList')
+    }
+
+    toTeaSubmitCourse = () =>{
+        history.replace('/teaSubmitCourse')
+    }
+
+    toTeaHomeworkList = ()=>{
+        history.replace('/teaHomeworkList')
+    }
+
+    toTeaHomeworkRelease = ()=>{
+        history.replace('/teaHomeworkRelease')
+    }
+    
+    teaMenuRedirect = (event) =>{
+        let key = event.key;
+        if(key === '1'){
+            this.toTeaInfo();
+        }
+        if(key === '2'){
+            this.toTeaSubmitCourse();
+        }
+        if(key === '3'){
+            this.toTeaCourseList();
+        }
+        if(key === '4'){
+            this.toTeaHomeworkRelease();
+        }
+        if(key === '5'){
+            this.toTeaHomeworkList();
+        }
+    };
+
     render(){
         return(
             <Layout>
@@ -32,7 +73,7 @@ export default class TeaHomeworkRelease extends React.Component{
                     }}
                 >
                     <div className="logo" />
-                    <Menu theme="dark" mode="inline" defaultSelectedKeys={['4']}>
+                    <Menu theme="dark" mode="inline" defaultSelectedKeys={['4']} onClick = {this.teaMenuRedirect}>
                         <Menu.Item key="1" icon={<UserOutlined />}>
                             个人信息
                         </Menu.Item>

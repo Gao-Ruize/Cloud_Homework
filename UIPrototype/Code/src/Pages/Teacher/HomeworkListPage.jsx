@@ -4,72 +4,9 @@ import {
     TableOutlined, HighlightOutlined,
     FormOutlined, ReadOutlined, UserOutlined
 } from '@ant-design/icons';
-
+import {history} from "../../Utils/History";
 const { Header, Content, Footer, Sider } = Layout;
 const { Option } = Select;
-
-const columns = [
-    {
-        title: '作业',
-        dataIndex: 'homework_name',
-        key: 'homework_name',
-        render: text => <a>{text}</a>,
-    },
-    {
-        title: '发布日期',
-        dataIndex: 'release_time',
-        key: 'release_time',
-        sorter: (a, b) => a.name.length - b.name.length,
-    },
-    {
-        title: '截止日期',
-        dataIndex: 'deadline',
-        key: 'deadline',
-        sorter: (a, b) => a.name.length - b.name.length,
-    },
-    {
-        title: '所属课程',
-        key: 'course',
-        dataIndex: 'course',
-        filters: [
-            {
-                text: '数学',
-                value: 'math',
-            },
-            {
-                text: '语文',
-                value: 'Chinese',
-            },
-            {
-                text: '英语',
-                value: 'English',
-            }
-        ]
-    },
-    {
-        title: '完成情况',
-        key: 'check',
-        render: (text, record) => (
-            <Space>
-                {record.finish_num + ' / ' + record.tot_num}
-                &nbsp;
-                {
-                    record.key<=2
-                    ?
-                    <Button disabled size={"small"}>
-                        批改已完成
-                    </Button>
-                    :
-                    <Button type="primary" size="small">
-                        批改
-                    </Button>
-                }
-
-            </Space>
-
-        ),
-    },
-];
 
 const data = [
     {
@@ -129,6 +66,110 @@ const data = [
 ];
 
 export default class TeaHomeworkList extends React.Component{
+    columns = [
+        {
+            title: '作业',
+            dataIndex: 'homework_name',
+            key: 'homework_name',
+            render: text => <a>{text}</a>,
+        },
+        {
+            title: '发布日期',
+            dataIndex: 'release_time',
+            key: 'release_time',
+            sorter: (a, b) => a.name.length - b.name.length,
+        },
+        {
+            title: '截止日期',
+            dataIndex: 'deadline',
+            key: 'deadline',
+            sorter: (a, b) => a.name.length - b.name.length,
+        },
+        {
+            title: '所属课程',
+            key: 'course',
+            dataIndex: 'course',
+            filters: [
+                {
+                    text: '数学',
+                    value: 'math',
+                },
+                {
+                    text: '语文',
+                    value: 'Chinese',
+                },
+                {
+                    text: '英语',
+                    value: 'English',
+                }
+            ]
+        },
+        {
+            title: '完成情况',
+            key: 'check',
+            render: (text, record) => (
+                <Space>
+                    {record.finish_num + ' / ' + record.tot_num}
+                    &nbsp;
+                    {
+                        record.key<=2
+                        ?
+                        <Button disabled size={"small"}>
+                            批改已完成
+                        </Button>
+                        :
+                        <Button type="primary" size="small" onClick={this.toTeaCheckHomework}>
+                            批改
+                        </Button>
+                    }
+    
+                </Space>
+    
+            ),
+        },
+    ];
+    toTeaInfo = () =>{
+        history.replace('/teaUserInfo')
+    }
+
+    toTeaCourseList = () =>{
+        history.replace('/teaCourseList')
+    }
+
+    toTeaSubmitCourse = () =>{
+        history.replace('/teaSubmitCourse')
+    }
+
+    toTeaHomeworkList = ()=>{
+        history.replace('/teaHomeworkList')
+    }
+
+    toTeaHomeworkRelease = ()=>{
+        history.replace('/teaHomeworkRelease')
+    }
+
+    toTeaCheckHomework = () =>{
+        history.push('/teaCheckHomework')
+    }
+    
+    teaMenuRedirect = (event) =>{
+        let key = event.key;
+        if(key === '1'){
+            this.toTeaInfo();
+        }
+        if(key === '2'){
+            this.toTeaSubmitCourse();
+        }
+        if(key === '3'){
+            this.toTeaCourseList();
+        }
+        if(key === '4'){
+            this.toTeaHomeworkRelease();
+        }
+        if(key === '5'){
+            this.toTeaHomeworkList();
+        }
+    };
 
     render(){
         return(
@@ -142,7 +183,7 @@ export default class TeaHomeworkList extends React.Component{
                     }}
                 >
                     <div className="logo" />
-                    <Menu theme="dark" mode="inline" defaultSelectedKeys={['5']}>
+                    <Menu theme="dark" mode="inline" defaultSelectedKeys={['5']} onClick = {this.teaMenuRedirect}>
                         <Menu.Item key="1" icon={<UserOutlined />}>
                             个人信息
                         </Menu.Item>
@@ -170,7 +211,7 @@ export default class TeaHomeworkList extends React.Component{
                             subTitle="查看已布置作业"
                         />
 
-                        <Table columns={columns} dataSource={data} />
+                        <Table columns ={this.columns} dataSource={data} />
                     </Content>
                     <Footer style={{ textAlign: 'center' }}>云作业平台</Footer>
                 </Layout>

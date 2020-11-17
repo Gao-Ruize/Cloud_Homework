@@ -5,27 +5,29 @@ import {
     FormOutlined, ReadOutlined, UserOutlined,
     UploadOutlined
 } from '@ant-design/icons';
+import {history} from "../../Utils/History";
 
 const { Header, Content, Footer, Sider } = Layout;
 const { Option } = Select;
 
+
 const data = [
-    {
-        type: 1,
-        index: 1,
-        text: '下列各组成语中，没有错别字的一组是(　　 )\n\tA.国泰民安　　风衣足食　　内忧外患　　政通人和\n\tB.臭名远扬　　兵慌马乱　　哀鸿遍野　　如泣如诉\n\tC.风景名盛　　不苟言笑　　太平盛世　　足智多谋\n\tD.夜不闭户　　民不聊生　　生灵涂炭　　多事之秋',
-        answer: 'B',
-        score: 0,
-        value: 10,
-    },
-    {
-        type: 1,
-        index: 2,
-        text: '下列问句中，内容表示肯定的一句是(　　 )\n\tA.人们说它是在望哨，可它真是在望哨吗？\n\tB.但是白鹭本身不就是一首很优美的歌吗?\n\tC.谁能把花生的好处说出来？\n\tD.妈，怎么还不摇桂花呢?',
-        answer: 'C',
-        score: 0,
-        value: 10,
-    },
+    // {
+    //     type: 1,
+    //     index: 1,
+    //     text: '下列各组成语中，没有错别字的一组是(　　 )\n\tA.国泰民安　　风衣足食　　内忧外患　　政通人和\n\tB.臭名远扬　　兵慌马乱　　哀鸿遍野　　如泣如诉\n\tC.风景名盛　　不苟言笑　　太平盛世　　足智多谋\n\tD.夜不闭户　　民不聊生　　生灵涂炭　　多事之秋',
+    //     answer: 'B',
+    //     score: 0,
+    //     value: 10,
+    // },
+    // {
+    //     type: 1,
+    //     index: 2,
+    //     text: '下列问句中，内容表示肯定的一句是(　　 )\n\tA.人们说它是在望哨，可它真是在望哨吗？\n\tB.但是白鹭本身不就是一首很优美的歌吗?\n\tC.谁能把花生的好处说出来？\n\tD.妈，怎么还不摇桂花呢?',
+    //     answer: 'C',
+    //     score: 0,
+    //     value: 10,
+    // },
     {
         type: 2,
         index: 3,
@@ -58,6 +60,45 @@ export default class TeaCheckHomework extends React.Component{
         console.log('changed', value);
     }
 
+    toTeaInfo = () =>{
+        history.replace('/teaUserInfo')
+    }
+
+    toTeaCourseList = () =>{
+        history.replace('/teaCourseList')
+    }
+
+    toTeaSubmitCourse = () =>{
+        history.replace('/teaSubmitCourse')
+    }
+
+    toTeaHomeworkList = ()=>{
+        history.replace('/teaHomeworkList')
+    }
+
+    toTeaHomeworkRelease = ()=>{
+        history.replace('/teaHomeworkRelease')
+    }
+    
+    teaMenuRedirect = (event) =>{
+        let key = event.key;
+        if(key === '1'){
+            this.toTeaInfo();
+        }
+        if(key === '2'){
+            this.toTeaSubmitCourse();
+        }
+        if(key === '3'){
+            this.toTeaCourseList();
+        }
+        if(key === '4'){
+            this.toTeaHomeworkRelease();
+        }
+        if(key === '5'){
+            this.toTeaHomeworkList();
+        }
+    };
+
 
     render(){
         return(
@@ -71,7 +112,7 @@ export default class TeaCheckHomework extends React.Component{
                     }}
                 >
                     <div className="logo" />
-                    <Menu theme="dark" mode="inline" defaultSelectedKeys={['5']}>
+                    <Menu theme="dark" mode="inline" defaultSelectedKeys={['5']} onClick = {this.teaMenuRedirect}>
                         <Menu.Item key="1" icon={<UserOutlined />}>
                             个人信息
                         </Menu.Item>
@@ -95,12 +136,10 @@ export default class TeaCheckHomework extends React.Component{
                     <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
                         <PageHeader
                             className="site-page-header"
-                            onBack={() => null}
+                            onBack={this.toTeaHomeworkList}
                             title="批改作业"
                             subTitle="返回到作业情况"
                         />
-
-
                         <br />
 
                         <List
@@ -147,14 +186,14 @@ export default class TeaCheckHomework extends React.Component{
                                                                 onChange={this.onInputScore}
                                                             />
                                                         </Col>
-                                                        <Col span={12}>
+                                                        {/* <Col span={12}>
                                                             <Slider
                                                                 min={0}
                                                                 max={item.value}
                                                                 onChange={this.onInputScore}
                                                                 defaultvalue={item.score}
                                                             />
-                                                        </Col>
+                                                        </Col> */}
                                                     </Row>;
                                                 case 3:
                                                     return <p><font color='red'>题目类型错误！</font></p>;

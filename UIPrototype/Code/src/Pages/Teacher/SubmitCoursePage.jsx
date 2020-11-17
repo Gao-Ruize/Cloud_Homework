@@ -5,6 +5,7 @@ import {
     FormOutlined, ReadOutlined, UserOutlined,
     UploadOutlined
 } from '@ant-design/icons';
+import {history} from "../../Utils/History";
 
 const { Header, Content, Footer, Sider } = Layout;
 const { TextArea } = Input;
@@ -41,22 +42,57 @@ export default class TeaSubmitCourse extends React.Component{
         let x = event.target.value;
         this.setState({courseID: x});
     };
-    changeTime = event => {
+
+    changeCourseInfo = event => {
         let x = event.target.value;
-        this.setState({time: x});
+        this.setState({courseInfo: x});
     };
-    changeDis = event => {
+
+    changeTeacherID = event => {
         let x = event.target.value;
-        this.setState({describe: x});
+        this.setState({teacherID: x});
     };
-    changeBook = event => {
-        let x = event.target.value;
-        this.setState({books: x});
+
+
+    toTeaInfo = () =>{
+        history.replace('/teaUserInfo')
+    }
+
+    toTeaCourseList = () =>{
+        history.replace('/teaCourseList')
+    }
+
+    toTeaSubmitCourse = () =>{
+        history.replace('/teaSubmitCourse')
+    }
+
+    toTeaHomeworkList = ()=>{
+        history.replace('/teaHomeworkList')
+    }
+
+    toTeaHomeworkRelease = ()=>{
+        history.replace('/teaHomeworkRelease')
+    }
+    
+    teaMenuRedirect = (event) =>{
+        let key = event.key;
+        if(key === '1'){
+            this.toTeaInfo();
+        }
+        if(key === '2'){
+            this.toTeaSubmitCourse();
+        }
+        if(key === '3'){
+            this.toTeaCourseList();
+        }
+        if(key === '4'){
+            this.toTeaHomeworkRelease();
+        }
+        if(key === '5'){
+            this.toTeaHomeworkList();
+        }
     };
-    changePlan = event => {
-        let x = event.target.value;
-        this.setState({plan: x});
-    };
+
 
     render(){
         return(
@@ -70,7 +106,7 @@ export default class TeaSubmitCourse extends React.Component{
                     }}
                 >
                     <div className="logo" />
-                    <Menu theme="dark" mode="inline" defaultSelectedKeys={['2']}>
+                    <Menu theme="dark" mode="inline" defaultSelectedKeys={['2']} onClick = {this.teaMenuRedirect}>
                         <Menu.Item key="1" icon={<UserOutlined />}>
                             个人信息
                         </Menu.Item>
@@ -115,50 +151,20 @@ export default class TeaSubmitCourse extends React.Component{
                             </Form.Item>
 
                             <Form.Item
-                                label="Time"
-                                name="Time"
-                                rules={[{ required: true, message: '请输入上课时间' }]}
+                                label="CourseInfo"
+                                name="CourseInfo"
+                                rules={[{ required: true, message: '请输入课程信息！' }]}
                             >
-                                <Input value={this.state.time} onChange={this.changeTime}/>
+                                <Input value={this.state.courseInfo} onChange={this.changeCourseInfo}/>
                             </Form.Item>
 
                             <Form.Item
-                                label="Describe"
-                                name="Describe"
-                                rules={[{ required: true, message: '请输入课程描述!' }]}
+                                label="TeacherId"
+                                name="TeacherId"
+                                rules={[{ required: true, message: '请输入教师编号！' }]}
                             >
-                                <TextArea rows={2} value={this.state.describe} onChange={this.changeDis}/>
+                                <Input value={this.state.courseInfo} onChange={this.changeTeacherID}/>
                             </Form.Item>
-
-                            <Form.Item
-                                label="Books"
-                                name="Books"
-                                rules={[{ required: true, message: '请输入所需书籍!' }]}
-                            >
-                                <TextArea rows={2} value={this.state.books} onChange={this.changeBook}/>
-                            </Form.Item>
-
-                            <Form.Item
-                                label="Plan"
-                                name="Plan"
-                                rules={[{ required: true, message: '请输入课程计划!' }]}
-                            >
-                                <TextArea rows={2} value={this.state.plan} onChange={this.changeBook}/>
-                            </Form.Item>
-
-                            <Form.Item
-                                name="upload image"
-                                label="UploadImage"
-                                valuePropName="fileList"
-                                getValueFromEvent={normFile}
-                                extra=" "
-                            >
-                                <Upload name="logo" action="/upload.do" listType="picture">
-                                    <Button icon={<UploadOutlined />}>Click to upload</Button>
-                                </Upload>
-                            </Form.Item>
-
-
                             <Form.Item >
                                 <Button type="primary" onClick = {this.submit}>
                                     Submit
