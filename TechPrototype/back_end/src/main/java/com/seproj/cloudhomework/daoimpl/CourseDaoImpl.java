@@ -20,21 +20,21 @@ public class CourseDaoImpl implements CourseDao {
 
     @Override
     public List<Course> findCoursesByNameLike(String name) {
-        return null;
+        return courseRepository.findByNameLike(name);
     }
 
     @Override
     public Course findCourseByName(String name) {
-        return null;
+        return courseRepository.findByName(name);
     }
 
     @Override
     public List<Course> findCoursesByTeacherId(int teacherId) {
-        return null;
+        return courseRepository.findByTeacherId(teacherId);
     }
 
     @Override
     public void saveOrUpdate(Course course) {
-
+        courseRepository.save(course);
     }
 }
