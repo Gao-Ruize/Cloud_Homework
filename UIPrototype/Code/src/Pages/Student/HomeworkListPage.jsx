@@ -82,9 +82,13 @@ export default class StuHomeworkList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            type: this.props.location.state.type,
+            type: '',
             homework: []
         };
+    }
+
+    componentDidMount() {
+        this.getHomework();
     }
 
     getHomework = () => {

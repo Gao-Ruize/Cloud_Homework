@@ -48,16 +48,19 @@ export default class StuUserInfo extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            user: [{
-                "name": "sho",
-                "password": "123456",
-                "email": "54749110@sjtu.edu.cn",
-            }],
+            user: {
+                name: "sho",
+                password: "123456",
+                email: "54749110@sjtu.edu.cn",
+            },
             cPhone: '',
             cClass: '',
             cQq: '',
             cMail: '',
         };
+    }
+
+    componentDidMount() {
         this.getUserInfo();
     }
 
@@ -160,7 +163,7 @@ export default class StuUserInfo extends React.Component {
                                             disabled
                                             id="outlined-disabled"
                                             label="姓名"
-                                            defaultValue="sho"
+                                            defaultValue={this.state.user.name}
                                             variant="outlined"
                                             style={{width: "90%"}}
                                         />
@@ -186,42 +189,6 @@ export default class StuUserInfo extends React.Component {
                                         />
                                     </Grid>
 
-                                    <Grid item xs={6}>
-                                        <TextField
-                                            select
-                                            label="学院"
-                                            variant="outlined"
-                                            style={{width: "90%"}}
-                                        >
-                                            {currencies.map((option) => (
-                                                <MenuItem key={option.value} value={option.value}>
-                                                    {option.label}
-                                                </MenuItem>
-                                            ))}
-                                        </TextField>
-                                    </Grid>
-
-                                    <Grid item xs={6}>
-                                        <TextField
-                                            id="outlined-disabled"
-                                            label="班级"
-                                            defaultValue="F1803702"
-                                            variant="outlined"
-                                            style={{width: "90%"}}
-                                            onChange={this.storeCClass}
-                                        />
-                                    </Grid>
-
-                                    <Grid item xs={6}>
-                                        <TextField
-                                            id="outlined-disabled"
-                                            label="QQ"
-                                            defaultValue="1036788120"
-                                            variant="outlined"
-                                            style={{width: "90%"}}
-                                            onChange={this.storeCQq}
-                                        />
-                                    </Grid>
                                     <Grid item xs={6}>
                                         <TextField
                                             id="outlined-disabled"

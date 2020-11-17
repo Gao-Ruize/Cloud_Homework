@@ -2,7 +2,15 @@ import React, {Component} from 'react'
 import {Button, Card, CardContent, CardHeader, Grid, MenuItem, TextField, Typography} from "@material-ui/core";
 import {history} from "../../Utils/History";
 import { message } from 'antd';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormControl from '@material-ui/core/FormControl';
+import FormLabel from '@material-ui/core/FormLabel';
+import axios from 'axios';
+import '../../config'
 
+let base = global.data.baseUrl;
 
 const currencies = [
   {
@@ -43,9 +51,9 @@ export default class Register extends Component {
       name: '',
       mail: '',
       class: '',
-      department: '',
       phone: '',
-      qq: '',
+      password: '',
+      userType: '',
     }
   }
 
@@ -81,8 +89,13 @@ export default class Register extends Component {
     this.setState({phone: event.target.value});
   };
 
-  storeQq = (event) => {
-    this.setState({qq: event.target.value});
+  storePassword = (event) => {
+    this.setState({passwprd: event.target.value});
+  };
+
+  storeUserType = (event) => {
+    this.setState({userType: event.target.value});
+    console.log(event.target.value);
   };
 
 
@@ -91,6 +104,17 @@ export default class Register extends Component {
       this.showSuccessMsg();
       history.replace('/login');
     }
+    console.log(base);
+    let data = {
+      id: this.state.id,
+      name: this.state.name,
+      mail: this.state.mail,
+      phone: this.state.phone,
+      password: this.state.password,
+      userType: this.state.userType
+    };
+    console.log(data);
+    // axios.post('')
   };
 
   render() {
@@ -116,6 +140,11 @@ export default class Register extends Component {
             </Grid>
 
             <Grid item xs={12}>
+              <TextField required variant="outlined" label="密码" style={{width: "100%"}}
+                         onChange={this.storePassword}/>
+            </Grid>
+
+            <Grid item xs={12}>
               <TextField required variant="outlined" label="邮箱" style={{width: "100%"}}
                          onChange={this.storeMail}/>
             </Grid>
@@ -126,26 +155,19 @@ export default class Register extends Component {
             </Grid>
 
             <Grid item xs={12}>
-              <TextField required select variant="outlined" label="学院" style={{width: "100%"}}
-                         onChange={this.storeDepartment}>
-                {currencies.map((option) => (
-                  <MenuItem key={option.value} value={option.value}>
-                    {option.label}
-                  </MenuItem>
-                ))}
-              </TextField>
-            </Grid>
-
-            <Grid item xs={12}>
               <TextField variant="outlined" label="电话" style={{width: "100%"}}
                          onChange={this.storePhone}/>
             </Grid>
 
             <Grid item xs={12}>
-              <TextField variant="outlined" label="QQ" style={{width: "100%"}}
-                         onChange={this.storeQq}/>
+              <FormControl component="fieldset">
+                <FormLabel component="legend">用户类型</FormLabel>
+                <RadioGroup aria-label="type" name="type" value={this.userType} onChange={this.storeUserType}>
+                  <FormControlLabel value="student" control={<Radio />} label="学生" />
+                  <FormControlLabel value="teacher" control={<Radio />} label="教师" />
+                </RadioGroup>
+              </FormControl>
             </Grid>
-
 
             <Button style={{width: "70%", margin: "auto"}} variant="contained" color="secondary"
                     size="large" onClick={this.register}>注册</Button>

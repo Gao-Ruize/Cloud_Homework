@@ -31,6 +31,9 @@ export default class StuCourseDetail extends React.Component {
             showModal: false,
             grade: 0
         };
+    }
+
+    componentDidMount() {
         this.getCourseData();
     }
 
@@ -144,12 +147,7 @@ export default class StuCourseDetail extends React.Component {
                                 <Descriptions.Item label="学期">{data.sem}</Descriptions.Item>
                                 <Descriptions.Item label="上课时间">{data.time}</Descriptions.Item>
                             </Descriptions>
-                            <Timeline mode='left'>
-                                <Timeline.Item label="2020-09-01 09:12:11">Homework1</Timeline.Item>
-                                <Timeline.Item label="2020-10-01 09:12:11">Lab1</Timeline.Item>
-                                <Timeline.Item label="2020-10-05 09:12:11">Homework2</Timeline.Item>
-                                <Timeline.Item label="2020-11-02 09:12:11">Lab2</Timeline.Item>
-                            </Timeline>
+
                             <Space>
                                 <Button type="primary" size='large' onClick={this.getAllHomework}>
                                     查看全部作业

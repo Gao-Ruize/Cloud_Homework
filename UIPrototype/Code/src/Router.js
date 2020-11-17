@@ -43,7 +43,7 @@ class BasicRouter extends React.Component {
                 <Route exact path = "/teaCourseList" component={TeaCourseList} />
                 <Route exact path = "/tesHomeworkList" component={TeaHomeworkList} />
                 <Route exact path = "/teaHomeworkRelease" component={TeaHomeworkRelease} />
-                <Route exact path = "/tesSubmitCourse" component={TeaSubmitCourse} />
+                <Route exact path = "/teaSubmitCourse" component={TeaSubmitCourse} />
                 <Route exact path = "/teaUserInfo" component={TeaUserInfo} />
             </Router>
         );

@@ -6,6 +6,10 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import {history} from "../../Utils/History";
+import axios from 'axios'
+import '../../config'
+
+let base = global.data.baseUrl;
 
 export default class Login extends Component {
   constructor(props) {
@@ -39,6 +43,26 @@ export default class Login extends Component {
   login = () => {
     let name = this.state.name;
     let password = this.state.password;
+    let data = {
+      username: name,
+      password: password
+    };
+    let Url = base + 'user/login';
+    axios.post(Url, data)
+        .then(resp => {
+          if(resp.date.code === 200) {
+            history.replace('/stuCourseList');
+            localStorage.setItem("UserType", "student");
+            let user = resp.data.user;
+            localStorage.setItem("UserInfo", user);
+          }
+          if(resp.data.code === 201) {
+            history.replace('/teaCourseList');
+            localStorage.setItem("UserType", "teacher");
+            let user = resp.data.user;
+            localStorage.setItem("UserInfo", user);
+          }
+        });
     if(name === "student") {
       history.replace('/stuCourseList');
       localStorage.setItem("UserType", "student");

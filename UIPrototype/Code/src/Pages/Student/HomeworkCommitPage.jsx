@@ -1,7 +1,7 @@
 import React from 'react';
 import 'antd/dist/antd.css';
 
-import {Layout, Menu, Upload, Input, Button, PageHeader,} from 'antd';
+import {Layout, Menu, Upload, Input, Button, PageHeader, message, Row, Col} from 'antd';
 import {
     UploadOutlined,
     HighlightOutlined, TableOutlined, ToTopOutlined, AuditOutlined,
@@ -21,6 +21,9 @@ export default class StuHomeworkCommit extends React.Component {
             uploading: false,
             homeworkId: this.props.location.state.hid,
         }
+    }
+
+    componentDidMount() {
     }
 
     toStuInfo = () => {
@@ -64,6 +67,10 @@ export default class StuHomeworkCommit extends React.Component {
         });
     };
 
+    handleCommit = () => {
+
+    };
+
     render(){
         const { uploading, fileList } = this.state;
         const props = {
@@ -78,10 +85,18 @@ export default class StuHomeworkCommit extends React.Component {
                 });
             },
             beforeUpload: file => {
-                this.setState(state => ({
-                    fileList: [...state.fileList, file],
-                }));
-                return false;
+                if (file.type !== 'image/png') {
+                    message.error(`${file.name} is not a png file`);
+                }
+                return file.type === 'image/png';
+            },
+            onChange: info => {
+                console.log(info.fileList);
+                // file.status is empty when beforeUpload return false
+                this.setState({
+                    fileList: info.fileList.filter(file => !!file.status)
+                }
+                );
             },
             fileList,
         };
@@ -127,15 +142,29 @@ export default class StuHomeworkCommit extends React.Component {
                         </Upload>
 
                         <TextArea rows={4} style={{marginTop: 24}} placeholder="请输入备注"/>
-                        <Button
-                            type="primary"
-                            onClick={this.handleUpload}
-                            disabled={fileList.length === 0}
-                            loading={uploading}
-                            style={{ marginTop: 16, width: 300 }}
-                        >
-                            {uploading ? '上传中' : '上传'}
-                        </Button>
+                        <Row>
+                            <Col span={8}>
+                                <Button
+                                    type="primary"
+                                    onClick={this.handleUpload}
+                                    disabled={fileList.length === 0}
+                                    loading={uploading}
+                                    style={{ marginTop: 16, width: 300 }}
+                                >
+                                    {uploading ? '上传中' : '上传'}
+                                </Button>
+                            </Col>
+                            <Col span={8} />
+                            <Col span={8}>
+                                <Button
+                                    type = 'danger'
+                                    onClick = {this.handleCommit()}
+                                    style={{ marginTop: 16, width: 300 }}
+                                >
+                                    提交作业
+                                </Button>
+                            </Col>
+                        </Row>
                     </Content>
                     <Footer style={{ textAlign: 'center' }}>云作业平台</Footer>
                 </Layout>

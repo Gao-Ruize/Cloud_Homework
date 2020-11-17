@@ -42,7 +42,7 @@ export default class StuHomeworkDetail extends React.Component {
         };
     }
 
-    UNSAFE_componentWillMount() {
+    componentDidMount() {
         this.getHomework();
     }
 

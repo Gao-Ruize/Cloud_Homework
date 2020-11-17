@@ -21,7 +21,7 @@ const data = [
         teacher: "王肇国",
         address: '东上院411',
         time: ['周一3-4节', '周二3-4节'],
-        status: {sta: '正在进行', color: 'green'},
+        status: 0,
         sem: ['2019-2020', 'Spring']
     },
     {
@@ -31,7 +31,7 @@ const data = [
         teacher: "王肇国",
         address: '东上院412',
         time: ['周一6-8节'],
-        status: {sta: '未开始', color: 'blue'},
+        status: 1,
         sem: ['2020-2021', 'Fall']
     },
     {
@@ -41,7 +41,7 @@ const data = [
         teacher: "王肇国",
         address: '上院411',
         time: ['周四6-8节', '周五11-13节'],
-        status: {sta: '已结束', color: 'red'},
+        status: 2,
         sem: ['2019-2020', 'Fall']
     },
 ];
@@ -53,6 +53,10 @@ export default class StuCourseList extends React.Component {
         this.state = {
             courses:[]
         }
+    }
+
+    componentDidMount() {
+        this.getAllCourses();
     }
 
     toStuInfo = () => {
@@ -82,6 +86,22 @@ export default class StuCourseList extends React.Component {
 
     getAllCourses = () => {
 
+    };
+
+    getColor = (x) => {
+        if(x === 0)
+            return 'green';
+        if(x === 1)
+            return 'blue';
+        return 'red'
+    };
+
+    getClassStatus = (x) => {
+        if(x === 0)
+            return '尚未开课';
+        if(x === 1)
+            return '正在进行';
+        return '课程结束';
     };
 
     toCourseDetail = (key) => {
@@ -128,42 +148,13 @@ export default class StuCourseList extends React.Component {
                             <Column title="课程代码" dataIndex="code" key="code" />
                             <Column title="课程名称" dataIndex="name" key="name" />
                             <Column title="授课教师" dataIndex="teacher" key="teacher" />
-                            <Column title="教室" dataIndex="address" key="address" />
-                            <Column
-                                title="学期"
-                                dataIndex="sem"
-                                key="sem"
-                                render={sem => (
-                                    <>
-                                        {sem.map(tag => (
-                                            <Tag color="orange" key={tag}>
-                                                {tag}
-                                            </Tag>
-                                        ))}
-                                    </>
-                                )}
-                            />
-                            <Column
-                                title="时间"
-                                dataIndex="time"
-                                key="time"
-                                render={time => (
-                                    <>
-                                        {time.map(tag => (
-                                            <Tag color="blue" key={tag}>
-                                                {tag}
-                                            </Tag>
-                                        ))}
-                                    </>
-                                )}
-                            />
                             <Column
                                 title="状态"
                                 dataIndex="status"
                                 key="status"
                                 render={status => (
-                                    <Tag color={status.color} key={status}>
-                                        {status.sta}
+                                    <Tag color = {this.getColor(status)} key={status}>
+                                        {this.getClassStatus(status)}
                                     </Tag>
 
                                 )}
