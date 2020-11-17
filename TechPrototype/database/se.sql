@@ -25,6 +25,7 @@ CREATE TABLE `course` (
   `course_id` varchar(255) DEFAULT NULL,
   `course_info` varchar(255) DEFAULT NULL,
   `teacher_id` int(11) DEFAULT NULL,
+  `status` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -34,6 +35,7 @@ CREATE TABLE `course` (
 DROP TABLE IF EXISTS `homework`;
 CREATE TABLE `homework` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
   `release_time` datetime DEFAULT NULL,
   `deadline` datetime DEFAULT NULL,
   `content` varchar(2000) DEFAULT NULL,
@@ -101,7 +103,6 @@ DROP TABLE IF EXISTS `instruct`;
 CREATE TABLE `instruct` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `course_id` int(11) DEFAULT NULL,
-  `teacher_id` int(11) DEFAULT NULL,
-  `student_id` int(11) DEFAULT NULL,
+  `student_id` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
