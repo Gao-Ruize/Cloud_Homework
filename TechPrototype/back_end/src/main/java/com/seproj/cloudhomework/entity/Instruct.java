@@ -13,5 +13,5 @@ public class Instruct {
     @Column(name = "id")
     int id;
     int courseId;
-    int studentId;
+    String studentId;
 }
