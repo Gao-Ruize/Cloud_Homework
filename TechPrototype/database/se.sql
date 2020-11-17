@@ -76,6 +76,7 @@ CREATE TABLE `studenthomework` (
   `homework_id` int(11) DEFAULT NULL,
   `grade` int(11) DEFAULT NULL,
   `content` varchar(2000) DEFAULT NULL,
+  `student_id` varchar(255) DEFAULT NULL,
   `picture` longtext DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
