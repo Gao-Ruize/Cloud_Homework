@@ -37,8 +37,7 @@ export default class StuHomeworkDetail extends React.Component {
         super(props);
         this.state = {
             info: {},
-            id: this.props.location.state.id,
-            test:0,
+            id: this.props.location.state.homeworkId,
         };
     }
 
@@ -48,8 +47,6 @@ export default class StuHomeworkDetail extends React.Component {
 
     getHomework = () => {
         // get homework by id
-        this.setState( {info: homeworks});
-        this.setState({test: 1});
     };
 
     toStuInfo = () => {
@@ -61,7 +58,7 @@ export default class StuHomeworkDetail extends React.Component {
     };
 
     toStuHomeworkList = () => {
-        history.replace('/stuHomeworkList')
+        history.replace('/stuHomeworkList', {type: 4});
     };
 
     toHomeworkDetail = () => {

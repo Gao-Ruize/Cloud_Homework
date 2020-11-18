@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
-import {Button, Card, CardContent, CardHeader, Grid, TextField, Typography} from "@material-ui/core";
+import {Button, Card, CardContent, CardHeader, Grid, TextField, Typography } from "@material-ui/core";
+import { message } from 'antd';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -62,7 +63,13 @@ export default class Login extends Component {
             let user = resp.data.user;
             localStorage.setItem("UserInfo", user);
           }
+          if(resp.data.code === 300) {
+            message.error("登录失败");
+            this.openErrDialog();
+          }
         });
+
+    // to delete
     if(name === "student") {
       history.replace('/stuCourseList');
       localStorage.setItem("UserType", "student");
@@ -74,6 +81,7 @@ export default class Login extends Component {
       localStorage.setItem("ID", "234");
     }
     this.openErrDialog();
+    // --------
   };
 
   redirectToRegister = () => {

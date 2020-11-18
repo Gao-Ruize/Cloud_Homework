@@ -9,9 +9,12 @@ import {
 import Meta from "antd/es/card/Meta";
 import Avatar from "@material-ui/core/Avatar";
 import {history} from "../../Utils/History";
+import axios from 'axios';
 
 const { Header, Content, Footer, Sider } = Layout;
 const { Column, ColumnGroup } = Table;
+
+let base = global.data.baseUrl;
 
 const data = [
     {
@@ -68,7 +71,7 @@ export default class StuCourseList extends React.Component {
     };
 
     toStuHomeworkList = () => {
-        history.replace('/stuHomeworkList')
+        history.replace('/stuHomeworkList', {type: 4});
     };
 
     stuMenuRedirect = (event) => {
@@ -85,7 +88,19 @@ export default class StuCourseList extends React.Component {
     };
 
     getAllCourses = () => {
-
+        let UserInfo = localStorage.getItem('UserInfo');
+        let UserId = UserInfo.userid;
+        let Url = base + 'student/getCoursesbysid/' + UserId;
+        let _this = this;
+        axios.get(Url)
+            .then(resp => {
+                if(resp && resp.status === 200) {
+                    let CourseList = resp.data;
+                    _this.setState({
+                        courses: CourseList
+                    });
+                }
+            })
     };
 
     getColor = (x) => {
@@ -163,9 +178,7 @@ export default class StuCourseList extends React.Component {
                                 title=""
                                 key="action"
                                 render={(text, record) => (
-                                    // <Space size="middle">
-                                    //     <a>查看课程详情</a>
-                                    // </Space>
+                                    // 根据数据类型进行修改
                                     <Popconfirm title="查看课程详情？" onConfirm={() => this.toCourseDetail(record.key)}>
                                         <a>more</a>
                                     </Popconfirm>

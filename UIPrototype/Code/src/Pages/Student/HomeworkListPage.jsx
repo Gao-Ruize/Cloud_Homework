@@ -20,6 +20,9 @@ import {history} from "../../Utils/History";
 const { Header, Content, Footer, Sider } = Layout;
 const { Column, ColumnGroup } = Table;
 
+let base = global.data.baseUrl;
+import axios from 'axios';
+
 const data = [
     {
         key: '1',
@@ -82,7 +85,7 @@ export default class StuHomeworkList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            type: '',
+            type: this.props.location.state.type,
             homework: []
         };
     }
@@ -92,8 +95,23 @@ export default class StuHomeworkList extends React.Component {
     }
 
     getHomework = () => {
+        let _this = this;
         let type = this.state.type;
+        let courseId = 'none';
+        if(type !== 4)
+            courseId = this.props.location.state.courseKey;
+        let studentId = localStorage.getItem('UserInfo').userid;
+        let Url = base + 'student/getHomeworks/' + courseId + '/' + type + '/' + studentId;
         // get homework by type
+        axios.get(Url)
+            .then(resp => {
+                if(resp && resp.status === 200) {
+                    let data = resp.data;
+                    _this.setState({
+                        homework: data
+                    });
+                }
+            })
     };
 
     toStuInfo = () => {
@@ -105,7 +123,7 @@ export default class StuHomeworkList extends React.Component {
     };
 
     toStuHomeworkList = () => {
-        history.replace('/stuHomeworkList')
+        history.replace('/stuHomeworkList', {type: 4});
     };
 
     stuMenuRedirect = (event) => {
@@ -170,7 +188,7 @@ export default class StuHomeworkList extends React.Component {
                                   <a href={'javascript:void(0)'}
                                      onClick={()=>{
                                          let id = record.key;
-                                         history.push('/stuHomeworkDetail', {id: id});
+                                         history.push('/stuHomeworkDetail', {homeworkId: id});
                                      }}
                                   >
                                    查看

@@ -12,37 +12,6 @@ import '../../config'
 
 let base = global.data.baseUrl;
 
-const currencies = [
-  {
-    value: 'EE',
-    label: '电子信息与电气工程学院',
-  },
-  {
-    value: 'M',
-    label: '机械与动力工程学院',
-  },
-  {
-    value: 'A',
-    label: '安泰经济与管理学院',
-  },
-  {
-    value: 'Y',
-    label: '药学院',
-  },
-  {
-    value: 'K',
-    label: '凯原法学院',
-  },
-  {
-    value: 'MathR',
-    label: '数学科学学院',
-  },
-  {
-    value: 'R',
-    label: '人文学院',
-  },
-];
-
 export default class Register extends Component {
   constructor(props) {
     super(props);
@@ -98,23 +67,40 @@ export default class Register extends Component {
     console.log(event.target.value);
   };
 
+  toLoginPage = () => {
+    history.replace('/login');
+  };
 
   register = () => {
+    // to delete
     if(true) {
       this.showSuccessMsg();
       history.replace('/login');
     }
+    // -------
     console.log(base);
+    let Url = base + "user/register";
     let data = {
-      id: this.state.id,
-      name: this.state.name,
-      mail: this.state.mail,
+      userid: this.state.id,
+      username: this.state.name,
+      email: this.state.mail,
       phone: this.state.phone,
       password: this.state.password,
       userType: this.state.userType
     };
     console.log(data);
-    // axios.post('')
+    let _this = this;
+    axios.post(Url, data)
+        .then(resp => {
+          if(resp && resp.status === 200) {
+            let code = resp.data.code;
+            if(code === 200) {
+              _this.showSuccessMsg();
+              _this.toLoginPage();
+            } else {}
+            _this.showFailMsg();
+          }
+        })
   };
 
   render() {
@@ -163,8 +149,8 @@ export default class Register extends Component {
               <FormControl component="fieldset">
                 <FormLabel component="legend">用户类型</FormLabel>
                 <RadioGroup aria-label="type" name="type" value={this.userType} onChange={this.storeUserType}>
-                  <FormControlLabel value="student" control={<Radio />} label="学生" />
-                  <FormControlLabel value="teacher" control={<Radio />} label="教师" />
+                  <FormControlLabel value="S" control={<Radio />} label="学生" />
+                  <FormControlLabel value="T" control={<Radio />} label="教师" />
                 </RadioGroup>
               </FormControl>
             </Grid>
