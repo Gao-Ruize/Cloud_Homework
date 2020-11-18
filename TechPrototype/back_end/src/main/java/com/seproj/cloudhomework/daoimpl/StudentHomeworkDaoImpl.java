@@ -24,6 +24,16 @@ public class StudentHomeworkDaoImpl implements StudentHomeworkDao {
     }
 
     @Override
+    public StudentHomework findStudentHomeworkByHomeworkIdAndStudentId(int homeworkId, String studentId) {
+        return studentHomeworkRepository.findByHomeworkIdAndStudentId(homeworkId, studentId);
+    }
+
+    @Override
+    public StudentHomework findStudentHomeworkById(int id) {
+        return studentHomeworkRepository.findDistinctById(id);
+    }
+
+    @Override
     public void saveOrUpdate(StudentHomework studentHomework) {
         studentHomeworkRepository.save(studentHomework);
     }

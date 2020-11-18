@@ -14,6 +14,11 @@ public class CourseDaoImpl implements CourseDao {
     CourseRepository courseRepository;
 
     @Override
+    public Course findCourseById(int cid) {
+        return courseRepository.findDistinctById(cid);
+    }
+
+    @Override
     public Course findCourseByCourseId(String courseId){
         return courseRepository.findDistinctByCourseId(courseId);
     }
