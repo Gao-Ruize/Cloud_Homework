@@ -10,7 +10,6 @@ import java.util.List;
 
 @Repository
 public class InstructDaoImpl implements InstructDao {
-
     @Autowired
     InstructRepository instructRepository;
 
@@ -22,6 +21,11 @@ public class InstructDaoImpl implements InstructDao {
     @Override
     public List<Instruct> findInstructByStudentId(String studentId) {
         return instructRepository.findByStudentId(studentId);
+    }
+
+    @Override
+    public Instruct findDistinctByCourseIdAndStudentId(int courseId, String studentId) {
+        return instructRepository.findDistinctByCourseIdAndStudentId(courseId, studentId);
     }
 
     @Override

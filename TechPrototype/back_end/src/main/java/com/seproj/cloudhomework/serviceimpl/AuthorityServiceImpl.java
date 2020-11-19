@@ -9,7 +9,7 @@ import com.seproj.cloudhomework.utils.Authority.RegisterForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-//@Service
+@Service
 public class AuthorityServiceImpl implements AuthorityService {
     @Autowired
     private UserDao userdao;
@@ -74,5 +74,16 @@ public class AuthorityServiceImpl implements AuthorityService {
         getUser.setEmail(modifyform.getEmail());
         userdao.saveOrUpdate(getUser);
         return 0;
+    }
+
+    /**
+     * <p>获取用户信息</p>
+     *
+     * @param userid 用户的学号/工号
+     * @return 用户信息
+     */
+    @Override
+    public User getUserInfo(String userid) {
+        return userdao.findUserByUserId(userid);
     }
 }

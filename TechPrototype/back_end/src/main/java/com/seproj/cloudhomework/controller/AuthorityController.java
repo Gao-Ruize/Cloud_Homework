@@ -10,14 +10,13 @@ import com.seproj.cloudhomework.utils.Authority.RegisterForm;
 
 import com.seproj.cloudhomework.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class AuthorityController {
+    @Qualifier("authorityServiceImpl")
     @Autowired
     private AuthorityService authorityservice;
 
@@ -54,6 +53,8 @@ public class AuthorityController {
     @PostMapping(value = "api/user/login")
     @ResponseBody
     public LoginResult login(@RequestBody LoginForm loginform){
+        System.out.println("login:");
+        System.out.println(loginform.toString());
         User user;
         if((user = authorityservice.login(loginform)) == null) {
             return new LoginResult(300, null);
@@ -78,5 +79,12 @@ public class AuthorityController {
         }
 
         return new Result(300);
+    }
+
+    @CrossOrigin
+    @GetMapping(value = "api/user/getUsrInfo/{userid}")
+    @ResponseBody
+    public User getUserInfo(@PathVariable String userid){
+        return authorityservice.getUserInfo(userid);
     }
 }

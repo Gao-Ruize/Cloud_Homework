@@ -109,4 +109,15 @@ public class Course {
     public void setStatus(int status) {
         this.status = status;
     }
+
+    @Transient
+    String teacherName;
+
+    public String getTeacherName() {
+        return teacherName;
+    }
+
+    public void setTeacherName(String teacherName) {
+        this.teacherName = teacherName;
+    }
 }
