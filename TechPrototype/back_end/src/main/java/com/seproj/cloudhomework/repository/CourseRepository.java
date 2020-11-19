@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface CourseRepository extends JpaRepository<Course, Integer> {
+    Course findDistinctById(int id);
     Course findDistinctByCourseId(String courseId);
     List<Course> findByNameLike(String name);
     Course findByName(String name);

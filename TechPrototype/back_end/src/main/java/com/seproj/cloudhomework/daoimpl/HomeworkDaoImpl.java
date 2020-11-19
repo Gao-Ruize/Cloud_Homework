@@ -14,6 +14,11 @@ public class HomeworkDaoImpl implements HomeworkDao {
     HomeworkRepository homeworkRepository;
 
     @Override
+    public Homework findHomeworkById(int hid) {
+        return homeworkRepository.findDistinctById(hid);
+    }
+
+    @Override
     public List<Homework> findHomeworkByCourseId(String courseId) {
         return homeworkRepository.findByCourseId(courseId);
     }

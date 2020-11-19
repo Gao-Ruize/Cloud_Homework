@@ -8,4 +8,6 @@ import java.util.List;
 public interface StudentHomeworkRepository extends JpaRepository<StudentHomework, Integer> {
     List<StudentHomework> findByHomeworkId(int homeworkId);
     List<StudentHomework> findByStudentId(String studentId);
+    StudentHomework findByHomeworkIdAndStudentId(int homeworkId, String studentId);
+    StudentHomework findDistinctById(int id);
 }

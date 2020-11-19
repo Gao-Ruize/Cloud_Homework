@@ -1,64 +1,54 @@
-package com.seproj.cloudhomework.entity;
+package com.seproj.cloudhomework.utils.Course;
 
-import lombok.Data;
-
-import javax.persistence.*;
 import java.util.Objects;
 
-@Data
-@Entity
-@Table(name = "course")
-public class Course {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    int id;
+public class CourseDetail {
+    private int id; // 课程id（数据库中存储）
+    private String name;
+    private String courseId;    // 课程编号
+    private int teacherId;
+    private int status;
+    private String teacherName;
 
-    String name;
-    String courseId;
-    String courseInfo;
-    int teacherId;
-    int status; // TODO:暂定 0：尚未开课，1：正在进行中，2：已结课
-
-    public Course(String name, String courseId, String courseInfo, int teacherId, int status) {
+    public CourseDetail(int id, String name, String courseId, int teacherId, int status, String teacherName) {
+        this.id = id;
         this.name = name;
         this.courseId = courseId;
-        this.courseInfo = courseInfo;
         this.teacherId = teacherId;
         this.status = status;
+        this.teacherName = teacherName;
     }
 
-    public Course() {
-
+    public CourseDetail() {
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Course course = (Course) o;
-        return id == course.id &&
-                teacherId == course.teacherId &&
-                status == course.status &&
-                Objects.equals(name, course.name) &&
-                Objects.equals(courseId, course.courseId) &&
-                Objects.equals(courseInfo, course.courseInfo);
+        CourseDetail that = (CourseDetail) o;
+        return id == that.id &&
+                teacherId == that.teacherId &&
+                status == that.status &&
+                Objects.equals(name, that.name) &&
+                Objects.equals(courseId, that.courseId) &&
+                Objects.equals(teacherName, that.teacherName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, courseId, courseInfo, teacherId, status);
+        return Objects.hash(id, name, courseId, teacherId, status, teacherName);
     }
 
     @Override
     public String toString() {
-        return "Course{" +
+        return "CourseDetail{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", courseId='" + courseId + '\'' +
-                ", courseInfo='" + courseInfo + '\'' +
                 ", teacherId=" + teacherId +
                 ", status=" + status +
+                ", teacherName='" + teacherName + '\'' +
                 '}';
     }
 
@@ -86,14 +76,6 @@ public class Course {
         this.courseId = courseId;
     }
 
-    public String getCourseInfo() {
-        return courseInfo;
-    }
-
-    public void setCourseInfo(String courseInfo) {
-        this.courseInfo = courseInfo;
-    }
-
     public int getTeacherId() {
         return teacherId;
     }
@@ -108,5 +90,13 @@ public class Course {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public String getTeacherName() {
+        return teacherName;
+    }
+
+    public void setTeacherName(String teacherName) {
+        this.teacherName = teacherName;
     }
 }
