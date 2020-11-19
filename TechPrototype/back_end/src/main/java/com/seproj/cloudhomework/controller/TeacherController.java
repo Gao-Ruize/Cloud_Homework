@@ -3,13 +3,12 @@ package com.seproj.cloudhomework.controller;
 import com.seproj.cloudhomework.entity.Course;
 import com.seproj.cloudhomework.entity.Homework;
 import com.seproj.cloudhomework.entity.StudentHomework;
+import com.seproj.cloudhomework.entity.User;
 import com.seproj.cloudhomework.service.TeacherService;
 import com.seproj.cloudhomework.utils.Course.AddStuToCourseForm;
+import com.seproj.cloudhomework.utils.Course.CourseDetail;
 import com.seproj.cloudhomework.utils.Course.UpdateCourseForm;
-import com.seproj.cloudhomework.utils.Homework.CreateHomeworkForm;
-import com.seproj.cloudhomework.utils.Homework.GradeStatistic;
-import com.seproj.cloudhomework.utils.Homework.StuHomeworkBrief;
-import com.seproj.cloudhomework.utils.Homework.UpdateHomeworkForm;
+import com.seproj.cloudhomework.utils.Homework.*;
 import com.seproj.cloudhomework.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
@@ -51,6 +50,20 @@ public class TeacherController {
     }
 
     @CrossOrigin
+    @GetMapping(value = "api/teacher/getCourseDetail/{cid}")
+    @ResponseBody
+    public CourseDetail getCourseDetail(@PathVariable int cid){
+        return teacherService.getCourseDetail(cid);
+    }
+
+    @CrossOrigin
+    @GetMapping(value = "api/teacher/getallstudents")
+    @ResponseBody
+    public List<User> getAllStudents(){
+        return teacherService.getAllStudents();
+    }
+
+    @CrossOrigin
     @PostMapping(value = "api/teacher/addstudents")
     @ResponseBody
     public Result addStudentsToCourse(@RequestBody AddStuToCourseForm form){
@@ -59,6 +72,13 @@ public class TeacherController {
         }
         return new Result(400);
     }
+
+//    @CrossOrigin
+//    @PostMapping(value = "api/teacher/getstudentsincourse/{cid}")
+//    @ResponseBody
+//    public List<User> getStudentsInCourse(@PathVariable int cid){
+//        return teacherService.getStudentsInCourse(cid);
+//    }
 
     @CrossOrigin
     @PostMapping(value = "api/teacher/createhomework")
@@ -111,8 +131,8 @@ public class TeacherController {
     @CrossOrigin
     @PostMapping(value = "api/teacher/ratestuhomework")
     @ResponseBody
-    public Result rateStuHomework(@RequestBody JSONObject rateData) throws Exception {
-        if(teacherService.rateStuHomework(rateData.getInt("id"), rateData.getInt("grade")) == 0){
+    public Result rateStuHomework(@RequestBody RateStuHomework rateData) {
+        if(teacherService.rateStuHomework(rateData.getId(), rateData.getGrade()) == 0){
             return new Result(200);
         }
         return new Result(400);

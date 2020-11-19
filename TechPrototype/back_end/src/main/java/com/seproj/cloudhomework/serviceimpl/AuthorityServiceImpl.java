@@ -75,4 +75,15 @@ public class AuthorityServiceImpl implements AuthorityService {
         userdao.saveOrUpdate(getUser);
         return 0;
     }
+
+    /**
+     * <p>获取用户信息</p>
+     *
+     * @param userid 用户的学号/工号
+     * @return 用户信息
+     */
+    @Override
+    public User getUserInfo(String userid) {
+        return userdao.findUserByUserId(userid);
+    }
 }

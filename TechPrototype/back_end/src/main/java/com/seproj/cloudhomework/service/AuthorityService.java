@@ -52,4 +52,12 @@ public interface AuthorityService {
     * @return 0为成功，1为失败
     */
    int modify(ModifyForm modifyform);
+
+   /**
+    * <p>获取用户信息</p>
+    *
+    * @param userid 用户的学号/工号
+    * @return 用户信息
+    */
+   User getUserInfo(String userid);
 }

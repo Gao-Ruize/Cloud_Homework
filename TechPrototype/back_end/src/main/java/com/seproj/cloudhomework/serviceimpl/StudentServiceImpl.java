@@ -44,6 +44,9 @@ public class StudentServiceImpl implements StudentService {
         Course course;
         for(Instruct ins:instructs){
             if((course = coursedao.findCourseById(ins.getCourseId())) != null){
+                int Uid = course.getTeacherId();
+                String teacherName = userdao.findUserById(Uid).getName();
+                course.setTeacherName(teacherName);
                 courseList.add(course);
             }
         }
@@ -114,7 +117,7 @@ public class StudentServiceImpl implements StudentService {
                     continue;
                 }
             }
-            if(type == 1){
+            if(type == 2){
                 return submittedHomework;
             }else{
                 return unSubmittedHomework;
@@ -142,13 +145,21 @@ public class StudentServiceImpl implements StudentService {
         }
         Date submitDate = new Date();
 //        System.out.println(submitDate.toString());
-        studenthomeworkdao.saveOrUpdate(new StudentHomework(new Date(),
-                homework.getHid(),
-                -1,
-                homework.getContent(),
-                homework.getPicture(),
-                stu.getUserId()));
-
+        StudentHomework stu_hw;
+        stu_hw = studenthomeworkdao.findStudentHomeworkByHomeworkIdAndStudentId(homework.getHid(), stu.getUserId());
+//        studenthomeworkdao.saveOrUpdate(new StudentHomework(new Date(),
+//                homework.getHid(),
+//                -1,
+//                homework.getContent(),
+//                homework.getPicture(),
+//                stu.getUserId()));
+        stu_hw.setCommitedTime(new Date());
+        stu_hw.setHomeworkId(homework.getHid());
+        stu_hw.setGrade(-1);
+        stu_hw.setContent(homework.getContent());
+        stu_hw.setPicture(homework.getPicture());
+        stu_hw.setStudentId(stu.getUserId());
+        studenthomeworkdao.saveOrUpdate(stu_hw);
         if(hw.getDeadline().compareTo(submitDate) < 0){
             // 超时
             return 1;

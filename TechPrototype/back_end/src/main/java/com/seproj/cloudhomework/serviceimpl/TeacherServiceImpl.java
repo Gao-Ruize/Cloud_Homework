@@ -3,6 +3,7 @@ package com.seproj.cloudhomework.serviceimpl;
 import com.seproj.cloudhomework.dao.*;
 import com.seproj.cloudhomework.entity.*;
 import com.seproj.cloudhomework.service.TeacherService;
+import com.seproj.cloudhomework.utils.Course.CourseDetail;
 import com.seproj.cloudhomework.utils.Course.UpdateCourseForm;
 import com.seproj.cloudhomework.utils.Homework.CreateHomeworkForm;
 import com.seproj.cloudhomework.utils.Homework.GradeStatistic;
@@ -46,15 +47,22 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public int updateCourse(UpdateCourseForm newCourse) {
         User teacher;
+        Course course;
         if((teacher = userDao.findUserByUserId(newCourse.getTeacherId())) == null || teacher.getRole() != 1){
             // 未找到该用户或该用户并非教师
             return -1;
         }
-        Course course = new Course(newCourse.getName(),
+        if((course = courseDao.findCourseByCourseId(newCourse.getCourseId())) == null){
+            // 未找到该课程信息
+            return -1;
+        }
+
+        Course newcourse = new Course(newCourse.getName(),
                 newCourse.getCourseId(),
                 newCourse.getCourseInfo(),
                 teacher.getId(),
                 1);
+        newcourse.setId(course.getId());
         courseDao.saveOrUpdate(course);
         return 0;
     }
@@ -69,10 +77,46 @@ public class TeacherServiceImpl implements TeacherService {
         return courseDao.findCoursesByTeacherId(teacher.getId());
     }
 
+    /**
+     * <p>获取某课程的详细信息</p>
+     *
+     * @param cid 课程id
+     * @return 课程详情
+     */
+    @Override
+    public CourseDetail getCourseDetail(int cid) {
+        Course course;
+        if((course = courseDao.findCourseById(cid)) == null){
+            return null;
+        }
+        User teacher = userDao.findUserById(course.getId());
+        if(teacher.getRole() != 1){
+            // 若用户身份不是教师（一般情况不会出现）
+            return null;
+        }
+        teacher.getUsername();
+        return new CourseDetail(course.getId(),
+                course.getName(),
+                course.getCourseId(),
+                course.getTeacherId(),
+                course.getStatus(),
+                teacher.getName());
+    }
+
     // TODO:删除课程暂未完成
     @Override
     public int deleteCourse(int c_id) {
         return 0;
+    }
+
+    /**
+     * <p>获取所有学生</p>
+     *
+     * @return 所有的学生列表
+     */
+    @Override
+    public List<User> getAllStudents() {
+        return userDao.findAllUsers();
     }
 
     @Override
@@ -89,6 +133,10 @@ public class TeacherServiceImpl implements TeacherService {
             if((student = userDao.findUserByUserId(stu)) == null || student.getRole() != 0){
                 // 该号码对应不到用户或者对应的用户不是学生
                 succ = 1;
+                continue;
+            }
+            if((instr = instructDao.findDistinctByCourseIdAndStudentId(course.getId(), stu)) == null){
+                // 该学生已经在该课程中
                 continue;
             }
             instr = new Instruct(c_id, stu);
