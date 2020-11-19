@@ -44,6 +44,9 @@ public class StudentServiceImpl implements StudentService {
         Course course;
         for(Instruct ins:instructs){
             if((course = coursedao.findCourseById(ins.getCourseId())) != null){
+                int Uid = course.getTeacherId();
+                String teacherName = userdao.findUserById(Uid).getName();
+                course.setTeacherName(teacherName);
                 courseList.add(course);
             }
         }
@@ -114,7 +117,7 @@ public class StudentServiceImpl implements StudentService {
                     continue;
                 }
             }
-            if(type == 1){
+            if(type == 2){
                 return submittedHomework;
             }else{
                 return unSubmittedHomework;
