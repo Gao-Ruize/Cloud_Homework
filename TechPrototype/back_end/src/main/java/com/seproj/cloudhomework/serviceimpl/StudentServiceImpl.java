@@ -6,6 +6,7 @@ import com.seproj.cloudhomework.service.StudentService;
 import com.seproj.cloudhomework.utils.Course.CourseDetail;
 import com.seproj.cloudhomework.utils.Homework.HandInHomework;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -19,6 +20,7 @@ import java.util.List;
  * @author Gao-Ruize
  * @since 2020/11/18
  */
+@Service
 public class StudentServiceImpl implements StudentService {
     @Autowired
     private UserDao userdao;

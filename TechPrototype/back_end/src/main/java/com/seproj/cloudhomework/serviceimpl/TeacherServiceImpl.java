@@ -9,10 +9,12 @@ import com.seproj.cloudhomework.utils.Homework.GradeStatistic;
 import com.seproj.cloudhomework.utils.Homework.StuHomeworkBrief;
 import com.seproj.cloudhomework.utils.Homework.UpdateHomeworkForm;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class TeacherServiceImpl implements TeacherService {
     @Autowired
     private CourseDao courseDao;

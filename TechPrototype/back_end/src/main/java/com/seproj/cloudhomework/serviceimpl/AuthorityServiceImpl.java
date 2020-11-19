@@ -9,7 +9,7 @@ import com.seproj.cloudhomework.utils.Authority.RegisterForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-//@Service
+@Service
 public class AuthorityServiceImpl implements AuthorityService {
     @Autowired
     private UserDao userdao;

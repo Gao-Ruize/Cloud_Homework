@@ -59,7 +59,7 @@ export default class Register extends Component {
   };
 
   storePassword = (event) => {
-    this.setState({passwprd: event.target.value});
+    this.setState({password: event.target.value});
   };
 
   storeUserType = (event) => {
@@ -72,13 +72,6 @@ export default class Register extends Component {
   };
 
   register = () => {
-    // to delete
-    if(true) {
-      this.showSuccessMsg();
-      history.replace('/login');
-    }
-    // -------
-    console.log(base);
     let Url = base + "user/register";
     let data = {
       userid: this.state.id,
@@ -86,7 +79,7 @@ export default class Register extends Component {
       email: this.state.mail,
       phone: this.state.phone,
       password: this.state.password,
-      userType: this.state.userType
+      usertype: this.state.userType
     };
     console.log(data);
     let _this = this;
@@ -97,8 +90,9 @@ export default class Register extends Component {
             if(code === 200) {
               _this.showSuccessMsg();
               _this.toLoginPage();
-            } else {}
-            _this.showFailMsg();
+            } else {
+              _this.showFailMsg();
+            }
           }
         })
   };
