@@ -8,10 +8,7 @@ import com.seproj.cloudhomework.service.TeacherService;
 import com.seproj.cloudhomework.utils.Course.AddStuToCourseForm;
 import com.seproj.cloudhomework.utils.Course.CourseDetail;
 import com.seproj.cloudhomework.utils.Course.UpdateCourseForm;
-import com.seproj.cloudhomework.utils.Homework.CreateHomeworkForm;
-import com.seproj.cloudhomework.utils.Homework.GradeStatistic;
-import com.seproj.cloudhomework.utils.Homework.StuHomeworkBrief;
-import com.seproj.cloudhomework.utils.Homework.UpdateHomeworkForm;
+import com.seproj.cloudhomework.utils.Homework.*;
 import com.seproj.cloudhomework.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
@@ -134,8 +131,8 @@ public class TeacherController {
     @CrossOrigin
     @PostMapping(value = "api/teacher/ratestuhomework")
     @ResponseBody
-    public Result rateStuHomework(@RequestBody JSONObject rateData) throws Exception {
-        if(teacherService.rateStuHomework(rateData.getInt("id"), rateData.getInt("grade")) == 0){
+    public Result rateStuHomework(@RequestBody RateStuHomework rateData) {
+        if(teacherService.rateStuHomework(rateData.getId(), rateData.getGrade()) == 0){
             return new Result(200);
         }
         return new Result(400);
