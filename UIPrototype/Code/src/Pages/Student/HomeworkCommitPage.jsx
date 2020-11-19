@@ -35,7 +35,7 @@ export default class StuHomeworkCommit extends React.Component {
     };
 
     toStuHomeworkList = () => {
-        history.replace('/stuHomeworkList')
+        history.replace('/stuHomeworkList', {type: 4});
     };
 
     stuMenuRedirect = (event) => {

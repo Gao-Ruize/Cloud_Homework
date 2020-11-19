@@ -1,7 +1,7 @@
 import React from 'react';
 import 'antd/dist/antd.css';
 
-import { Layout, Menu, Upload, Input, } from 'antd';
+import { Layout, Menu, Upload, Input, message} from 'antd';
 import {
     UploadOutlined,
     HighlightOutlined, TableOutlined, ToTopOutlined, AuditOutlined,
@@ -13,36 +13,9 @@ import {history} from "../../Utils/History";
 const { Header, Content, Footer, Sider } = Layout;
 const { TextArea } = Input;
 
-const currencies = [
-    {
-        value: 'EE',
-        label: '电子信息与电气工程学院',
-    },
-    {
-        value: 'M',
-        label: '机械与动力工程学院',
-    },
-    {
-        value: 'A',
-        label: '安泰经济与管理学院',
-    },
-    {
-        value: 'Y',
-        label: '药学院',
-    },
-    {
-        value: 'K',
-        label: '凯原法学院',
-    },
-    {
-        value: 'MathR',
-        label: '数学科学学院',
-    },
-    {
-        value: 'R',
-        label: '人文学院',
-    },
-];
+let base = global.data.baseUrl;
+
+import axios from 'axios';
 
 export default class StuUserInfo extends React.Component {
     constructor(props) {
@@ -54,8 +27,6 @@ export default class StuUserInfo extends React.Component {
                 email: "54749110@sjtu.edu.cn",
             },
             cPhone: '',
-            cClass: '',
-            cQq: '',
             cMail: '',
         };
     }
@@ -65,11 +36,10 @@ export default class StuUserInfo extends React.Component {
     }
 
     getUserInfo = () => {
-        let id = localStorage.getItem("ID");
-        let userType = localStorage.getItem("UserType");
-        // get info by id and userType
-        console.log(id);
-        console.log(userType);
+        let user = localStorage.getItem('UserInfo');
+        this.setState({
+            user: user
+        });
     };
 
     toStuInfo = () => {
@@ -81,7 +51,7 @@ export default class StuUserInfo extends React.Component {
     };
 
     toStuHomeworkList = () => {
-        history.replace('/stuHomeworkList')
+        history.replace('/stuHomeworkList', {type: 4});
     };
 
     stuMenuRedirect = (event) => {
@@ -101,20 +71,27 @@ export default class StuUserInfo extends React.Component {
         this.setState({'cPhone': event.target.value});
     };
 
-    storeCClass = (event) => {
-        this.setState({'cClass': event.target.value});
-    };
-
     storeCMail = (event) => {
         this.setState({'cMail': event.target.value});
     };
 
-    storeCQq = (event) => {
-        this.setState({'cQq': event.target.value});
-    };
-
     handleSubmit = () => {
-
+        let Url = base + 'api/user/modify';
+        let userId = this.state.user.userid;
+        let data = {
+            id: userId,
+            email: this.state.cMail,
+            phone: this.state.cPhone
+        };
+        axios.post(Url, data)
+            .then(resp => {
+                if(resp && resp.status === 200) {
+                    if(resp.data.code === 200) {
+                        message.success('修改成功');
+                    } else
+                        message.error('修改失败');
+                }
+            })
     };
 
     render(){
