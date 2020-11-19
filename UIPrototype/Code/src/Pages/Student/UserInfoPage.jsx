@@ -8,6 +8,7 @@ import {
 } from '@ant-design/icons';
 import {Button, Card, CardContent, CardHeader, Grid, MenuItem, TextField, Typography} from "@material-ui/core";
 import {history} from "../../Utils/History";
+import axios from 'axios';
 
 
 const { Header, Content, Footer, Sider } = Layout;
@@ -15,17 +16,15 @@ const { TextArea } = Input;
 
 let base = global.data.baseUrl;
 
-import axios from 'axios';
-
 export default class StuUserInfo extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            user: {
-                name: "sho",
-                password: "123456",
-                email: "54749110@sjtu.edu.cn",
-            },
+            id: localStorage.getItem('Uid'),
+            userName: '',
+            userId: localStorage.getItem('UserId'),
+            Phone: '',
+            Mail: '',
             cPhone: '',
             cMail: '',
         };
@@ -36,10 +35,28 @@ export default class StuUserInfo extends React.Component {
     }
 
     getUserInfo = () => {
-        let user = localStorage.getItem('UserInfo');
-        this.setState({
-            user: user
-        });
+        let userId = localStorage.getItem('UserId');
+        let Url = base + 'user/getUsrInfo/' + userId;
+        let _this = this;
+        axios.get(Url)
+            .then(resp => {
+                if(resp && resp.status === 200) {
+                    // let User = resp.data;
+                    let username = resp.data.username;
+                    let userid = resp.data.userId;
+                    let phone = resp.data.phone;
+                    let mail = resp.data.email;
+                    console.log(username);
+                    console.log(userid);
+                    console.log(phone);
+                    _this.setState({
+                        userName: username,
+                        userId: userid,
+                        Phone: phone,
+                        Mail: mail
+                    });
+                }
+            })
     };
 
     toStuInfo = () => {
@@ -51,7 +68,7 @@ export default class StuUserInfo extends React.Component {
     };
 
     toStuHomeworkList = () => {
-        history.replace('/stuHomeworkList', {type: 4});
+        history.replace('/stuHomeworkList', {type: 3});
     };
 
     stuMenuRedirect = (event) => {
@@ -76,8 +93,8 @@ export default class StuUserInfo extends React.Component {
     };
 
     handleSubmit = () => {
-        let Url = base + 'api/user/modify';
-        let userId = this.state.user.userid;
+        let Url = base + 'user/modify';
+        let userId = this.state.id;
         let data = {
             id: userId,
             email: this.state.cMail,
@@ -140,7 +157,7 @@ export default class StuUserInfo extends React.Component {
                                             disabled
                                             id="outlined-disabled"
                                             label="姓名"
-                                            defaultValue={this.state.user.name}
+                                            defaultValue={this.state.userName}
                                             variant="outlined"
                                             style={{width: "90%"}}
                                         />
@@ -150,7 +167,7 @@ export default class StuUserInfo extends React.Component {
                                             disabled
                                             id="outlined-disabled"
                                             label="学号"
-                                            defaultValue="518030990030"
+                                            defaultValue={this.state.userId}
                                             variant="outlined"
                                             style={{width: "90%"}}
                                         />
@@ -159,7 +176,7 @@ export default class StuUserInfo extends React.Component {
                                     <Grid item xs={6}>
                                         <TextField
                                             label="电话"
-                                            defaultValue="54749110"
+                                            defaultValue={this.state.Phone}
                                             variant="outlined"
                                             style={{width: "90%"}}
                                             onChange={this.storeCPhone}
@@ -170,7 +187,7 @@ export default class StuUserInfo extends React.Component {
                                         <TextField
                                             id="outlined-disabled"
                                             label="邮箱"
-                                            defaultValue="1036788120@qq.com"
+                                            defaultValue={this.state.Mail}
                                             variant="outlined"
                                             style={{width: "90%"}}
                                             onChange={this.storeCMail}

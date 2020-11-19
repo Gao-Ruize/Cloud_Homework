@@ -6,6 +6,8 @@ import {
     HighlightOutlined, TableOutlined, ToTopOutlined, AuditOutlined,
 } from '@ant-design/icons';
 import {history} from "../../Utils/History";
+import axios from 'axios';
+
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -19,18 +21,15 @@ const data = {
 };
 
 let base = global.data.baseUrl;
-import axios from 'axios';
-
 
 export default class StuCourseDetail extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             // 从路由获取参数 课程id
-            courseKey: this.props.location.state.courseKey,
+            courseId: this.props.location.state.courseKey,
             courseData: [],
-            userInfo: localStorage.getItem('UserInfo'),
-            studentId: localStorage.getItem('UserInfo').userid,
+            studentId: localStorage.getItem('Uid'),
             showModal: false,
             grade: 0
         };
@@ -53,7 +52,7 @@ export default class StuCourseDetail extends React.Component {
     };
 
     getCourseData = () => {
-        let Url = base + 'api/student/getCourseDetail/' + this.state.courseKey;
+        let Url = base + 'student/getCourseDetail/' + this.state.courseId;
         let _this = this;
         axios.get(Url)
             .then(resp => {
@@ -76,7 +75,7 @@ export default class StuCourseDetail extends React.Component {
     };
 
     toStuHomeworkList = () => {
-        history.replace('/stuHomeworkList', {type: 4});
+        history.replace('/stuHomeworkList', {type: 3});
     };
 
     stuMenuRedirect = (event) => {
@@ -95,15 +94,15 @@ export default class StuCourseDetail extends React.Component {
     // 根据 courseId 与 studentID 获取作业，成绩等内容
     // 通过 type 确定获取哪种作业(all finished unfinished)
     getAllHomework = () => {
-        history.push('/stuHomeworkList', {type: 1, courseId: this.state.courseKey});
+        history.push('/stuHomeworkList', {type: 0, courseId: this.state.courseId});
     };
 
     getUnfinishedHomework = () => {
-        history.push('/stuHomeworkList', {type: 2, courseId: this.state.courseKey});
+        history.push('/stuHomeworkList', {type: 1, courseId: this.state.courseId});
     };
 
     getFinishedHomework = () => {
-        history.push('/stuHomeworkList', {type: 3, courseId: this.state.courseKey});
+        history.push('/stuHomeworkList', {type: 2, courseId: this.state.courseId});
     };
 
 
@@ -111,8 +110,8 @@ export default class StuCourseDetail extends React.Component {
         // get grade
         let _this = this;
         let UserId = this.state.studentId;
-        let CourseId = this.state.courseData.courseId;
-        let Url = base + 'api/student/getGrade/' + UserId + '/' + CourseId;
+        let CourseId = this.state.courseData.id;
+        let Url = base + 'student/getGrade/' + UserId + '/' + CourseId;
         axios.get(Url)
             .then(resp => {
                 if(resp && resp.status === 200) {
@@ -174,11 +173,12 @@ export default class StuCourseDetail extends React.Component {
                             />
                             <br />
                             <Descriptions title="课程详情">
-                                <Descriptions.Item label="课程代码">{data.courseId}</Descriptions.Item>
-                                <Descriptions.Item label="课程名称">{data.name}</Descriptions.Item>
-                                <Descriptions.Item label="授课教师">{data.teacherName}</Descriptions.Item>
-                                <Descriptions.Item label="教师工号">{data.teacherId}</Descriptions.Item>
-                                <Descriptions.Item label="状态">{this.getCourseState(data.status)}</Descriptions.Item>
+                                <Descriptions.Item label="课程代码">{this.state.courseData.courseId}</Descriptions.Item>
+                                <Descriptions.Item label="课程名称">{this.state.courseData.name}</Descriptions.Item>
+                                <Descriptions.Item label="授课教师">{this.state.courseData.teacherName}</Descriptions.Item>
+                                <Descriptions.Item label="教师工号">{this.state.courseData.teacherId}</Descriptions.Item>
+                                <Descriptions.Item label="课程简介">{this.state.courseData.courseInfo}</Descriptions.Item>
+                                <Descriptions.Item label="状态">{this.getCourseState(this.state.courseData.status)}</Descriptions.Item>
                             </Descriptions>
 
                             <Space>

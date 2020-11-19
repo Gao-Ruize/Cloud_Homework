@@ -71,7 +71,7 @@ export default class StuCourseList extends React.Component {
     };
 
     toStuHomeworkList = () => {
-        history.replace('/stuHomeworkList', {type: 4});
+        history.replace('/stuHomeworkList', {type: 3});
     };
 
     stuMenuRedirect = (event) => {
@@ -88,8 +88,7 @@ export default class StuCourseList extends React.Component {
     };
 
     getAllCourses = () => {
-        let UserInfo = localStorage.getItem('UserInfo');
-        let UserId = UserInfo.userid;
+        let UserId = localStorage.getItem('Uid');
         let Url = base + 'student/getCoursesbysid/' + UserId;
         let _this = this;
         axios.get(Url)
@@ -159,10 +158,10 @@ export default class StuCourseList extends React.Component {
                             subTitle=""
                         />
                         <br />
-                        <Table dataSource={data}>
-                            <Column title="课程代码" dataIndex="code" key="code" />
+                        <Table dataSource={this.state.courses}>
+                            <Column title="课程代码" dataIndex="courseId" key="courseId" />
                             <Column title="课程名称" dataIndex="name" key="name" />
-                            <Column title="授课教师" dataIndex="teacher" key="teacher" />
+                            <Column title="授课教师" dataIndex="teacherId" key="teacherId" />
                             <Column
                                 title="状态"
                                 dataIndex="status"
@@ -179,7 +178,7 @@ export default class StuCourseList extends React.Component {
                                 key="action"
                                 render={(text, record) => (
                                     // 根据数据类型进行修改
-                                    <Popconfirm title="查看课程详情？" onConfirm={() => this.toCourseDetail(record.key)}>
+                                    <Popconfirm title="查看课程详情？" onConfirm={() => this.toCourseDetail(record.id)}>
                                         <a>more</a>
                                     </Popconfirm>
                                 )}

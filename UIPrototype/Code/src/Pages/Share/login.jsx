@@ -51,37 +51,27 @@ export default class Login extends Component {
     let Url = base + 'user/login';
     axios.post(Url, data)
         .then(resp => {
-          if(resp.date.code === 200) {
-            history.replace('/stuCourseList');
+          if(resp.data.code === 200) {
             localStorage.setItem("UserType", "student");
-            let user = resp.data.user;
-            localStorage.setItem("UserInfo", user);
-          }
+            let userId = resp.data.user.userId;
+            let Uid = resp.data.user.id;
+            localStorage.setItem("UserId", userId);
+            localStorage.setItem("Uid", Uid);
+            history.replace('/stuCourseList');
+          } else
           if(resp.data.code === 201) {
-            history.replace('/teaCourseList');
             localStorage.setItem("UserType", "teacher");
-            let user = resp.data.user;
-            localStorage.setItem("UserInfo", user);
-          }
+            let userId = resp.data.user.userId;
+            let Uid = resp.data.user.id;
+            localStorage.setItem("UserId", userId);
+            localStorage.setItem("Uid", Uid);
+            history.replace('/teaCourseList');
+          } else
           if(resp.data.code === 300) {
             message.error("登录失败");
             this.openErrDialog();
           }
         });
-
-    // to delete
-    if(name === "student") {
-      history.replace('/stuCourseList');
-      localStorage.setItem("UserType", "student");
-      localStorage.setItem("ID", "123");
-    } else
-    if(name === "teacher") {
-      history.replace('/teaCourseList');
-      localStorage.setItem("UserType", "teacher");
-      localStorage.setItem("ID", "234");
-    }
-    this.openErrDialog();
-    // --------
   };
 
   redirectToRegister = () => {
