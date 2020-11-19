@@ -10,4 +10,6 @@ public interface UserDao {
     User findUserByUserId(String userId);
     List<User> findUserByRole(int role);
     void saveOrUpdate(User user);
+
+    List<User> findAllUsers();
 }
