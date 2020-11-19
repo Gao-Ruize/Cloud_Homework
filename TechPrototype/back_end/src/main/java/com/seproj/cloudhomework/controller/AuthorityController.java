@@ -38,7 +38,7 @@ public class AuthorityController {
         }
         if(usertype.equals("T")){
             // 注册信息为教师
-            if(authorityservice.registerAsStudent(registerform) == 0){
+            if(authorityservice.registerAsTeacher(registerform) == 0){
                 return new Result(200);
             }
             else{
