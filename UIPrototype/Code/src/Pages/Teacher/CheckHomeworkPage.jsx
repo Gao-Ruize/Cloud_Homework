@@ -36,14 +36,14 @@ const data = [
         score: 0,
         value: 20,
     },
-    {
-        type: 2,
-        index: 4,
-        text: '(白鹭)色素的配合，身段的大小，一切都很适宜。白鹤太大而嫌生硬，即使如粉红的朱鹭或灰色的苍鹭，也觉得大了一些，而且太不寻常了。(《白鹭》)\n\n这个句子运用___________的修辞手法，突出了白鹭的_____________________。',
-        answer: '',
-        score: 0,
-        value: 20,
-    }
+    // {
+    //     type: 2,
+    //     index: 4,
+    //     text: '(白鹭)色素的配合，身段的大小，一切都很适宜。白鹤太大而嫌生硬，即使如粉红的朱鹭或灰色的苍鹭，也觉得大了一些，而且太不寻常了。(《白鹭》)\n\n这个句子运用___________的修辞手法，突出了白鹭的_____________________。',
+    //     answer: '',
+    //     score: 0,
+    //     value: 20,
+    // }
 ];
 
 
@@ -210,11 +210,7 @@ export default class TeaCheckHomework extends React.Component{
                                 //     </Card>
                                 // </List.Item>}
                                 <Card size = "large"style={{ width: '100%' }}>
-                                    <Image
-                                        width={400}
-                                        height={200}
-                                        src={this.state.picture}
-                                    />
+                                    *作业一内容content*
                                 <InputNumber
                                     min={0}
                                     max={item.value}

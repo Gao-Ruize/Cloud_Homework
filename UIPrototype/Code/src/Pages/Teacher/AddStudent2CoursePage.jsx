@@ -283,16 +283,21 @@ export default class TeaAddStudent2Course extends React.Component{
                             title="添加至课程"
                             render={(text, record) => (
                                 <div>
-                                  <a href={'javascript:void(0)'}
+                                  <a 
                                      onClick={()=>{
-                                         let sid = record.userId;
+                                         console.log('here!');
+                                         let sid = record.userId;                                    
                                          let cid = this.state.cid;
                                          let Url = base + 'teacher/addAStudent/' + cid + '/' + sid;
-                                         axios.post(Url)
+                                         data: {};
+                                         axios.post(Url, data)
                                          .then(resp => {
+                                             console.log(resp);
                                              if(resp && resp.status === 200) {
                                                  if(resp.data.code === 200) {
                                                      message.success("添加成功");
+                                                 } else {
+                                                     message.error("请勿重复添加")
                                                  }
                                              }
                                          });
@@ -306,9 +311,9 @@ export default class TeaAddStudent2Course extends React.Component{
                         </Table>
                         &nbsp; &nbsp; &nbsp; &nbsp;
                         &nbsp; &nbsp; &nbsp; &nbsp;
-                        <Button type="primary">
+                        {/* <Button type="primary">
                             Submit
-                        </Button>
+                        </Button> */}
                     </Content>
                     <Footer style={{ textAlign: 'center' }}>云作业平台</Footer>
                 </Layout>

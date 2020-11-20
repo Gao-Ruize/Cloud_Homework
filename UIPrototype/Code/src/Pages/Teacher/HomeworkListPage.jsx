@@ -1,5 +1,5 @@
 import React from 'react'
-import { Layout, Menu, Select, Button, PageHeader, Table, Space,message } from 'antd';
+import { Layout, Menu, Select, Button, PageHeader, Table, Space,message, Modal } from 'antd';
 import {
     TableOutlined, HighlightOutlined,
     FormOutlined, ReadOutlined, UserOutlined
@@ -8,7 +8,7 @@ import {history} from "../../Utils/History";
 import axios from 'axios';
 
 const { Header, Content, Footer, Sider } = Layout;
-const { Option } = Select;
+const { Option } = Select;const { Column, ColumnGroup } = Table;
 let base = global.data.baseUrl;
 // const data = [
 //     {
@@ -67,13 +67,90 @@ let base = global.data.baseUrl;
 //     },
 // ];
 
+const dataSource = [
+    {
+      key: '1',
+      name: 'mbgson',
+      studentId: 32,
+    },
+    {
+      key: '2',
+      name: 'sfa',
+      studentId: 42,
+    },
+  ];
+  
+  const columns = [
+    {
+      title: '姓名',
+      dataIndex: 'name',
+      key: 'name',
+    },
+    {
+      title: '学号',
+      dataIndex: 'studentId',
+      key: 'studentId',
+    },
+    {
+      title: '操作',
+      render: (text, record) => (
+        <Button size="middle" onClick={this.toCorrectHomework}>
+          批改
+        </Button>
+      )
+    },
+  ];
+  
+
+
 export default class TeaHomeworkList extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
             homework: []
         };
-    }
+    } ;
+
+    showModal = () => {
+        this.setState({
+          visible: true,
+        });
+
+        // let UserId = localStorage.getItem('UserId');
+        // let Url = base + 'teacher/getstuhomeworklist';
+        // let _this = this;
+        // let data = {
+        //     name: this.state.homework.id
+        // }
+        // axios.get(Url)
+        //     .then(resp => {
+        //         if(resp && resp.status === 200) {
+        //             let CourseList = resp.data;
+        //             console.log("aaaa",resp.data)
+        //             _this.setState({
+        //                 courses: CourseList
+        //             });
+        //         }
+        //     })
+        
+      };
+
+      handleOk = e => {
+        console.log(e);
+        this.setState({
+          visible: false,
+        });
+      };
+    
+      handleCancel = e => {
+        console.log(e);
+        this.setState({
+          visible: false,
+        });
+      };
+      toCorrectPage = ()=>{
+          history.push('/teaCheckHomework')
+      }
     columns = [
         {
             title: '课程编号',
@@ -104,27 +181,37 @@ export default class TeaHomeworkList extends React.Component{
             key: 'check',
             render: (text, record) => (
                 <Space>
-                    {/* {record.finish_num + ' / ' + record.tot_num}
-                    &nbsp;
-                    {
-                        record.key<=2
-                        ?
-                        <Button disabled size={"small"}>
-                            批改已完成
-                        </Button>
-                        :
-                        <Button type="primary" size="small" onClick={this.toTeaCheckHomework}>
-                            批改
-                        </Button>
-                    } */}
-                    <Button type="primary" size="small" onClick={this.toTeaCheckHomework}>
-                            批改
-                        </Button>
+                    <Button type="primary" size="small" onClick={this.showModal}>
+                            选择学生批改
+                    </Button>
+                        <Modal
+          title="Basic Modal"
+          visible={this.state.visible}
+          onOk={this.handleOk}
+          onCancel={this.handleCancel}
+        >
+                                      <Table dataSource={dataSource}>
+                            <Column title="姓名" dataIndex="name" key="name" />
+                            <Column title="学号" dataIndex="studentId" key="studentId" />
+                            <Column
+                                title=""
+                                key="action"
+                                render={(text, record) => (
+                                    // 根据数据类型进行修改
+                                    <Button title="批改" onClick={this.toCorrectPage}>
+                                        批改
+                                    </Button>
+                                )}
+                            />
+                        </Table>
+        </Modal>
                 </Space>
     
             ),
         },
     ];
+
+
     toTeaInfo = () =>{
         history.replace('/teaUserInfo')
     }
