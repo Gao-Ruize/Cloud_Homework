@@ -42,7 +42,7 @@ export default class TeaCourseDetail extends React.Component{
             courseKey: this.props.location.state.courseKey,
             id:'',
             name:'',
-            courseId:'',
+            courseId:  this.props.location.state.courseId,
             teacherId:'',
             status:'',
             teacherName:'',
@@ -51,12 +51,13 @@ export default class TeaCourseDetail extends React.Component{
     }
 
     getCourseData = () => {
-        let Url = base + 'api/student/getCourseDetail/' + this.state.courseKey;
+        let Url = base + 'student/getCourseDetail/' + this.state.courseKey;
         let _this = this;
         axios.get(Url)
             .then(resp => {
                 if(resp && resp.status === 200) {
                     let courseDetail = resp.data;
+                    console.log(resp.data)
                     _this.setState({
                         id: courseDetail.id,
                         name: courseDetail.name,
@@ -90,7 +91,7 @@ export default class TeaCourseDetail extends React.Component{
     }
 
     toTeaHomeworkRelease = ()=>{
-        history.replace('/teaHomeworkRelease')
+        history.replace('/teaHomeworkRelease',{courseId:this.state.courseId})
     }
 
     toTeaCheckHomework = () =>{
@@ -98,7 +99,7 @@ export default class TeaCourseDetail extends React.Component{
     }
 
     toTeaAddStudent2Course = ()=>{
-        history.push('/teaAddStudent2Course')
+        history.push('/teaAddStudent2Course', {cid: this.state.courseKey})
     }
 
     teaMenuRedirect = (event) =>{
@@ -142,9 +143,9 @@ export default class TeaCourseDetail extends React.Component{
                         <Menu.Item key="3" icon={<TableOutlined />}>
                             课程
                         </Menu.Item>
-                        <Menu.Item key="4" icon={<HighlightOutlined />}>
+                        {/* <Menu.Item key="4" icon={<HighlightOutlined />}>
                             发布作业
-                        </Menu.Item>
+                        </Menu.Item> */}
                         <Menu.Item key="5" icon={<ReadOutlined />}>
                             作业情况
                         </Menu.Item>
@@ -157,7 +158,6 @@ export default class TeaCourseDetail extends React.Component{
                         <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
                             <PageHeader
                                 className="site-page-header"
-                                onBack={() => null}
                                 title="课程详情"
                                 subTitle="返回到课程列表"
                             />

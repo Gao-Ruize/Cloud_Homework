@@ -46,19 +46,44 @@ const currencies = [
 
 
 export default class TeaUserInfo extends React.Component{
-    state = {
-        user: [{
-            "name": "sho",
-            "password": "123456",
-            "email": "54749110@sjtu.edu.cn",
-        }]
+    constructor(props) {
+        super(props);
+        this.state = {
+            id: localStorage.getItem('Uid'),
+            name: '',
+            userName: '',
+            userId: localStorage.getItem('UserId'),
+            Phone: '',
+            Mail: '',
+            cPhone: '',
+            cMail: '',
+        };
     }
 
     getUserInfo = () => {
-        let user = localStorage.getItem('UserInfo');
-        this.setState({
-            user: user
-        });
+        let userId = localStorage.getItem('UserId');
+        let Url = base + 'user/getUsrInfo/' + userId;
+        let _this = this;
+        axios.get(Url)
+            .then(resp => {
+                if(resp && resp.status === 200) {
+                    // let User = resp.data;
+                    let username = resp.data.username;
+                    let userid = resp.data.userId;
+                    let phone = resp.data.phone;
+                    let mail = resp.data.email;
+                    let name = resp.data.name;
+                    _this.setState({
+                        userName: username,
+                        userId: userid,
+                        Phone: phone,
+                        Mail: mail,
+                        name: name
+                    }, function () {
+                        console.log(_this.state);
+                    });
+                }
+            });
     };
 
     toTeaInfo = () =>{
@@ -131,14 +156,14 @@ export default class TeaUserInfo extends React.Component{
 
 
     render(){
-        const {user} = this.state
-        const formLayout = {
-            labelCol: {span: 8},
-            wrapperCol: {span: 8}
-        }
-        const onFinish = values => {
-            console.log('Received values of form:', values);
-        }
+        // const {user} = this.state
+        // const formLayout = {
+        //     labelCol: {span: 8},
+        //     wrapperCol: {span: 8}
+        // }
+        // const onFinish = values => {
+        //     console.log('Received values of form:', values);
+        // }
         return(
             <Layout>
                 <Sider
@@ -160,9 +185,9 @@ export default class TeaUserInfo extends React.Component{
                         <Menu.Item key="3" icon={<TableOutlined />}>
                             课程
                         </Menu.Item>
-                        <Menu.Item key="4" icon={<HighlightOutlined />}>
+                        {/* <Menu.Item key="4" icon={<HighlightOutlined />}>
                             发布作业
-                        </Menu.Item>
+                        </Menu.Item> */}
                         <Menu.Item key="5" icon={<ReadOutlined />}>
                             作业情况
                         </Menu.Item>
@@ -187,7 +212,7 @@ export default class TeaUserInfo extends React.Component{
                                             disabled
                                             id="outlined-disabled"
                                             label="姓名"
-                                            defaultValue="王老师"
+                                            defaultValue={this.state.name}
                                             variant="outlined"
                                             style={{width: "90%"}}
                                         />
@@ -197,7 +222,7 @@ export default class TeaUserInfo extends React.Component{
                                             disabled
                                             id="outlined-disabled"
                                             label="工号"
-                                            defaultValue="123235124"
+                                            defaultValue={this.state.userId}
                                             variant="outlined"
                                             style={{width: "90%"}}
                                         />
@@ -206,7 +231,7 @@ export default class TeaUserInfo extends React.Component{
                                     <Grid item xs={6}>
                                         <TextField
                                             label="电话"
-                                            defaultValue="54749110"
+                                            defaultValue={this.state.cPhone}
                                             variant="outlined"
                                             style={{width: "90%"}}
                                         />
@@ -215,7 +240,7 @@ export default class TeaUserInfo extends React.Component{
                                     <Grid item xs={6}>
                                         <TextField
                                             select
-                                            label="学院"
+                                            label=""
                                             variant="outlined"
                                             style={{width: "90%"}}
                                         >
@@ -231,8 +256,8 @@ export default class TeaUserInfo extends React.Component{
                                     <Grid item xs={6}>
                                         <TextField
                                             id="outlined-disabled"
-                                            label="QQ"
-                                            defaultValue="1036788120"
+                                            label="昵称"
+                                            defaultValue={this.state.userName}
                                             variant="outlined"
                                             style={{width: "90%"}}
                                             onChange={this.storeCPhone}
@@ -242,7 +267,7 @@ export default class TeaUserInfo extends React.Component{
                                         <TextField
                                             id="outlined-disabled"
                                             label="邮箱"
-                                            defaultValue="1036788120@qq.com"
+                                            defaultValue={this.state.cMail}
                                             variant="outlined"
                                             style={{width: "90%"}}
                                             onChange={this.storeCMail}

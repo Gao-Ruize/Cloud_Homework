@@ -1,15 +1,16 @@
 import React from 'react'
-import { Layout, Menu, Select, Button, Checkbox, PageHeader, Table } from 'antd';
+import { Layout, Menu, Select, Button, Checkbox, PageHeader, Table , message} from 'antd';
 import {
     TableOutlined, HighlightOutlined,
     FormOutlined, ReadOutlined, UserOutlined
 } from '@ant-design/icons';
 import {history} from "../../Utils/History";
+import axios from 'axios';
 
 const { Header, Content, Footer, Sider } = Layout;
 const { Option } = Select;
 let base = global.data.baseUrl;
-
+const { Column, ColumnGroup } = Table;
 const data = [
     {
         key: '1',
@@ -126,7 +127,10 @@ export default class TeaAddStudent2Course extends React.Component{
         this.state = {
             filteredInfo: null,
             sortedInfo: null,
-            user:{}
+            user:[],
+            cid: this.props.location.state.cid,
+            sid: '',
+            students:[]
         };
 
         let { sortedInfo, filteredInfo } = this.state;
@@ -134,6 +138,25 @@ export default class TeaAddStudent2Course extends React.Component{
         this.filteredInfo = filteredInfo || {};
         //_this = this;
     }
+
+    componentDidMount(){
+        this.getStudentList();
+    };
+
+    getStudentList = () => {
+        let Url = base + 'teacher/getallstudents';
+        let _this = this;
+        axios.get(Url)
+        .then(resp => {
+            if(resp && resp.status === 200) {
+                let data = resp.data;
+                console.log(resp.data)
+                _this.setState({
+                    students: data
+                });
+            }
+        })
+    };
 
     handleChange = (filters, sorter) => {
         this.setState({
@@ -154,9 +177,9 @@ export default class TeaAddStudent2Course extends React.Component{
         history.replace('/teaCourseList')
     }
 
-    toTeaSubmitCourse = () =>{
-        history.replace('/teaSubmitCourse')
-    }
+    // toTeaSubmitCourse = () =>{
+    //     history.replace('/teaSubmitCourse')
+    // }
 
     toTeaHomeworkList = ()=>{
         history.replace('/teaHomeworkList')
@@ -177,9 +200,9 @@ export default class TeaAddStudent2Course extends React.Component{
         if(key === '3'){
             this.toTeaCourseList();
         }
-        if(key === '4'){
-            this.toTeaHomeworkRelease();
-        }
+        // if(key === '4'){
+        //     this.toTeaHomeworkRelease();
+        // }
         if(key === '5'){
             this.toTeaHomeworkList();
         }
@@ -187,10 +210,6 @@ export default class TeaAddStudent2Course extends React.Component{
 
 
     render(){
-        // const rowSelection = {
-        //     selectedRowKeys,
-        //     onChange: this.onSelectChange,
-        //   };
         const columns = [
             {
                 title: '姓名',
@@ -208,6 +227,11 @@ export default class TeaAddStudent2Course extends React.Component{
                 title: '邮件',
                 dataIndex: 'email',
             },
+            {
+                title: '操作',
+                dataIndex:'',
+                key: ''
+            }
         ];
         return(
             <Layout>
@@ -230,9 +254,9 @@ export default class TeaAddStudent2Course extends React.Component{
                         <Menu.Item key="3" icon={<TableOutlined />}>
                             课程
                         </Menu.Item>
-                        <Menu.Item key="4" icon={<HighlightOutlined />}>
+                        {/* <Menu.Item key="4" icon={<HighlightOutlined />}>
                             发布作业
-                        </Menu.Item>
+                        </Menu.Item> */}
                         <Menu.Item key="5" icon={<ReadOutlined />}>
                             作业情况
                         </Menu.Item>
@@ -251,11 +275,35 @@ export default class TeaAddStudent2Course extends React.Component{
                         <br />
 
                         <Table
-                            rowSelection={Checkbox}
-                            columns={columns}
-                            dataSource={data}
-                            onChange={this.handleChange}
+                            dataSource={this.state.students}
+                        >
+                           <Column title="学生姓名" dataIndex="username" key="username" />
+                           <Column title="学生学号" dataIndex="userId" key="userId" />
+                           <Column
+                            title="添加至课程"
+                            render={(text, record) => (
+                                <div>
+                                  <a href={'javascript:void(0)'}
+                                     onClick={()=>{
+                                         let sid = record.userId;
+                                         let cid = this.state.cid;
+                                         let Url = base + 'teacher/addAStudent/' + cid + '/' + sid;
+                                         axios.post(Url)
+                                         .then(resp => {
+                                             if(resp && resp.status === 200) {
+                                                 if(resp.data.code === 200) {
+                                                     message.success("添加成功");
+                                                 }
+                                             }
+                                         });
+                                     }}
+                                  >
+                                   添加至课程
+                                  </a>
+                                </div>)
+                            }
                         />
+                        </Table>
                         &nbsp; &nbsp; &nbsp; &nbsp;
                         &nbsp; &nbsp; &nbsp; &nbsp;
                         <Button type="primary">

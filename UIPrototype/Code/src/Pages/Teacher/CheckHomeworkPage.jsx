@@ -1,5 +1,5 @@
 import React from 'react'
-import { Layout, Menu, PageHeader, Button, Radio, Row, Col, Input, Descriptions, List, Card, InputNumber, Select, Slider } from 'antd';
+import { Layout, Menu, PageHeader, Button, Radio, Row, Col, Input, Descriptions, List, Card, InputNumber, Select, Image,Slider } from 'antd';
 import {
     TableOutlined, HighlightOutlined,
     FormOutlined, ReadOutlined, UserOutlined,
@@ -52,7 +52,6 @@ export default class TeaCheckHomework extends React.Component{
         super(props);
         this.state = {
             id:'',
-            homeworkName:'',
             commitedTime:'',
             homeworkId:'',
             grade:'',
@@ -131,9 +130,9 @@ export default class TeaCheckHomework extends React.Component{
                         <Menu.Item key="3" icon={<TableOutlined />}>
                             课程
                         </Menu.Item>
-                        <Menu.Item key="4" icon={<HighlightOutlined />}>
+                        {/* <Menu.Item key="4" icon={<HighlightOutlined />}>
                             发布作业
-                        </Menu.Item>
+                        </Menu.Item> */}
                         <Menu.Item key="5" icon={<ReadOutlined />}>
                             作业情况
                         </Menu.Item>
@@ -155,14 +154,14 @@ export default class TeaCheckHomework extends React.Component{
                             size="large"
                             style={{paddingLeft: 24}}
                             header={<div>
-                                <Descriptions title="" bordered style={{}}>
-                                    <Descriptions.Item label="作业名">{this.state.homeworkName}</Descriptions.Item>
-                            <Descriptions.Item label="课程">{this.state.courseName}</Descriptions.Item>
+                                <Descriptions title="">
+                                    {/* <Descriptions.Item label="作业名">{this.state.homeworkName}</Descriptions.Item>
+                            <Descriptions.Item label="课程">{this.state.courseName}</Descriptions.Item> */}
                                     <br />
                                     {/* <Descriptions.Item label="学生">张三</Descriptions.Item> */}
                             <Descriptions.Item label="学号">{this.state.student_id}</Descriptions.Item>
                                     <Descriptions.Item label="评分">
-                                        0
+                                        {this.state.grade?this.state.grade:0}
                                     </Descriptions.Item>
                                 </Descriptions>
                             </div>}
@@ -170,46 +169,61 @@ export default class TeaCheckHomework extends React.Component{
 
                             dataSource={data}
                             renderItem={item =>
-                                <List.Item>
-                                    <Card size="large" title={'第'+item.index+'题'} extra={item.score+'/'+item.value+'分'} style={{ width: '100%' }}>
-                                        <p style={{whiteSpace:"pre"}}>{item.text}</p>
-                                        <p>
-                                            {"学生答案："}
-                                            {item.answer==''?<font color='red'>{'未作答！'}</font>:<font color='blue'>{item.answer}</font>}
-                                        </p>
-                                        {(()=> {
-                                            switch(item.type){
-                                                case 1:
-                                                    return <Radio.Group buttonStyle='solid' onChange={this.handleMark}>
-                                                        <Radio.Button value="right"><font color='blue'>正确</font></Radio.Button>
-                                                        <Radio.Button value="fault"><font color='red'>错误</font></Radio.Button>
-                                                    </Radio.Group>;
-                                                case 2:
-                                                    return  <Row>
-                                                        <Col span={4}>
-                                                            <InputNumber
-                                                                min={0}
-                                                                max={item.value}
-                                                                style={{ margin: '0 16px' }}
-                                                                defaultValue={item.score}
-                                                                onChange={this.onInputScore}
-                                                            />
-                                                        </Col>
-                                                        {/* <Col span={12}>
-                                                            <Slider
-                                                                min={0}
-                                                                max={item.value}
-                                                                onChange={this.onInputScore}
-                                                                defaultvalue={item.score}
-                                                            />
-                                                        </Col> */}
-                                                    </Row>;
-                                                case 3:
-                                                    return <p><font color='red'>题目类型错误！</font></p>;
-                                            }
-                                        })()}
-                                    </Card>
-                                </List.Item>}
+                                // <List.Item>
+                                //     <Card size="large" title={'第'+item.index+'题'} extra={item.score+'/'+item.value+'分'} style={{ width: '100%' }}>
+                                //         <p style={{whiteSpace:"pre"}}>{item.text}</p>
+                                //         <p>
+                                //             {"学生答案："}
+                                //             {item.answer==''?<font color='red'>{'未作答！'}</font>:<font color='blue'>{item.answer}</font>}
+                                //         </p>
+                                //         {(()=> {
+                                //             switch(item.type){
+                                //                 case 1:
+                                //                     return <Radio.Group buttonStyle='solid' onChange={this.handleMark}>
+                                //                         <Radio.Button value="right"><font color='blue'>正确</font></Radio.Button>
+                                //                         <Radio.Button value="fault"><font color='red'>错误</font></Radio.Button>
+                                //                     </Radio.Group>;
+                                //                 case 2:
+                                //                     return  <Row>
+                                //                         <Col span={4}>
+                                //                             <InputNumber
+                                //                                 min={0}
+                                //                                 max={item.value}
+                                //                                 style={{ margin: '0 16px' }}
+                                //                                 defaultValue={item.score}
+                                //                                 onChange={this.onInputScore}
+                                //                             />
+                                //                         </Col>
+                                //                         {/* <Col span={12}>
+                                //                             <Slider
+                                //                                 min={0}
+                                //                                 max={item.value}
+                                //                                 onChange={this.onInputScore}
+                                //                                 defaultvalue={item.score}
+                                //                             />
+                                //                         </Col> */}
+                                //                     </Row>;
+                                //                 case 3:
+                                //                     return <p><font color='red'>题目类型错误！</font></p>;
+                                //             }
+                                //         })()}
+                                //     </Card>
+                                // </List.Item>}
+                                <Card size = "large"style={{ width: '100%' }}>
+                                    <Image
+                                        width={400}
+                                        height={200}
+                                        src={this.state.picture}
+                                    />
+                                <InputNumber
+                                    min={0}
+                                    max={item.value}
+                                    style={{ margin: '0 16px' }}
+                                    defaultValue={item.score}
+                                    onChange={this.onInputScore}
+                                />
+                                </Card>
+                            }
                         />
                     </Content>
                     <Footer style={{ textAlign: 'center' }}>云作业平台</Footer>

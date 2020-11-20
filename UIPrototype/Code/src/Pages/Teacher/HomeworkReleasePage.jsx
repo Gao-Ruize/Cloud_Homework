@@ -1,11 +1,13 @@
 import React from 'react'
-import { Layout, Menu, Col, Form, Row, Checkbox, Button, DatePicker, Input, PageHeader } from 'antd';
+import { Layout, Menu, Col, Form, Row, Checkbox, Button, DatePicker, Input, PageHeader,message } from 'antd';
 import {
     TableOutlined, HighlightOutlined,
-    FormOutlined, ReadOutlined, UserOutlined
+    FormOutlined, ReadOutlined, UserOutlined, LeftCircleFilled
 } from '@ant-design/icons';
 import {history} from "../../Utils/History";
+import axios from "axios";
 
+let base = global.data.baseUrl;
 const { Header, Content, Footer, Sider } = Layout;
 const { TextArea } = Input;
 
@@ -14,13 +16,35 @@ export default class TeaHomeworkRelease extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
-            title:'',
+            id:'',
+            name:'',
             content:'',
-            answer:'',
+            releasetime:'',
             deadline:'',
-            type:[],
+            courseId: this.props.location.state.courseKey,
         }
     }
+
+    storeName = (event) => {
+        this.setState({name: event.target.value});
+    };
+
+    storeId = (event) => {
+        this.setState({id: event.target.value});
+    };
+    storeContent = (event) => {
+        this.setState({content: event.target.value});
+    };
+
+    storeReleasetime = (date, dateString) => {
+        this.setState({releasetime: dateString});
+        //  console.log("release:",dateString)
+    };
+
+    storeDeadline = (date, dateString) => {
+        this.setState({deadline: dateString});
+        // console.log("deadline:",event.target.value)
+    };
 
     toTeaInfo = () =>{
         history.replace('/teaUserInfo')
@@ -61,6 +85,28 @@ export default class TeaHomeworkRelease extends React.Component{
         }
     };
 
+    handleSubmit = () => {
+        let Url = base + 'teacher/createhomework';
+        let data = {
+            id: this.state.id,
+            name: this.state.name,
+            content: this.state.content,
+            releasetime: this.state.releasetime ,
+            deadline: this.state.deadline,
+            courseId: this.state.courseId
+        }
+        console.log(data)
+        axios.post(Url, data)
+            .then(resp => {
+                if(resp && resp.status === 200) {
+                    if(resp.data.code === 200) {
+                        message.success('发布成功');
+                    } else
+                        message.error('发布失败');
+                }
+            })
+    };
+
     render(){
         return(
             <Layout>
@@ -83,9 +129,9 @@ export default class TeaHomeworkRelease extends React.Component{
                         <Menu.Item key="3" icon={<TableOutlined />}>
                             课程
                         </Menu.Item>
-                        <Menu.Item key="4" icon={<HighlightOutlined />}>
+                        {/* <Menu.Item key="4" icon={<HighlightOutlined />}>
                             发布作业
-                        </Menu.Item>
+                        </Menu.Item> */}
                         <Menu.Item key="5" icon={<ReadOutlined />}>
                             作业情况
                         </Menu.Item>
@@ -103,12 +149,19 @@ export default class TeaHomeworkRelease extends React.Component{
                             />
 
                             <Form style={{marginTop:30}}>
+                                {/* <Form.Item
+                                    label="课程课号"
+                                    name="id"
+                                    rules={[{ required: true, message: '请输入课程课号!' }]}
+                                > */}
+                                    {/* <Input value={this.state.id} onChange={this.storeId}/>
+                                </Form.Item> */}
                                 <Form.Item
                                     label="作业名称"
-                                    name="title"
-                                    rules={[{ required: true, message: '请输入作业题目!' }]}
+                                    name="name"
+                                    rules={[{ required: true, message: '请输入作业名称!' }]}
                                 >
-                                    <Input />
+                                    <TextArea rows={1} value={this.state.name} onChange={this.storeName}/>
                                 </Form.Item>
 
                                 <Form.Item
@@ -116,48 +169,25 @@ export default class TeaHomeworkRelease extends React.Component{
                                     name="content"
                                     rules={[{ required: true, message: '请输入作业内容!' }]}
                                 >
-                                    <TextArea rows={3}/>
+                                    <TextArea rows={5} value={this.state.content} onChange={this.storeContent}/>
                                 </Form.Item>
 
-                                <Form.Item
-                                    label="参考答案"
-                                    name="answer"
-                                    rules={[{ required: true, message: '请输入参考答案' }]}
-                                >
-                                    <TextArea rows={3}/>
-                                </Form.Item>
-
-                                <Form.Item label="选择作业时间" style={{ marginBottom: 0 }}>
+                                <Form.Item label="选择作业时间" style={{ marginBottom: 0 ,alignContent: "left"}}>
                                     <Form.Item
                                         style={{ display: 'inline-block', width: 'calc(50% - 12px)' }}
                                     >
-                                        <DatePicker />
+                                        <DatePicker  onChange={this.storeReleasetime}/>
                                     </Form.Item>
                                     <span
                                         style={{ display: 'inline-block', width: '24px', lineHeight: '32px', textAlign: 'center' }}
                                     > to </span>
                                     <Form.Item style={{ display: 'inline-block', width: 'calc(50% - 12px)' }}>
-                                        <DatePicker />
+                                        <DatePicker onChange={this.storeDeadline}/>
                                     </Form.Item>
                                 </Form.Item>
 
-                                <Form.Item
-                                    label="Books"
-                                    name="Books"
-                                    rules={[{ required: true, message: '请输入所需书籍!' }]}
-                                >
-                                    <TextArea rows={2} value={this.state.books} onChange={this.changeBook}/>
-                                </Form.Item>
 
-                                <Form.Item
-                                    label="Plan"
-                                    name="Plan"
-                                    rules={[{ required: true, message: '请输入课程计划!' }]}
-                                >
-                                    <TextArea rows={2} value={this.state.plan} onChange={this.changeBook}/>
-                                </Form.Item>
-
-                                <Form.Item name="checkbox-group" label="Checkbox.Group">
+                                {/* <Form.Item name="checkbox-group" label="Checkbox.Group">
                                     <Checkbox.Group>
                                         <Row>
                                             <Col span={8}>
@@ -177,11 +207,11 @@ export default class TeaHomeworkRelease extends React.Component{
                                             </Col>
                                         </Row>
                                     </Checkbox.Group>
-                                </Form.Item>
+                                </Form.Item> */}
 
 
                                 <Form.Item >
-                                    <Button type="primary">
+                                    <Button type="primary" onClick={this.handleSubmit}>
                                         Submit
                                     </Button>
                                 </Form.Item>
