@@ -1,7 +1,7 @@
 import React from 'react';
 import 'antd/dist/antd.css';
 
-import { Layout, Menu, Upload, Input, message} from 'antd';
+import { Layout, Menu, Upload, Input, message, Form } from 'antd';
 import {
     UploadOutlined,
     HighlightOutlined, TableOutlined, ToTopOutlined, AuditOutlined,
@@ -13,6 +13,14 @@ import axios from 'axios';
 
 const { Header, Content, Footer, Sider } = Layout;
 const { TextArea } = Input;
+
+const layout = {
+    labelCol: { span: 8 },
+    wrapperCol: { span: 16 },
+};
+const tailLayout = {
+    wrapperCol: { offset: 8, span: 16 },
+};
 
 let base = global.data.baseUrl;
 
@@ -46,17 +54,16 @@ export default class StuUserInfo extends React.Component {
                     let userid = resp.data.userId;
                     let phone = resp.data.phone;
                     let mail = resp.data.email;
-                    console.log(username);
-                    console.log(userid);
-                    console.log(phone);
                     _this.setState({
                         userName: username,
                         userId: userid,
                         Phone: phone,
                         Mail: mail
+                    }, function () {
+                        console.log(_this.state);
                     });
                 }
-            })
+            });
     };
 
     toStuInfo = () => {
@@ -142,66 +149,113 @@ export default class StuUserInfo extends React.Component {
                 <Layout className="site-layout" style={{ marginLeft: 200 }}>
                     <Header className="site-layout-background" style={{ padding: 0 }} />
                     <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
-                        <Card style={{width: "50%", margin: "150px auto"}}>
+                        <Card style={{width: "70%", margin: "150px auto"}}>
                             <CardHeader
                                 title={<Typography variant={"h5"} align={"center"}>
                                     个人信息资料
                                 </Typography>}
                             />
+
+                            <Form
+                                {...layout}
+                                name="basic"
+                                initialValues={{ remember: true }}
+                            >
+                                <Form.Item
+                                    label="用户姓名"
+                                    name="username"
+                                >
+                                    <Input style={{width: "70%"}} disabled defaultValue={this.state.userName}/>
+                                </Form.Item>
+
+                                <Form.Item
+                                    label="用户账号"
+                                    name="id"
+                                >
+                                    <Input style={{width: "70%"}} disabled defaultValue={this.state.userId} />
+                                </Form.Item>
+
+                                <Form.Item
+                                    label="用户电话"
+                                    name="phone"
+                                >
+                                    <Input style={{width: "70%"}} defaultValue={this.state.Phone}
+                                           onChange={this.storeCPhone}/>
+                                </Form.Item>
+
+                                <Form.Item
+                                    label="用户邮箱"
+                                    name="mail"
+                                >
+                                    <Input style={{width: "70%"}} defaultValue={this.state.Mail}
+                                           onChange={this.storeCMail}/>
+                                </Form.Item>
+
+                                <Form.Item>
+                                    <Button style={{marginLeft: 150}} variant="contained" size="large" color="primary" component="span"
+                                        onClick={this.handleSubmit}>
+                                    确认修改
+                                    </Button>
+                                </Form.Item>
+
+
+                            </Form>
+
                             <Grid item xs={12}>
                             </Grid>
-                            <CardContent>
-                                <Grid container spacing={3}>
-                                    <Grid item xs={6}>
-                                        <TextField
-                                            disabled
-                                            id="outlined-disabled"
-                                            label="姓名"
-                                            defaultValue={this.state.userName}
-                                            variant="outlined"
-                                            style={{width: "90%"}}
-                                        />
-                                    </Grid>
-                                    <Grid item xs={6}>
-                                        <TextField
-                                            disabled
-                                            id="outlined-disabled"
-                                            label="学号"
-                                            defaultValue={this.state.userId}
-                                            variant="outlined"
-                                            style={{width: "90%"}}
-                                        />
-                                    </Grid>
+                            {/*<CardContent>*/}
+                            {/*    <Grid container spacing={3}>*/}
+                            {/*        <Grid item xs={6}>*/}
+                            {/*            /!*<TextField*!/*/}
+                            {/*            /!*    disabled*!/*/}
+                            {/*            /!*    id="outlined-disabled"*!/*/}
+                            {/*            /!*    label="姓名"*!/*/}
+                            {/*            /!*    placeholder={this.state.userName}*!/*/}
+                            {/*            /!*    variant="outlined"*!/*/}
+                            {/*            /!*    style={{width: "90%"}}*!/*/}
+                            {/*            /!*//*/}
+                            {/*            <Input placeholder={this.state.userName}/>*/}
+                            {/*        </Grid>*/}
+                            {/*        <Grid item xs={6}>*/}
+                            {/*            <TextField*/}
+                            {/*                disabled*/}
+                            {/*                id="outlined-disabled"*/}
+                            {/*                label="学号"*/}
+                            {/*                defaultValue={this.state.userId}*/}
+                            {/*                variant="outlined"*/}
+                            {/*                style={{width: "90%"}}*/}
+                            {/*            />*/}
+                            {/*        </Grid>*/}
 
-                                    <Grid item xs={6}>
-                                        <TextField
-                                            label="电话"
-                                            defaultValue={this.state.Phone}
-                                            variant="outlined"
-                                            style={{width: "90%"}}
-                                            onChange={this.storeCPhone}
-                                        />
-                                    </Grid>
+                            {/*        <Grid item xs={6}>*/}
+                            {/*            <TextField*/}
+                            {/*                label="电话"*/}
+                            {/*                defaultValue={this.state.Phone}*/}
+                            {/*                variant="outlined"*/}
+                            {/*                style={{width: "90%"}}*/}
+                            {/*                onChange={this.storeCPhone}*/}
+                            {/*            />*/}
+                            {/*        </Grid>*/}
 
-                                    <Grid item xs={6}>
-                                        <TextField
-                                            id="outlined-disabled"
-                                            label="邮箱"
-                                            defaultValue={this.state.Mail}
-                                            variant="outlined"
-                                            style={{width: "90%"}}
-                                            onChange={this.storeCMail}
-                                        />
-                                    </Grid>
-                                    <Grid item xs={6}>
-                                        <Button variant="contained" size="large" color="primary" component="span"
-                                                onClick={this.handleSubmit}>
-                                            确认修改
-                                        </Button>
-                                    </Grid>
+                            {/*        <Grid item xs={6}>*/}
+                            {/*            <TextField*/}
+                            {/*                id="outlined-disabled"*/}
+                            {/*                label="邮箱"*/}
+                            {/*                defaultValue={this.state.Mail}*/}
+                            {/*                variant="outlined"*/}
+                            {/*                style={{width: "90%"}}*/}
+                            {/*                onChange={this.storeCMail}*/}
+                            {/*            />*/}
+                            {/*        </Grid>*/}
+                            {/*        <Grid item xs={6}>*/}
+                            {/*            <Button variant="contained" size="large" color="primary" component="span"*/}
+                            {/*                    onClick={this.handleSubmit}>*/}
+                            {/*                确认修改*/}
+                            {/*            </Button>*/}
+                            {/*        </Grid>*/}
 
-                                </Grid>
-                            </CardContent>
+                            {/*    </Grid>*/}
+                            {/*</CardContent>*/}
                         </Card>
                     </Content>
                     <Footer style={{ textAlign: 'center' }}>云作业平台</Footer>
