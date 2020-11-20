@@ -157,6 +157,8 @@ public interface TeacherService {
      */
     List<StuHomeworkBrief> getStuHomeworkList(int c_id, String courseId, int h_id);
 
+    StudentHomework getAHomeworkToRate(int hid);
+
     /**
      * <p>获取某一作业某一学生的提交内容</p>
      *
@@ -177,5 +179,6 @@ public interface TeacherService {
      * </pre>
      */
     int rateStuHomework(int sh_id, int grade);
+
 
 }

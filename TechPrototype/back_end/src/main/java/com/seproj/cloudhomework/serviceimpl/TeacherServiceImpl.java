@@ -116,7 +116,7 @@ public class TeacherServiceImpl implements TeacherService {
      */
     @Override
     public List<User> getAllStudents() {
-        return userDao.findAllUsers();
+        return userDao.findUserByRole(0);
     }
 
     @Override
@@ -169,10 +169,12 @@ public class TeacherServiceImpl implements TeacherService {
         }
         instr = new Instruct(cid, sid);
         instructDao.saveOrUpdate(instr);
+        return 0;
     }
 
     @Override
     public int createHomework(CreateHomeworkForm newhomework) {
+        // TODO: 检测输入是否有效
         Homework homework = new Homework(newhomework.getName(),
                 newhomework.getReleasetime(),
                 newhomework.getDeadline(),
@@ -284,6 +286,21 @@ public class TeacherServiceImpl implements TeacherService {
                     stuHW.getGrade()));
         }
         return stuHWBrief_list;
+    }
+
+    @Override
+    public StudentHomework getAHomeworkToRate(int hid) {
+        List<StudentHomework> stuHW_list = studentHomeworkDao.findStudentHomeworkByHomeworkId(hid);
+        for(StudentHomework stuHW:stuHW_list){
+            User stu;
+            if((stu = userDao.findUserByUserId(stuHW.getStudentId())) == null){
+                continue;
+            }
+            if(stuHW.getGrade() < 0){
+                return stuHW;   // 找到一份未批改的作业
+            }
+        }
+        return null;
     }
 
     @Override

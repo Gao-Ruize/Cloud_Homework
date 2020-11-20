@@ -147,6 +147,13 @@ public class TeacherController {
     }
 
     @CrossOrigin
+    @GetMapping(value = "api/teacher/getAHomeworkToRate/{hid}")
+    @ResponseBody
+    public StudentHomework getAHomeworkToRate(@PathVariable int hid){
+        return teacherService.getAHomeworkToRate(hid);
+    }
+
+    @CrossOrigin
     @GetMapping(value = "api/teacher/getstuhomework/{sh_id}")
     @ResponseBody
     public StudentHomework getStuHomework(@PathVariable int sh_id){
