@@ -17,6 +17,7 @@ import Meta from "antd/es/card/Meta";
 import Avatar from "@material-ui/core/Avatar";
 import {history} from "../../Utils/History";
 import axios from 'axios';
+
 const { Header, Content, Footer, Sider } = Layout;
 const { Column, ColumnGroup } = Table;
 
@@ -97,12 +98,11 @@ export default class StuHomeworkList extends React.Component {
     getHomework = () => {
         let _this = this;
         let type = this.state.type;
-        let courseId = 'none';
-        if(type !== 4)
-            courseId = this.props.location.state.courseKey;
-        let studentId = localStorage.getItem('UserInfo').userid;
-        let Url = base + 'student/getHomeworks/' + courseId + '/' + type + '/' + studentId;
-        // get homework by type
+        let courseId = 0;
+        if(type !== 3)
+            courseId = this.props.location.state.courseId;
+        let studentId = localStorage.getItem('Uid');
+        let Url = base + 'student/getHomeworks/' + studentId + '/' + courseId + '/' + type;
         axios.get(Url)
             .then(resp => {
                 if(resp && resp.status === 200) {
@@ -123,7 +123,7 @@ export default class StuHomeworkList extends React.Component {
     };
 
     toStuHomeworkList = () => {
-        history.replace('/stuHomeworkList', {type: 4});
+        history.replace('/stuHomeworkList', {type: 3});
     };
 
     stuMenuRedirect = (event) => {
@@ -175,19 +175,17 @@ export default class StuHomeworkList extends React.Component {
                         subTitle=""
                     />
                     <br />
-                    <Table dataSource={data}>
-                        <Column title="课程编号" dataIndex="courseNum" key="courseNum" />
+                    <Table dataSource={this.state.homework}>
+                        <Column title="课程编号" dataIndex="courseId" key="courseId" />
                         <Column title="课程名称" dataIndex="courseName" key="courseName" />
                         <Column title="作业名称" dataIndex="name" key="name" />
-                        <Column title="发布状态" dataIndex="openStatus" key="openStatus" />
-                        <Column title="课程编号" dataIndex="courseNum" key="courseNum" />
                         <Column
                             title="详情"
                             render={(text, record) => (
                                 <div>
                                   <a href={'javascript:void(0)'}
                                      onClick={()=>{
-                                         let id = record.key;
+                                         let id = record.id;
                                          history.push('/stuHomeworkDetail', {homeworkId: id});
                                      }}
                                   >
@@ -196,8 +194,8 @@ export default class StuHomeworkList extends React.Component {
                                 </div>)
                             }
                         />
-                        <Column title="提交状态" dataIndex="submitStatus" key="submitStatus" />
-                        <Column title="作业成绩" dataIndex="score" key="score" />
+                        {/*<Column title="提交状态" dataIndex="submitStatus" key="submitStatus" />*/}
+                        {/*<Column title="作业成绩" dataIndex="score" key="score" />*/}
                     </Table>
                 </Content>
                 <Footer style={{ textAlign: 'center' }}>云作业平台</Footer>

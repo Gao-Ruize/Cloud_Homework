@@ -21,7 +21,7 @@ public class StudentController {
     @GetMapping(value = "api/student/getCoursesbysid/{user_id}")
     @ResponseBody
     public List<Course> getCoursesById(@PathVariable int user_id){
-        // System.out.println("user id is: "+user_id);
+         System.out.println("user id is: "+user_id);
         return studentservice.getCoursesBySid(user_id);
     }
 

@@ -3,6 +3,8 @@ package com.seproj.cloudhomework.service;
 import com.seproj.cloudhomework.entity.Course;
 import com.seproj.cloudhomework.entity.Homework;
 import com.seproj.cloudhomework.entity.StudentHomework;
+import com.seproj.cloudhomework.entity.User;
+import com.seproj.cloudhomework.utils.Course.CourseDetail;
 import com.seproj.cloudhomework.utils.Course.UpdateCourseForm;
 import com.seproj.cloudhomework.utils.Homework.CreateHomeworkForm;
 import com.seproj.cloudhomework.utils.Homework.GradeStatistic;
@@ -57,6 +59,14 @@ public interface TeacherService {
     List<Course> getAllCourseByTid(String tid);
 
     /**
+     * <p>获取某课程的详细信息</p>
+     *
+     * @param cid 课程id
+     * @return 课程详情
+     */
+    CourseDetail getCourseDetail(int cid);
+
+    /**
      * <p>删除某课程</p>
      *
      * <p>version 1.0暂未实现</p>
@@ -65,6 +75,13 @@ public interface TeacherService {
      * @return 执行结果
      */
     int deleteCourse(int c_id);
+
+    /**
+     * <p>获取所有学生</p>
+     *
+     * @return 所有的学生列表
+     */
+    List<User> getAllStudents();
 
     /**
      * <p>教师拉取学生加入课程</p>
@@ -148,4 +165,5 @@ public interface TeacherService {
      * </pre>
      */
     int rateStuHomework(int sh_id, int grade);
+
 }

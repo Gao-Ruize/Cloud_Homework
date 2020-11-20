@@ -14,6 +14,9 @@ import {
     HighlightOutlined, TableOutlined, ToTopOutlined, AuditOutlined,
 } from '@ant-design/icons';
 import {history} from "../../Utils/History";
+import axios from 'axios';
+
+let base = global.data.baseUrl;
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -47,6 +50,17 @@ export default class StuHomeworkDetail extends React.Component {
 
     getHomework = () => {
         // get homework by id
+        let Url = base + 'student/getHomeworkDetail/' + this.state.id;
+        let _this = this;
+        axios.get(Url)
+            .then(resp => {
+                if(resp && resp.status === 200) {
+                    _this.setState({
+                        info: resp.data
+                    });
+                }
+            })
+
     };
 
     toStuInfo = () => {
@@ -58,7 +72,7 @@ export default class StuHomeworkDetail extends React.Component {
     };
 
     toStuHomeworkList = () => {
-        history.replace('/stuHomeworkList', {type: 4});
+        history.replace('/stuHomeworkList', {type: 3});
     };
 
     toHomeworkDetail = () => {
@@ -125,7 +139,7 @@ export default class StuHomeworkDetail extends React.Component {
                             <Descriptions.Item>{
                                 <Button type={"primary"}
                                         size={"large"}
-                                        onClick={this.toHomeworkDetail}
+                                        onClick={this.toHomeworkDetail()}
                                 >
                                     提交作业
                                 </Button>

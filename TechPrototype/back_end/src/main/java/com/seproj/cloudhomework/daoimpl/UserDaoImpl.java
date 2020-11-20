@@ -35,4 +35,9 @@ public class UserDaoImpl implements UserDao {
     public void saveOrUpdate(User user) {
         userRepository.save(user);
     }
+
+    @Override
+    public List<User> findAllUsers() {
+        return userRepository.findAll();
+    }
 }
