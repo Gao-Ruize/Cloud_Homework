@@ -135,7 +135,7 @@ public class TeacherServiceImpl implements TeacherService {
                 succ = 1;
                 continue;
             }
-            if((instr = instructDao.findDistinctByCourseIdAndStudentId(course.getId(), stu)) == null){
+            if((instr = instructDao.findDistinctByCourseIdAndStudentId(course.getId(), stu)) != null){
                 // 该学生已经在该课程中
                 continue;
             }
@@ -144,6 +144,31 @@ public class TeacherServiceImpl implements TeacherService {
         }
         // 返回-1：未找到课程；返回0：添加成功；返回1：存在非法学号（部分添加成功）
         return succ;
+    }
+
+    @Override
+    public int addAStudent(int cid, String sid) {
+        Course course;
+        if((course = courseDao.findCourseById(cid)) == null){
+            // 未找到课程
+            return -1;
+        }
+        User student;
+        Instruct instr;
+        if((student = userDao.findUserByUserId(sid)) == null){
+            // 未找到用户
+            return 1;
+        }
+        if(student.getRole() != 0){
+            // 用户不是学生
+            return 1;
+        }
+        if((instr = instructDao.findDistinctByCourseIdAndStudentId(course.getId(), sid)) != null){
+            // 该学生已经在该课程中
+            return 2;
+        }
+        instr = new Instruct(cid, sid);
+        instructDao.saveOrUpdate(instr);
     }
 
     @Override

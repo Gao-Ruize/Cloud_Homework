@@ -98,6 +98,10 @@ public interface TeacherService {
     int addStudents(int c_id, List<String> stu_list);
 
 
+    int addAStudent(int cid, String sid);
+
+
+
 
     /**
      * <p>教师发布新的作业</p>
@@ -173,4 +177,5 @@ public interface TeacherService {
      * </pre>
      */
     int rateStuHomework(int sh_id, int grade);
+
 }

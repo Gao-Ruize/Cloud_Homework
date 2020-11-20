@@ -73,6 +73,24 @@ public class TeacherController {
         return new Result(400);
     }
 
+    @CrossOrigin
+    @PostMapping(value = "api/teacher/addAStudent/{cid}/{sid}")
+    @ResponseBody
+    public Result addAStudentToCourse(@PathVariable int cid, @PathVariable String sid){
+//        if(teacherService.addAStudent(cid, sid) == 0){
+//            return new Result(200);
+//        }
+        switch(teacherService.addAStudent(cid, sid)){
+            case 0: // 成功
+                return new Result(200);
+            case 1: // 未找到用户或用户不是学生
+                return new Result(201);
+            case 2: // 学生已在课程中
+                return new Result(202);
+        }
+        return new Result(400);
+    }
+
 //    @CrossOrigin
 //    @PostMapping(value = "api/teacher/getstudentsincourse/{cid}")
 //    @ResponseBody
