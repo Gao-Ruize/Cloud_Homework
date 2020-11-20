@@ -146,7 +146,15 @@ public class StudentServiceImpl implements StudentService {
         Date submitDate = new Date();
 //        System.out.println(submitDate.toString());
         StudentHomework stu_hw;
+//        if((stu_hw = studenthomeworkdao.findStudentHomeworkByHomeworkIdAndStudentId(homework.getHid(), stu.getUserId())) == null){
+//            stu_hw = new StudentHomework();
+//        }
         stu_hw = studenthomeworkdao.findStudentHomeworkByHomeworkIdAndStudentId(homework.getHid(), stu.getUserId());
+        int flag = 0;
+        if(stu_hw == null) {
+            flag = 1;
+            stu_hw = new StudentHomework();
+        }
 //        studenthomeworkdao.saveOrUpdate(new StudentHomework(new Date(),
 //                homework.getHid(),
 //                -1,
@@ -165,7 +173,9 @@ public class StudentServiceImpl implements StudentService {
             return 1;
         }
         else {
-            return 0;
+            if(flag == 0)
+                return 2;   // 覆盖提交
+            return 0; // 第一次提交
         }
     }
 
@@ -191,3 +201,4 @@ public class StudentServiceImpl implements StudentService {
         return (float)tot_grade / count;
     }
 }
+
