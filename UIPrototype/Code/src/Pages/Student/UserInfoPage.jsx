@@ -192,7 +192,7 @@ export default class StuUserInfo extends React.Component {
                                 </Form.Item>
 
                                 <Form.Item>
-                                    <Button style={{marginLeft: 150}} variant="contained" size="large" color="primary" component="span"
+                                    <Button style={{marginLeft: "67%"}} variant="contained" size="large" color="primary" component="span"
                                         onClick={this.handleSubmit}>
                                     确认修改
                                     </Button>
