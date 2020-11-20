@@ -16,12 +16,12 @@ import {
 import Meta from "antd/es/card/Meta";
 import Avatar from "@material-ui/core/Avatar";
 import {history} from "../../Utils/History";
-
+import axios from 'axios';
 const { Header, Content, Footer, Sider } = Layout;
 const { Column, ColumnGroup } = Table;
 
 let base = global.data.baseUrl;
-import axios from 'axios';
+
 
 const data = [
     {

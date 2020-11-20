@@ -6,7 +6,7 @@ import {
     HighlightOutlined, TableOutlined, ToTopOutlined, AuditOutlined,
 } from '@ant-design/icons';
 import {history} from "../../Utils/History";
-
+import axios from 'axios';
 const { Header, Content, Footer, Sider } = Layout;
 
 const data = {
@@ -19,7 +19,7 @@ const data = {
 };
 
 let base = global.data.baseUrl;
-import axios from 'axios';
+
 
 
 export default class StuCourseDetail extends React.Component {

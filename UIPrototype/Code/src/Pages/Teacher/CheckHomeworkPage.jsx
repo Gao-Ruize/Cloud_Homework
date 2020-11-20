@@ -48,9 +48,18 @@ const data = [
 
 
 export default class TeaCheckHomework extends React.Component{
-    constructor(props){
+    constructor(props) {
         super(props);
-
+        this.state = {
+            id:'',
+            homeworkName:'',
+            commitedTime:'',
+            homeworkId:'',
+            grade:'',
+            content:'',
+            student_id:'',
+            picture:'',
+        };
     }
 
     handleMark = e => {
@@ -147,11 +156,11 @@ export default class TeaCheckHomework extends React.Component{
                             style={{paddingLeft: 24}}
                             header={<div>
                                 <Descriptions title="" bordered style={{}}>
-                                    <Descriptions.Item label="作业名">5月20日作业</Descriptions.Item>
-                                    <Descriptions.Item label="课程">语文</Descriptions.Item>
+                                    <Descriptions.Item label="作业名">{this.state.homeworkName}</Descriptions.Item>
+                            <Descriptions.Item label="课程">{this.state.courseName}</Descriptions.Item>
                                     <br />
-                                    <Descriptions.Item label="学生">张三</Descriptions.Item>
-                                    <Descriptions.Item label="学号">1234501</Descriptions.Item>
+                                    {/* <Descriptions.Item label="学生">张三</Descriptions.Item> */}
+                            <Descriptions.Item label="学号">{this.state.student_id}</Descriptions.Item>
                                     <Descriptions.Item label="评分">
                                         0
                                     </Descriptions.Item>

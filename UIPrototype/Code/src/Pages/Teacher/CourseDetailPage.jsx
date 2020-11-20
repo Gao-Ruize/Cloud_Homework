@@ -6,8 +6,9 @@ import {
     FormOutlined, ReadOutlined, UserOutlined
 } from '@ant-design/icons';
 import {history} from "../../Utils/History";
+import axios from "axios";
 
-
+let base = global.data.baseUrl;
 const { Header, Content, Footer, Sider } = Layout;
 const { Title } = Typography;
 // const data = {
@@ -21,18 +22,56 @@ const { Title } = Typography;
 // }
 
 export default class TeaCourseDetail extends React.Component{
-    state = {
-        current: 'mail',
-        courseInfo:{
+    // state = {
+    //     current: 'mail',
+    //     courseInfo:{
+    //         imgUrl:'https://i.loli.net/2020/10/08/LHWT2zrwkU3lQPK.png',
+    //         name:'校纪校规学习',
+    //         courseID:'se000',
+    //         time:'2020 fall',
+    //         describe:'加深学生对学校校纪校规学习的理解,避免违法乱纪的现象发生',
+    //         plan:'每周一到周五8:00-10:00上课，共18周，无考试',
+    //         books:'校纪校规手册'
+    //     }
+    // };
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            // 从路由获取参数 课程id
+            courseKey: this.props.location.state.courseKey,
+            id:'',
+            name:'',
+            courseId:'',
+            teacherId:'',
+            status:'',
+            teacherName:'',
             imgUrl:'https://i.loli.net/2020/10/08/LHWT2zrwkU3lQPK.png',
-            name:'校纪校规学习',
-            courseID:'se000',
-            time:'2020 fall',
-            describe:'加深学生对学校校纪校规学习的理解,避免违法乱纪的现象发生',
-            plan:'每周一到周五8:00-10:00上课，共18周，无考试',
-            books:'校纪校规手册'
-        }
+        };
+    }
+
+    getCourseData = () => {
+        let Url = base + 'api/student/getCourseDetail/' + this.state.courseKey;
+        let _this = this;
+        axios.get(Url)
+            .then(resp => {
+                if(resp && resp.status === 200) {
+                    let courseDetail = resp.data;
+                    _this.setState({
+                        id: courseDetail.id,
+                        name: courseDetail.name,
+                        courseId: courseDetail.courseId,
+                        teacherId: courseDetail.teacherId,
+                        status:courseDetail.status,
+                        teacherName:courseDetail.teacherName
+                    });
+                }
+            })
     };
+
+    componentDidMount() {
+        this.getCourseData();
+    }
 
     toTeaInfo = () =>{
         history.replace('/teaUserInfo')
@@ -141,14 +180,14 @@ export default class TeaCourseDetail extends React.Component{
                                     <Image
                                         width={400}
                                         height={200}
-                                        src={this.state.courseInfo.imgUrl}
+                                        src={this.state.imgUrl}
                                     />
                                 </Col>
                                 <Col span={12}>
                                     <div>
-                                        <Title>{this.state.courseInfo.name}</Title>
-                                        <Title level={2}>{this.state.courseInfo.courseID}</Title>
-                                        <Title level={3}>{this.state.courseInfo.time}</Title>
+                                        <Title>{this.state.name}</Title>
+                                        <Title level={2}>{this.state.courseId}</Title>
+                                        {/* <Title level={3}>{this.state.time}</Title> */}
                                     </div>
                                 </Col>
                             </Row>
@@ -169,15 +208,15 @@ export default class TeaCourseDetail extends React.Component{
                                 <Col span={24}>
                                     <Descriptions title="课程详情" bordered column={5}>
                                         <Descriptions.Item label="课程名称" span={3}>
-                                            {this.state.courseInfo.name}
+                                            {this.state.name}
                                         </Descriptions.Item>
                                         <Descriptions.Item label="课号" span={2}>
-                                            {this.state.courseInfo.courseID}
+                                            {this.state.courseId}
                                         </Descriptions.Item>
-                                        <Descriptions.Item label="课程简介" span={3}>
+                                        {/* <Descriptions.Item label="课程简介" span={3}>
                                             {this.state.courseInfo.describe}
-                                        </Descriptions.Item>
-                                        <Descriptions.Item label="课程时间" span={2}>
+                                        </Descriptions.Item> */}
+                                        {/* <Descriptions.Item label="课程时间" span={2}>
                                             {this.state.courseInfo.time}
                                         </Descriptions.Item>
                                         <Descriptions.Item label="教学计划" span={2}>
@@ -185,7 +224,7 @@ export default class TeaCourseDetail extends React.Component{
                                         </Descriptions.Item>
                                         <Descriptions.Item label="教材" span={3}>
                                             {this.state.courseInfo.books}
-                                        </Descriptions.Item>
+                                        </Descriptions.Item> */}
                                     </Descriptions>
                                 </Col>
                             </Row>

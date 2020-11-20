@@ -1,10 +1,11 @@
 import React from 'react'
-import {Layout, Menu, Table, Tag, Space, PageHeader} from 'antd';
+import {Layout, Menu, Table, Tag, Space, PageHeader, Popconfirm} from 'antd';
 import {
     TableOutlined, HighlightOutlined,
     FormOutlined, ReadOutlined, UserOutlined
 } from '@ant-design/icons';
 import {history} from "../../Utils/History";
+import axios from "axios";
 
 const { Header, Content, Footer, Sider } = Layout;
 const { Column, ColumnGroup } = Table;
@@ -44,6 +45,19 @@ const data = [
 
 
 export default class TeaCourseList extends React.Component{
+
+    
+    constructor(props) {
+        super(props);
+        this.state = {
+            course:{},
+        };
+    }
+
+    toCourseDetail = (key) => {
+        history.replace('/teaCourseDetail', {courseKey: key});
+    };
+
     toTeaInfo = () =>{
         history.replace('/teaUserInfo')
     }
@@ -67,6 +81,7 @@ export default class TeaCourseList extends React.Component{
     getTeaCourseDetail = () =>{
         let type = this.state.type;
     }
+
     teaMenuRedirect = (event) =>{
         let key = event.key;
         if(key === '1'){
@@ -128,11 +143,11 @@ export default class TeaCourseList extends React.Component{
                         <br />
 
                         <Table dataSource={data}>
-                            <Column title="课程代码" dataIndex="code" key="code" />
-                            <Column title="课程名称" dataIndex="name" key="name" />
-                            <Column title="学生数量" dataIndex="num_stu" key="num_stu" />
-                            <Column title="教室" dataIndex="address" key="address" />
-                            <Column
+                            <Column title="课程代码" dataIndex="courseId" key="courseId" />
+                            <Column title="课程名称" dataIndex="course_name" key="course_name" />
+                            {/* <Column title="学生数量" dataIndex="num_stu" key="num_stu" /> */}
+                            {/* <Column title="教室" dataIndex="address" key="address" /> */}
+                            {/* <Column
                                 title="学期"
                                 dataIndex="sem"
                                 key="sem"
@@ -170,19 +185,15 @@ export default class TeaCourseList extends React.Component{
                                     </Tag>
 
                                 )}
-                            />
+                            /> */}
                             <Column
                                 title=""
                                 key="action"
                                 render={(text, record) => (
-                                    <Space size="middle">
-                                        <a href={'javascript:void(0)'}
-                                            onClick={()=>{
-                                                let id = record.key;
-                                            history.push('/teaCourseDetail', {id: id});
-                                     }}
-                                        >查看课程详情</a>
-                                    </Space>
+                                    // 根据数据类型进行修改
+                                    <Popconfirm title="查看课程详情？" onConfirm={() => this.toCourseDetail(record.key)}>
+                                        <a>more</a>
+                                    </Popconfirm>
                                 )}
                             />
                         </Table>

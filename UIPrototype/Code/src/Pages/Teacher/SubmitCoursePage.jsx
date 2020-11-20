@@ -1,12 +1,12 @@
 import React from 'react'
-import { Layout, Menu, PageHeader, Form, Button, Upload, Input } from 'antd';
+import { Layout, Menu, PageHeader, Form, Button, Upload, Input,message } from 'antd';
 import {
     TableOutlined, HighlightOutlined,
     FormOutlined, ReadOutlined, UserOutlined,
     UploadOutlined
 } from '@ant-design/icons';
 import {history} from "../../Utils/History";
-
+import axios from 'axios';
 const { Header, Content, Footer, Sider } = Layout;
 const { TextArea } = Input;
 
@@ -17,41 +17,37 @@ const normFile = e => {
     }
     return e && e.fileList;
 };
-
+let base = global.data.baseUrl;
 
 export default class TeaSubmitCourse extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
             name:'',
-            courseID:'',
-            time:'',
-            imgUrl:'',
-            describe:'',
-            plan:'',
-            books:''
-        }
+            courseId:'',
+            courseInfo:'',
+            teacherId:''
+        };
     }
-    submit = () => {
-    };
-    changeName = event => {
-        let x = event.target.value;
-        this.setState({name: x});
-    };
-    changeCourseID = event => {
-        let x = event.target.value;
-        this.setState({courseID: x});
-    };
 
-    changeCourseInfo = event => {
-        let x = event.target.value;
-        this.setState({courseInfo: x});
-    };
+    // changeName = event => {
+    //     let x = event.target.value;
+    //     this.setState({name: x});
+    // };
+    // changeCourseID = event => {
+    //     let x = event.target.value;
+    //     this.setState({courseID: x});
+    // };
 
-    changeTeacherID = event => {
-        let x = event.target.value;
-        this.setState({teacherID: x});
-    };
+    // changeCourseInfo = event => {
+    //     let x = event.target.value;
+    //     this.setState({courseInfo: x});
+    // };
+
+    // changeTeacherID = event => {
+    //     let x = event.target.value;
+    //     this.setState({teacherID: x});
+    // };
 
 
     toTeaInfo = () =>{
@@ -93,6 +89,34 @@ export default class TeaSubmitCourse extends React.Component{
         }
     };
 
+    storeName = (event) => {
+        this.setState({'Name': event.target.value});
+    };
+
+    storeCourseId = (event) => {
+        this.setState({'CourseId': event.target.value});
+    };
+    storeCourseInfo = (event) => {
+        this.setState({'CourseInfo': event.target.value});
+    };
+
+    storeTeacherId = (event) => {
+        this.setState({'TeacherId': event.target.value});
+    };
+
+    handleSubmit = () => {
+        let Url = base + 'api/teacher/createcourse';
+        let data = this.state;
+        axios.post(Url, data)
+            .then(resp => {
+                if(resp && resp.status === 200) {
+                    if(resp.data.code === 200) {
+                        message.success('修改成功');
+                    } else
+                        message.error('修改失败');
+                }
+            })
+    };
 
     render(){
         return(
@@ -139,7 +163,7 @@ export default class TeaSubmitCourse extends React.Component{
                                 name="name"
                                 rules={[{ required: true, message: '请输入课程名!' }]}
                             >
-                                <Input value={this.state.name} onChange={this.changeName}/>
+                                <Input value={this.state.name} onChange={this.storeName}/>
                             </Form.Item>
 
                             <Form.Item
@@ -147,7 +171,7 @@ export default class TeaSubmitCourse extends React.Component{
                                 name="CourseID"
                                 rules={[{ required: true, message: '请输入课程编号!' }]}
                             >
-                                <Input value={this.state.courseID} onChange={this.changeCourseID}/>
+                                <Input value={this.state.courseID} onChange={this.storeCourseId}/>
                             </Form.Item>
 
                             <Form.Item
@@ -155,7 +179,7 @@ export default class TeaSubmitCourse extends React.Component{
                                 name="CourseInfo"
                                 rules={[{ required: true, message: '请输入课程信息！' }]}
                             >
-                                <Input value={this.state.courseInfo} onChange={this.changeCourseInfo}/>
+                                <Input value={this.state.courseInfo} onChange={this.storeCourseInfo}/>
                             </Form.Item>
 
                             <Form.Item
@@ -163,10 +187,10 @@ export default class TeaSubmitCourse extends React.Component{
                                 name="TeacherId"
                                 rules={[{ required: true, message: '请输入教师编号！' }]}
                             >
-                                <Input value={this.state.courseInfo} onChange={this.changeTeacherID}/>
+                                <Input value={this.state.courseInfo} onChange={this.storeTeacherId}/>
                             </Form.Item>
                             <Form.Item >
-                                <Button type="primary" onClick = {this.submit}>
+                                <Button type="primary" onClick = {this.handleSubmit}>
                                     Submit
                                 </Button>
                             </Form.Item>

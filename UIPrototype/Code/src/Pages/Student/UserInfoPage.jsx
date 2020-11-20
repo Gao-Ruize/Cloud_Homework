@@ -8,14 +8,14 @@ import {
 } from '@ant-design/icons';
 import {Button, Card, CardContent, CardHeader, Grid, MenuItem, TextField, Typography} from "@material-ui/core";
 import {history} from "../../Utils/History";
-
+import axios from 'axios';
 
 const { Header, Content, Footer, Sider } = Layout;
 const { TextArea } = Input;
 
 let base = global.data.baseUrl;
 
-import axios from 'axios';
+
 
 export default class StuUserInfo extends React.Component {
     constructor(props) {
