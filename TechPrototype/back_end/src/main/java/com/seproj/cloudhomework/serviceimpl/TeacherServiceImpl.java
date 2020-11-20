@@ -216,6 +216,33 @@ public class TeacherServiceImpl implements TeacherService {
         return homeworkDao.findHomeworkByCourseId(course.getCourseId());
     }
 
+    /**
+     * <p>教师获取自己执教课程的所有作业</p>
+     *
+     * @param tid 教师id
+     * @return 作业列表
+     */
+    @Override
+    public List<Homework> getHomeworksByTid(int tid) {
+        User teacher;
+        if((teacher  = userDao.findUserById(tid)) == null){
+            // 未找到该教师
+            return null;
+        }
+        List<Course> courses = courseDao.findCoursesByTeacherId(tid);
+
+        List<Homework> HwOfCourse;
+        List<Homework> result = new ArrayList<>();
+        for(Course course:courses){
+            HwOfCourse = homeworkDao.findHomeworkByCourseId(course.getCourseId());
+            for(Homework homework:HwOfCourse){
+                result.add(homework);
+            }
+        }
+
+        return result;
+    }
+
     @Override
     public List<StuHomeworkBrief> getStuHomeworkList(int c_id, String courseId, int h_id) {
         List<StudentHomework> stuHW_list = studentHomeworkDao.findStudentHomeworkByHomeworkId(h_id);

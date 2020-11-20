@@ -115,6 +115,13 @@ public class TeacherController {
     }
 
     @CrossOrigin
+    @GetMapping(value = "api/teacher/getHomeworksByTid/{tid}")
+    @ResponseBody
+    public List<Homework> getHomeworksByTid(@PathVariable int tid){
+        return teacherService.getHomeworksByTid(tid);
+    }
+
+    @CrossOrigin
     @GetMapping(value = "api/teacher/getstuhomeworklist/{c_id}/{courseId}/{h_id}")
     @ResponseBody
     public List<StuHomeworkBrief> getStuHomeworkList(@PathVariable int c_id, @PathVariable String courseId, @PathVariable int h_id){

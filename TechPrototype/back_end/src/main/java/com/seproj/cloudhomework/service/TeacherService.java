@@ -136,6 +136,14 @@ public interface TeacherService {
     List<Homework> getAllHomework(int c_id);
 
     /**
+     * <p>教师获取自己执教课程的所有作业</p>
+     *
+     * @param tid 教师id
+     * @return 作业列表
+     */
+    List<Homework> getHomeworksByTid(int tid);
+
+    /**
      * <p>获取某次作业学生提交列表</p>
      *
      * @param c_id 课程id
@@ -165,5 +173,4 @@ public interface TeacherService {
      * </pre>
      */
     int rateStuHomework(int sh_id, int grade);
-
 }
