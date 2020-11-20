@@ -8,7 +8,6 @@ import {
 import {history} from "../../Utils/History";
 import axios from 'axios';
 
-
 const { Header, Content, Footer, Sider } = Layout;
 
 const data = {

@@ -23,6 +23,7 @@ const { Column, ColumnGroup } = Table;
 
 let base = global.data.baseUrl;
 
+
 const data = [
     {
         key: '1',

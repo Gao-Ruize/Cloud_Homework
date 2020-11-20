@@ -8,7 +8,7 @@ import {history} from "../../Utils/History";
 
 const { Header, Content, Footer, Sider } = Layout;
 const { Option } = Select;
-
+let base = global.data.baseUrl;
 
 const data = [
     {
@@ -126,6 +126,7 @@ export default class TeaAddStudent2Course extends React.Component{
         this.state = {
             filteredInfo: null,
             sortedInfo: null,
+            user:{}
         };
 
         let { sortedInfo, filteredInfo } = this.state;
@@ -139,6 +140,7 @@ export default class TeaAddStudent2Course extends React.Component{
             filteredInfo: filters,
             sortedInfo: sorter,
         });
+        console.log("filteredInfo: ", filters)
     };
 
     clearFilters = () => {
@@ -185,6 +187,10 @@ export default class TeaAddStudent2Course extends React.Component{
 
 
     render(){
+        // const rowSelection = {
+        //     selectedRowKeys,
+        //     onChange: this.onSelectChange,
+        //   };
         const columns = [
             {
                 title: '姓名',
@@ -192,36 +198,16 @@ export default class TeaAddStudent2Course extends React.Component{
             },
             {
                 title: '学号',
-                dataIndex: 'ID',
+                dataIndex: 'user_id',
             },
             {
-                title: '班级',
-                dataIndex: 'class',
-                filters: [
-                    { text: '一年级', value: '一年级' },
-                    { text: '二年级', value: '二年级' },
-                    { text: '三年级', value: '三年级' },
-                    { text: '四年级', value: '四年级' },
-                    { text: '五年级', value: '五年级' },
-                    { text: '六年级', value: '六年级' },
-                ],
-                filteredValue: this.filteredInfo.address || null,
-                onFilter: (value, record) => record.class.includes(value),
+                title: '昵称',
+                dataIndex: 'username',
             },
             {
-                title: '年级',
-                dataIndex: 'grade',
-                filters: [
-                    { text: '一年级', value: '一年级' },
-                    { text: '二年级', value: '二年级' },
-                    { text: '三年级', value: '三年级' },
-                    { text: '四年级', value: '四年级' },
-                    { text: '五年级', value: '五年级' },
-                    { text: '六年级', value: '六年级' },
-                ],
-                filteredValue: this.filteredInfo.address || null,
-                onFilter: (value, record) => record.grade.includes(value),
-            }
+                title: '邮件',
+                dataIndex: 'email',
+            },
         ];
         return(
             <Layout>

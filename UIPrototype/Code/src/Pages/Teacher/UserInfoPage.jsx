@@ -1,5 +1,5 @@
 import React from 'react'
-import { Layout, Menu } from 'antd';
+import { Layout, Menu, message} from 'antd';
 import {
     TableOutlined, HighlightOutlined,
     FormOutlined, ReadOutlined,
@@ -7,6 +7,9 @@ import {
 } from '@ant-design/icons';
 import {Button, Card, CardContent, CardHeader, Grid, MenuItem, TextField, Typography} from "@material-ui/core";
 import {history} from "../../Utils/History";
+import axios from 'axios';
+
+let base = global.data.baseUrl;
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -51,6 +54,13 @@ export default class TeaUserInfo extends React.Component{
         }]
     }
 
+    getUserInfo = () => {
+        let user = localStorage.getItem('UserInfo');
+        this.setState({
+            user: user
+        });
+    };
+
     toTeaInfo = () =>{
         history.replace('/teaUserInfo')
     }
@@ -88,6 +98,35 @@ export default class TeaUserInfo extends React.Component{
         if(key === '5'){
             this.toTeaHomeworkList();
         }
+    };
+
+    storeCPhone = (event) => {
+        this.setState({'cPhone': event.target.value});
+    };
+
+    storeCMail = (event) => {
+        this.setState({'cMail': event.target.value});
+    };
+
+    handleSubmit = () => {
+        let Url = base + 'api/user/modify';
+        let userId = this.state.user.userid;
+        let data = {
+            id: userId,
+            email: this.state.cMail,
+            phone: this.state.cPhone
+        };
+
+        console.log(data)
+        axios.post(Url, data)
+            .then(resp => {
+                if(resp && resp.status === 200) {
+                    if(resp.data.code === 200) {
+                        message.success('修改成功');
+                    } else
+                        message.error('修改失败');
+                }
+            })
     };
 
 
@@ -196,6 +235,7 @@ export default class TeaUserInfo extends React.Component{
                                             defaultValue="1036788120"
                                             variant="outlined"
                                             style={{width: "90%"}}
+                                            onChange={this.storeCPhone}
                                         />
                                     </Grid>
                                     <Grid item xs={6}>
@@ -205,10 +245,12 @@ export default class TeaUserInfo extends React.Component{
                                             defaultValue="1036788120@qq.com"
                                             variant="outlined"
                                             style={{width: "90%"}}
+                                            onChange={this.storeCMail}
                                         />
                                     </Grid>
                                     <Grid item xs={6}>
-                                        <Button variant="contained" size="large" color="primary" component="span">
+                                        <Button variant="contained" size="large" color="primary" component="span"
+                                                onClick={this.handleSubmit}>
                                             确认修改
                                         </Button>
                                     </Grid>
