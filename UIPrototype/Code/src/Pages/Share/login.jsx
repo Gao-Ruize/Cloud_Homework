@@ -55,16 +55,32 @@ export default class Login extends Component {
             localStorage.setItem("UserType", "student");
             let userId = resp.data.user.userId;
             let Uid = resp.data.user.id;
+            let userName = resp.data.user.name;
+            let phone = resp.data.user.phone;
+            let mail = resp.data.user.email;
+            console.log(phone);
+            console.log(mail);
+            console.log(userName);
             localStorage.setItem("UserId", userId);
             localStorage.setItem("Uid", Uid);
+            localStorage.setItem("UserName", userName);
+            console.log(localStorage.getItem('UserName'));
+            localStorage.setItem("Phone", phone);
+            localStorage.setItem("Mail", mail);
             history.replace('/stuCourseList');
           } else
           if(resp.data.code === 201) {
             localStorage.setItem("UserType", "teacher");
             let userId = resp.data.user.userId;
             let Uid = resp.data.user.id;
+            let userName = resp.data.user.name;
+            let phone = resp.data.user.phone;
+            let mail = resp.data.user.email;
             localStorage.setItem("UserId", userId);
             localStorage.setItem("Uid", Uid);
+            localStorage.setItem("UserName", userName);
+            localStorage.setItem("Phone", phone);
+            localStorage.setItem("Mail", mail);
             history.replace('/teaCourseList');
           } else
           if(resp.data.code === 300) {
@@ -119,7 +135,6 @@ export default class Login extends Component {
                 id="outlined-password-input"
                 label="用户名"
                 type="用户名"
-                autoComplete="current-password"
                 variant="outlined"
                 style={{width: "100%"}}
                 onChange={this.storeName}
@@ -127,13 +142,13 @@ export default class Login extends Component {
             </Grid>
             <Grid item xs={12}>
               <TextField
-                id="outlined-password-input"
-                label="密码"
-                type="密码"
-                autoComplete="current-password"
-                variant="outlined"
-                style={{width: "100%"}}
-                onChange={this.storePassword}
+                  password
+                  id="outlined-password-input"
+                  label="密码"
+                  type="password"
+                  variant="outlined"
+                  style={{width: "100%"}}
+                  onChange={this.storePassword}
               />
             </Grid>
 

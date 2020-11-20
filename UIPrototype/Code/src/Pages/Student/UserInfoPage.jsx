@@ -29,10 +29,10 @@ export default class StuUserInfo extends React.Component {
         super(props);
         this.state = {
             id: localStorage.getItem('Uid'),
-            userName: '',
+            userName: localStorage.getItem('UserName'),
             userId: localStorage.getItem('UserId'),
-            Phone: '',
-            Mail: '',
+            Phone: localStorage.getItem('Phone'),
+            Mail: localStorage.getItem('Mail'),
             cPhone: '',
             cMail: '',
         };
@@ -43,6 +43,8 @@ export default class StuUserInfo extends React.Component {
     }
 
     getUserInfo = () => {
+        console.log("firsttime");
+        console.log(this.state);
         let userId = localStorage.getItem('UserId');
         let Url = base + 'user/getUsrInfo/' + userId;
         let _this = this;
@@ -54,6 +56,8 @@ export default class StuUserInfo extends React.Component {
                     let userid = resp.data.userId;
                     let phone = resp.data.phone;
                     let mail = resp.data.email;
+                    console.log(username);
+                    console.log(userid);
                     _this.setState({
                         userName: username,
                         userId: userid,
@@ -156,106 +160,105 @@ export default class StuUserInfo extends React.Component {
                                 </Typography>}
                             />
 
-                            <Form
-                                {...layout}
-                                name="basic"
-                                initialValues={{ remember: true }}
-                            >
-                                <Form.Item
-                                    label="用户姓名"
-                                    name="username"
-                                >
-                                    <Input style={{width: "70%"}} disabled defaultValue={this.state.userName}/>
-                                </Form.Item>
+                            {/*<Form*/}
+                            {/*    {...layout}*/}
+                            {/*    name="basic"*/}
+                            {/*    initialValues={{ remember: true }}*/}
+                            {/*>*/}
+                            {/*    <Form.Item*/}
+                            {/*        label="用户姓名"*/}
+                            {/*        name="username"*/}
+                            {/*    >*/}
+                            {/*        <Input style={{width: "70%"}} disabled defaultValue={this.state.userName}/>*/}
+                            {/*    </Form.Item>*/}
 
-                                <Form.Item
-                                    label="用户账号"
-                                    name="id"
-                                >
-                                    <Input style={{width: "70%"}} disabled defaultValue={this.state.userId} />
-                                </Form.Item>
+                            {/*    <Form.Item*/}
+                            {/*        label="用户账号"*/}
+                            {/*        name="id"*/}
+                            {/*    >*/}
+                            {/*        <Input style={{width: "70%"}} disabled defaultValue={this.state.userId} />*/}
+                            {/*    </Form.Item>*/}
 
-                                <Form.Item
-                                    label="用户电话"
-                                    name="phone"
-                                >
-                                    <Input style={{width: "70%"}} defaultValue={this.state.Phone}
-                                           onChange={this.storeCPhone}/>
-                                </Form.Item>
+                            {/*    <Form.Item*/}
+                            {/*        label="用户电话"*/}
+                            {/*        name="phone"*/}
+                            {/*    >*/}
+                            {/*        <Input style={{width: "70%"}} defaultValue={this.state.Phone}*/}
+                            {/*               onChange={this.storeCPhone}/>*/}
+                            {/*    </Form.Item>*/}
 
-                                <Form.Item
-                                    label="用户邮箱"
-                                    name="mail"
-                                >
-                                    <Input style={{width: "70%"}} defaultValue={this.state.Mail}
-                                           onChange={this.storeCMail}/>
-                                </Form.Item>
+                            {/*    <Form.Item*/}
+                            {/*        label="用户邮箱"*/}
+                            {/*        name="mail"*/}
+                            {/*    >*/}
+                            {/*        <Input style={{width: "70%"}} defaultValue={this.state.Mail}*/}
+                            {/*               onChange={this.storeCMail}/>*/}
+                            {/*    </Form.Item>*/}
 
-                                <Form.Item>
-                                    <Button style={{marginLeft: 150}} variant="contained" size="large" color="primary" component="span"
-                                        onClick={this.handleSubmit}>
-                                    确认修改
-                                    </Button>
-                                </Form.Item>
+                            {/*    <Form.Item>*/}
+                            {/*        <Button style={{marginLeft: "67%"}} variant="contained" size="large" color="primary" component="span"*/}
+                            {/*            onClick={this.handleSubmit}>*/}
+                            {/*        确认修改*/}
+                            {/*        </Button>*/}
+                            {/*    </Form.Item>*/}
 
 
-                            </Form>
+                            {/*</Form>*/}
 
                             <Grid item xs={12}>
                             </Grid>
-                            {/*<CardContent>*/}
-                            {/*    <Grid container spacing={3}>*/}
-                            {/*        <Grid item xs={6}>*/}
-                            {/*            /!*<TextField*!/*/}
-                            {/*            /!*    disabled*!/*/}
-                            {/*            /!*    id="outlined-disabled"*!/*/}
-                            {/*            /!*    label="姓名"*!/*/}
-                            {/*            /!*    placeholder={this.state.userName}*!/*/}
-                            {/*            /!*    variant="outlined"*!/*/}
-                            {/*            /!*    style={{width: "90%"}}*!/*/}
-                            {/*            /!*//*/}
-                            {/*            <Input placeholder={this.state.userName}/>*/}
-                            {/*        </Grid>*/}
-                            {/*        <Grid item xs={6}>*/}
-                            {/*            <TextField*/}
-                            {/*                disabled*/}
-                            {/*                id="outlined-disabled"*/}
-                            {/*                label="学号"*/}
-                            {/*                defaultValue={this.state.userId}*/}
-                            {/*                variant="outlined"*/}
-                            {/*                style={{width: "90%"}}*/}
-                            {/*            />*/}
-                            {/*        </Grid>*/}
+                            <CardContent>
+                                <Grid container spacing={3}>
+                                    <Grid item xs={6}>
+                                        <TextField
+                                            disabled
+                                            id="outlined-disabled"
+                                            label="姓名"
+                                            defaultValue={this.state.userName}
+                                            variant="outlined"
+                                            style={{width: "90%"}}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={6}>
+                                        <TextField
+                                            disabled
+                                            id="outlined-disabled"
+                                            label="学号"
+                                            defaultValue={this.state.userId}
+                                            variant="outlined"
+                                            style={{width: "90%"}}
+                                        />
+                                    </Grid>
 
-                            {/*        <Grid item xs={6}>*/}
-                            {/*            <TextField*/}
-                            {/*                label="电话"*/}
-                            {/*                defaultValue={this.state.Phone}*/}
-                            {/*                variant="outlined"*/}
-                            {/*                style={{width: "90%"}}*/}
-                            {/*                onChange={this.storeCPhone}*/}
-                            {/*            />*/}
-                            {/*        </Grid>*/}
+                                    <Grid item xs={6}>
+                                        <TextField
+                                            label="电话"
+                                            defaultValue={this.state.Phone}
+                                            variant="outlined"
+                                            style={{width: "90%"}}
+                                            onChange={this.storeCPhone}
+                                        />
+                                    </Grid>
 
-                            {/*        <Grid item xs={6}>*/}
-                            {/*            <TextField*/}
-                            {/*                id="outlined-disabled"*/}
-                            {/*                label="邮箱"*/}
-                            {/*                defaultValue={this.state.Mail}*/}
-                            {/*                variant="outlined"*/}
-                            {/*                style={{width: "90%"}}*/}
-                            {/*                onChange={this.storeCMail}*/}
-                            {/*            />*/}
-                            {/*        </Grid>*/}
-                            {/*        <Grid item xs={6}>*/}
-                            {/*            <Button variant="contained" size="large" color="primary" component="span"*/}
-                            {/*                    onClick={this.handleSubmit}>*/}
-                            {/*                确认修改*/}
-                            {/*            </Button>*/}
-                            {/*        </Grid>*/}
+                                    <Grid item xs={6}>
+                                        <TextField
+                                            id="outlined-disabled"
+                                            label="邮箱"
+                                            defaultValue={this.state.Mail}
+                                            variant="outlined"
+                                            style={{width: "90%"}}
+                                            onChange={this.storeCMail}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={6}>
+                                        <Button variant="contained" size="large" color="primary" component="span"
+                                                onClick={this.handleSubmit}>
+                                            确认修改
+                                        </Button>
+                                    </Grid>
 
-                            {/*    </Grid>*/}
-                            {/*</CardContent>*/}
+                                </Grid>
+                            </CardContent>
                         </Card>
                     </Content>
                     <Footer style={{ textAlign: 'center' }}>云作业平台</Footer>
