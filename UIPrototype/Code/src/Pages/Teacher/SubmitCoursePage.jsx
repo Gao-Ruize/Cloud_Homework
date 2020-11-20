@@ -26,29 +26,9 @@ export default class TeaSubmitCourse extends React.Component{
             name:'',
             courseId:'',
             courseInfo:'',
-            teacherId:''
+            teacherId:localStorage.getItem("UserId")
         };
     }
-
-    // changeName = event => {
-    //     let x = event.target.value;
-    //     this.setState({name: x});
-    // };
-    // changeCourseID = event => {
-    //     let x = event.target.value;
-    //     this.setState({courseID: x});
-    // };
-
-    // changeCourseInfo = event => {
-    //     let x = event.target.value;
-    //     this.setState({courseInfo: x});
-    // };
-
-    // changeTeacherID = event => {
-    //     let x = event.target.value;
-    //     this.setState({teacherID: x});
-    // };
-
 
     toTeaInfo = () =>{
         history.replace('/teaUserInfo')
@@ -90,30 +70,36 @@ export default class TeaSubmitCourse extends React.Component{
     };
 
     storeName = (event) => {
-        this.setState({'Name': event.target.value});
+        this.setState({name: event.target.value});
     };
 
     storeCourseId = (event) => {
-        this.setState({'CourseId': event.target.value});
+        this.setState({courseId: event.target.value});
     };
     storeCourseInfo = (event) => {
-        this.setState({'CourseInfo': event.target.value});
+        this.setState({courseInfo: event.target.value});
     };
 
     storeTeacherId = (event) => {
-        this.setState({'TeacherId': event.target.value});
+        this.setState({teacherId: event.target.value});
     };
 
     handleSubmit = () => {
-        let Url = base + 'api/teacher/createcourse';
-        let data = this.state;
+        let Url = base + 'teacher/createcourse';
+        let data = {
+            name: this.state.name,
+            courseId: this.state.courseId,
+            courseInfo: this.state.courseInfo,
+            teacherId: this.state.teacherId
+        }
+        console.log(data)
         axios.post(Url, data)
             .then(resp => {
                 if(resp && resp.status === 200) {
                     if(resp.data.code === 200) {
-                        message.success('修改成功');
+                        message.success('提交成功');
                     } else
-                        message.error('修改失败');
+                        message.error('提交失败');
                 }
             })
     };
@@ -140,9 +126,9 @@ export default class TeaSubmitCourse extends React.Component{
                         <Menu.Item key="3" icon={<TableOutlined />}>
                             课程
                         </Menu.Item>
-                        <Menu.Item key="4" icon={<HighlightOutlined />}>
+                        {/* <Menu.Item key="4" icon={<HighlightOutlined />}>
                             发布作业
-                        </Menu.Item>
+                        </Menu.Item> */}
                         <Menu.Item key="5" icon={<ReadOutlined />}>
                             作业情况
                         </Menu.Item>
@@ -171,7 +157,7 @@ export default class TeaSubmitCourse extends React.Component{
                                 name="CourseID"
                                 rules={[{ required: true, message: '请输入课程编号!' }]}
                             >
-                                <Input value={this.state.courseID} onChange={this.storeCourseId}/>
+                                <Input value={this.state.courseId} onChange={this.storeCourseId}/>
                             </Form.Item>
 
                             <Form.Item
@@ -182,13 +168,6 @@ export default class TeaSubmitCourse extends React.Component{
                                 <Input value={this.state.courseInfo} onChange={this.storeCourseInfo}/>
                             </Form.Item>
 
-                            <Form.Item
-                                label="TeacherId"
-                                name="TeacherId"
-                                rules={[{ required: true, message: '请输入教师编号！' }]}
-                            >
-                                <Input value={this.state.courseInfo} onChange={this.storeTeacherId}/>
-                            </Form.Item>
                             <Form.Item >
                                 <Button type="primary" onClick = {this.handleSubmit}>
                                     Submit
