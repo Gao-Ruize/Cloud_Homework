@@ -60,6 +60,10 @@ export default class StuHomeworkCommit extends React.Component {
         message.error("提交失败，请重试！");
     };
 
+    showRepeatMsg = () => {
+        message.info("重复提交，已覆盖先前提交！");
+    };
+
     stuMenuRedirect = (event) => {
         let key = event.key;
         if(key === '1') {
@@ -105,7 +109,7 @@ export default class StuHomeworkCommit extends React.Component {
     };
 
     handleCommit = () => {
-        let Url = base + 'api/student/handInHomework';
+        let Url = base + 'student/handInHomework';
         let _this = this;
         let studentId = localStorage.getItem('Uid');
         let hId = this.state.homeworkId;
@@ -125,6 +129,8 @@ export default class StuHomeworkCommit extends React.Component {
                         _this.showSuccessMsg();
                     } else if(code === 201) {
                         _this.showDelayMsg();
+                    } else if(code === 202) {
+                        _this.showRepeatMsg();
                     } else {
                         _this.showOtherErrMsg();
                     }
