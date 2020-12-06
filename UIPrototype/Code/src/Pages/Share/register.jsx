@@ -23,6 +23,7 @@ export default class Register extends Component {
       phone: '',
       password: '',
       userType: '',
+      userName: '',
     }
   }
 
@@ -31,7 +32,7 @@ export default class Register extends Component {
   };
 
   showFailMsg = () => {
-    message.info("注册失败！");
+    message.info("注册失败！用户名或邮箱重复");
   };
 
   storeId = (event) => {
@@ -67,6 +68,10 @@ export default class Register extends Component {
     console.log(event.target.value);
   };
 
+  storeUserName = (event) => {
+    this.setState({userName: event.target.value});
+  };
+
   toLoginPage = () => {
     history.replace('/login');
   };
@@ -75,7 +80,8 @@ export default class Register extends Component {
     let Url = base + "user/register";
     let data = {
       userid: this.state.id,
-      username: this.state.name,
+      username: this.state.userName,
+      name: this.state.name,
       email: this.state.mail,
       phone: this.state.phone,
       password: this.state.password,
@@ -90,7 +96,11 @@ export default class Register extends Component {
             if(code === 200) {
               _this.showSuccessMsg();
               _this.toLoginPage();
-            } else {
+            } else if(code === 300) {
+              message.error('邮箱格式错误');
+            }
+            else
+            {
               _this.showFailMsg();
             }
           }
@@ -110,12 +120,17 @@ export default class Register extends Component {
           <Grid container spacing={3}>
 
             <Grid item xs={12}>
+              <TextField required variant="outlined" label="用户名" style={{width: "100%"}}
+                         onChange={this.storeUserName}/>
+            </Grid>
+
+            <Grid item xs={12}>
               <TextField required variant="outlined" label="学号" style={{width: "100%"}}
                          onChange={this.storeId}/>
             </Grid>
 
             <Grid item xs={12}>
-              <TextField required variant="outlined" label="姓名" style={{width: "100%"}}
+              <TextField required variant="outlined" label="真实姓名" style={{width: "100%"}}
                          onChange={this.storeName}/>
             </Grid>
 

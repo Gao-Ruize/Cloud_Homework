@@ -119,6 +119,8 @@ export default class StuCourseList extends React.Component {
     };
 
     toCourseDetail = (key) => {
+        console.log("here!!!");
+        console.log(key);
         history.replace('/stuCourseDetail', {courseKey: key});
     };
 

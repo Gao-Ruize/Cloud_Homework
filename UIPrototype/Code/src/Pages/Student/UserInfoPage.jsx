@@ -116,6 +116,8 @@ export default class StuUserInfo extends React.Component {
                 if(resp && resp.status === 200) {
                     if(resp.data.code === 200) {
                         message.success('修改成功');
+                    } else if(resp.data.code === 400) {
+                        message.error('邮箱格式错误')
                     } else
                         message.error('修改失败');
                 }

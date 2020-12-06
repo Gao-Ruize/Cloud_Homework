@@ -67,6 +67,9 @@ export default class Login extends Component {
             console.log(localStorage.getItem('UserName'));
             localStorage.setItem("Phone", phone);
             localStorage.setItem("Mail", mail);
+            console.log(resp);
+            console.log(localStorage.getItem('Phone'));
+            console.log(localStorage.getItem('Mail'));
             history.replace('/stuCourseList');
           } else
           if(resp.data.code === 201) {
