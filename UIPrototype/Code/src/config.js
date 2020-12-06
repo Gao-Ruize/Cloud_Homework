@@ -1,3 +1,3 @@
 global.data = {
-    baseUrl: 'http://59.78.37.242:8443/api/',
+    baseUrl: 'http://39.106.85.149:8080/api/',
 };

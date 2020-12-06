@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
-import {Button, Card, CardContent, CardHeader, Grid, MenuItem, TextField, Typography} from "@material-ui/core";
+import {Button, Card, CardContent, CardHeader, Grid, TextField, Typography} from "@material-ui/core";
 import {history} from "../../Utils/History";
-import { message } from 'antd';
+import {message} from 'antd';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -11,37 +11,6 @@ import axios from 'axios';
 import '../../config'
 
 let base = global.data.baseUrl;
-
-const currencies = [
-  {
-    value: 'EE',
-    label: '电子信息与电气工程学院',
-  },
-  {
-    value: 'M',
-    label: '机械与动力工程学院',
-  },
-  {
-    value: 'A',
-    label: '安泰经济与管理学院',
-  },
-  {
-    value: 'Y',
-    label: '药学院',
-  },
-  {
-    value: 'K',
-    label: '凯原法学院',
-  },
-  {
-    value: 'MathR',
-    label: '数学科学学院',
-  },
-  {
-    value: 'R',
-    label: '人文学院',
-  },
-];
 
 export default class Register extends Component {
   constructor(props) {
@@ -90,7 +59,7 @@ export default class Register extends Component {
   };
 
   storePassword = (event) => {
-    this.setState({passwprd: event.target.value});
+    this.setState({password: event.target.value});
   };
 
   storeUserType = (event) => {
@@ -98,84 +67,95 @@ export default class Register extends Component {
     console.log(event.target.value);
   };
 
+  toLoginPage = () => {
+    history.replace('/login');
+  };
 
   register = () => {
-    if(true) {
-      this.showSuccessMsg();
-      history.replace('/login');
-    }
-    console.log(base);
+    let Url = base + "user/register";
     let data = {
-      id: this.state.id,
-      name: this.state.name,
-      mail: this.state.mail,
+      userid: this.state.id,
+      username: this.state.name,
+      email: this.state.mail,
       phone: this.state.phone,
       password: this.state.password,
-      userType: this.state.userType
+      usertype: this.state.userType
     };
     console.log(data);
-    // axios.post('')
+    let _this = this;
+    axios.post(Url, data)
+      .then(resp => {
+        if (resp && resp.status === 200) {
+          let code = resp.data.code;
+          if (code === 200) {
+            _this.showSuccessMsg();
+            _this.toLoginPage();
+          } else {
+            _this.showFailMsg();
+          }
+        }
+      })
   };
 
   render() {
     return (
-        <div>
+      <div>
 
-      <Card style={{width: "30%", margin: "30px auto"}}> <CardHeader
-        title={<Typography variant={"h5"} align={"center"}>
-          注册
-        </Typography>}
-      />
-        <CardContent>
-          <Grid container spacing={3}>
+        <Card style={{width: "30%", margin: "30px auto"}}> <CardHeader
+          title={<Typography variant={"h5"} align={"center"}>
+            注册
+          </Typography>}
+        />
+          <CardContent>
+            <Grid container spacing={3}>
 
-            <Grid item xs={12}>
-              <TextField required variant="outlined" label="学号" style={{width: "100%"}}
-                         onChange={this.storeId}/>
+              <Grid item xs={12}>
+                <TextField required variant="outlined" label="学号" style={{width: "100%"}}
+                           onChange={this.storeId}/>
+              </Grid>
+
+              <Grid item xs={12}>
+                <TextField required variant="outlined" label="姓名" style={{width: "100%"}}
+                           onChange={this.storeName}/>
+              </Grid>
+
+              <Grid item xs={12}>
+                <TextField required variant="outlined" label="密码" style={{width: "100%"}}
+                           onChange={this.storePassword}/>
+              </Grid>
+
+              <Grid item xs={12}>
+                <TextField required variant="outlined" label="邮箱" style={{width: "100%"}}
+                           onChange={this.storeMail}/>
+              </Grid>
+
+              <Grid item xs={12}>
+                <TextField required variant="outlined" label="班级" style={{width: "100%"}}
+                           onChange={this.storeClass}/>
+              </Grid>
+
+              <Grid item xs={12}>
+                <TextField variant="outlined" label="电话" style={{width: "100%"}}
+                           onChange={this.storePhone}/>
+              </Grid>
+
+              <Grid item xs={12}>
+                <FormControl component="fieldset">
+                  <FormLabel component="legend">用户类型</FormLabel>
+                  <RadioGroup aria-label="type" name="type" value={this.userType} onChange={this.storeUserType}>
+                    <FormControlLabel value="S" control={<Radio/>} label="学生"/>
+                    <FormControlLabel value="T" control={<Radio/>} label="教师"/>
+                  </RadioGroup>
+                </FormControl>
+              </Grid>
+
+              <Button style={{width: "70%", margin: "auto"}} variant="contained" color="secondary"
+                      size="large" onClick={this.register}>注册</Button>
+
             </Grid>
-
-            <Grid item xs={12}>
-              <TextField required variant="outlined" label="姓名" style={{width: "100%"}}
-                         onChange={this.storeName}/>
-            </Grid>
-
-            <Grid item xs={12}>
-              <TextField required variant="outlined" label="密码" style={{width: "100%"}}
-                         onChange={this.storePassword}/>
-            </Grid>
-
-            <Grid item xs={12}>
-              <TextField required variant="outlined" label="邮箱" style={{width: "100%"}}
-                         onChange={this.storeMail}/>
-            </Grid>
-
-            <Grid item xs={12}>
-              <TextField required variant="outlined" label="班级" style={{width: "100%"}}
-                         onChange={this.storeClass}/>
-            </Grid>
-
-            <Grid item xs={12}>
-              <TextField variant="outlined" label="电话" style={{width: "100%"}}
-                         onChange={this.storePhone}/>
-            </Grid>
-
-            <Grid item xs={12}>
-              <FormControl component="fieldset">
-                <FormLabel component="legend">用户类型</FormLabel>
-                <RadioGroup aria-label="type" name="type" value={this.userType} onChange={this.storeUserType}>
-                  <FormControlLabel value="student" control={<Radio />} label="学生" />
-                  <FormControlLabel value="teacher" control={<Radio />} label="教师" />
-                </RadioGroup>
-              </FormControl>
-            </Grid>
-
-            <Button style={{width: "70%", margin: "auto"}} variant="contained" color="secondary"
-                    size="large" onClick={this.register}>注册</Button>
-
-          </Grid>
-        </CardContent>
-      </Card>
-        </div>
+          </CardContent>
+        </Card>
+      </div>
     );
   }
 }
