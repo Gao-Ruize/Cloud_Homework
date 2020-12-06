@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
-import {Button, Card, CardContent, CardHeader, Grid, TextField, Typography } from "@material-ui/core";
-import { message } from 'antd';
+import {Button, Card, CardContent, CardHeader, Grid, TextField, Typography} from "@material-ui/core";
+import {message} from 'antd';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -50,28 +50,26 @@ export default class Login extends Component {
     };
     let Url = base + 'user/login';
     axios.post(Url, data)
-        .then(resp => {
-          if(resp.data.code === 200) {
-            localStorage.setItem("UserType", "student");
-            let userId = resp.data.user.userId;
-            let Uid = resp.data.user.id;
-            localStorage.setItem("UserId", userId);
-            localStorage.setItem("Uid", Uid);
-            history.replace('/stuCourseList');
-          } else
-          if(resp.data.code === 201) {
-            localStorage.setItem("UserType", "teacher");
-            let userId = resp.data.user.userId;
-            let Uid = resp.data.user.id;
-            localStorage.setItem("UserId", userId);
-            localStorage.setItem("Uid", Uid);
-            history.replace('/teaCourseList');
-          } else
-          if(resp.data.code === 300) {
-            message.error("登录失败");
-            this.openErrDialog();
-          }
-        });
+      .then(resp => {
+        if (resp.data.code === 200) {
+          localStorage.setItem("UserType", "student");
+          let userId = resp.data.user.userId;
+          let Uid = resp.data.user.id;
+          localStorage.setItem("UserId", userId);
+          localStorage.setItem("Uid", Uid);
+          history.replace('/stuCourseList');
+        } else if (resp.data.code === 201) {
+          localStorage.setItem("UserType", "teacher");
+          let userId = resp.data.user.userId;
+          let Uid = resp.data.user.id;
+          localStorage.setItem("UserId", userId);
+          localStorage.setItem("Uid", Uid);
+          history.replace('/teaCourseList');
+        } else if (resp.data.code === 300) {
+          message.error("登录失败");
+          this.openErrDialog();
+        }
+      });
   };
 
   redirectToRegister = () => {
@@ -81,12 +79,12 @@ export default class Login extends Component {
 
   render() {
     return (
-        <div>
+      <div>
         <Dialog
-            open={this.state.open}
-            onClose={this.closeErrDialog}
-            aria-labelledby="alert-dialog-title"
-            aria-describedby="alert-dialog-description"
+          open={this.state.open}
+          onClose={this.closeErrDialog}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
         >
           <DialogTitle id="alert-dialog-title">{"登录失败"}</DialogTitle>
           <DialogContent>
@@ -104,51 +102,51 @@ export default class Login extends Component {
           </DialogActions>
         </Dialog>
 
-      <Card style={{width: "30%", margin: "200px auto"}}> <CardHeader
-        title={<Typography variant={"h5"} align={"center"}>
-          云作业平台
-        </Typography>}
-        subheader={<Typography variant={"body1"} align={"center"}>
-          登陆后使用更多功能
-        </Typography>}
-      />
-        <CardContent>
-          <Grid container spacing={3}>
-            <Grid item xs={12}>
-              <TextField
-                id="outlined-password-input"
-                label="用户名"
-                type="用户名"
-                autoComplete="current-password"
-                variant="outlined"
-                style={{width: "100%"}}
-                onChange={this.storeName}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                id="outlined-password-input"
-                label="密码"
-                type="密码"
-                autoComplete="current-password"
-                variant="outlined"
-                style={{width: "100%"}}
-                onChange={this.storePassword}
-              />
-            </Grid>
+        <Card style={{width: "30%", margin: "200px auto"}}> <CardHeader
+          title={<Typography variant={"h5"} align={"center"}>
+            云作业平台
+          </Typography>}
+          subheader={<Typography variant={"body1"} align={"center"}>
+            登陆后使用更多功能
+          </Typography>}
+        />
+          <CardContent>
+            <Grid container spacing={3}>
+              <Grid item xs={12}>
+                <TextField
+                  id="outlined-password-input"
+                  label="用户名"
+                  type="用户名"
+                  autoComplete="current-password"
+                  variant="outlined"
+                  style={{width: "100%"}}
+                  onChange={this.storeName}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  id="outlined-password-input"
+                  label="密码"
+                  type="密码"
+                  autoComplete="current-password"
+                  variant="outlined"
+                  style={{width: "100%"}}
+                  onChange={this.storePassword}
+                />
+              </Grid>
 
-            <Grid item xs={6}>
-              <Button style={{width: "100%"}} variant="contained" color="secondary" size="large"
-                      onClick={this.login}>登录</Button>
+              <Grid item xs={6}>
+                <Button style={{width: "100%"}} variant="contained" color="secondary" size="large"
+                        onClick={this.login}>登录</Button>
+              </Grid>
+              <Grid item xs={6}>
+                <Button style={{width: "100%"}} variant="contained" color="primary" size="large"
+                        onClick={this.redirectToRegister}>注册</Button>
+              </Grid>
             </Grid>
-            <Grid item xs={6}>
-              <Button style={{width: "100%"}} variant="contained" color="primary" size="large"
-                      onClick={this.redirectToRegister}>注册</Button>
-            </Grid>
-          </Grid>
-        </CardContent>
-      </Card>
-        </div>
+          </CardContent>
+        </Card>
+      </div>
     );
   }
 }
