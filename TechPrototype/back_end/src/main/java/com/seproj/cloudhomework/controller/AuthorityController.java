@@ -26,22 +26,23 @@ public class AuthorityController {
     public Result register(@RequestBody RegisterForm registerform){
         String usertype = registerform.getUsertype();
 
+        int resCode;
         if(usertype.equals("S")){
             // 注册信息为学生
-            if(authorityservice.registerAsStudent(registerform) == 0){
+            if((resCode = authorityservice.registerAsStudent(registerform)) == 0){
                 return new Result(200);
             }
             else{
-                return new Result(300);
+                return new Result(299+resCode);
             }
         }
         if(usertype.equals("T")){
             // 注册信息为教师
-            if(authorityservice.registerAsTeacher(registerform) == 0){
+            if((resCode = authorityservice.registerAsTeacher(registerform)) == 0){
                 return new Result(200);
             }
             else{
-                return new Result(300);
+                return new Result(299+resCode);
             }
         }
 
@@ -74,11 +75,12 @@ public class AuthorityController {
     @PostMapping(value = "api/user/modify")
     @ResponseBody
     public Result ModifyUserInfo(@RequestBody ModifyForm modifyform){
-        if(authorityservice.modify(modifyform) == 0) {  // 修改成功
+        int resCode;
+        if((resCode = authorityservice.modify(modifyform)) == 0) {  // 修改成功
             return new Result(200);
         }
 
-        return new Result(300);
+        return new Result(299+resCode);
     }
 
     @CrossOrigin

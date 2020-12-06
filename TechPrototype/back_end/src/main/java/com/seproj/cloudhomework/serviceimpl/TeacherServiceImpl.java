@@ -181,6 +181,16 @@ public class TeacherServiceImpl implements TeacherService {
                 newhomework.getContent(),
                 newhomework.getCourseId());
         homeworkDao.saveOrUpdate(homework);
+        List<Instruct> allStus = instructDao.findInstructByStudentId(newhomework.getCourseId());
+        int hid = homework.getId();
+        for(Instruct instr:allStus){
+            StudentHomework SH = new StudentHomework();
+            SH.setHomeworkId(hid);
+            SH.setStudentId(instr.getStudentId());
+            SH.setGrade(0);
+            studentHomeworkDao.saveOrUpdate(SH);
+        }
+
         return 0;
     }
 
@@ -211,7 +221,7 @@ public class TeacherServiceImpl implements TeacherService {
         List<StudentHomework> stuHomework_list = studentHomeworkDao.findStudentHomeworkByHomeworkId(h_id);
         for(StudentHomework stuHomework:stuHomework_list){
             num_submitedstu++;
-            if(stuHomework.getGrade() < 0){
+            if(stuHomework.getCommitedTime() == null){
                 continue;
             }
             int grade = stuHomework.getGrade();
@@ -227,7 +237,11 @@ public class TeacherServiceImpl implements TeacherService {
 
         gradestat.setNum_allstu(num_allstu);
         gradestat.setNum_stu(num_submitedstu);
-        gradestat.setAvg_grade(tot_grade/num_ratedstu);
+        if(num_ratedstu == 0){
+            gradestat.setAvg_grade(0);
+        }else{
+            gradestat.setAvg_grade(tot_grade/num_ratedstu);
+        }
         gradestat.setMax_grade(max_grade);
         gradestat.setMin_grade(min_grade);
         return gradestat;
@@ -296,7 +310,7 @@ public class TeacherServiceImpl implements TeacherService {
             if((stu = userDao.findUserByUserId(stuHW.getStudentId())) == null){
                 continue;
             }
-            if(stuHW.getGrade() < 0){
+            if(stuHW.getCommitedTime() == null){
                 return stuHW;   // 找到一份未批改的作业
             }
         }

@@ -59,9 +59,10 @@ public class StudentServiceImpl implements StudentService {
         if((course = coursedao.findCourseById(cid)) == null){
             return null;
         }
-        User teacher = userdao.findUserById(course.getId());
-        if(teacher.getRole() != 1){
-            // 若用户身份不是教师（一般情况不会出现）
+        User teacher = userdao.findUserById(course.getTeacherId());
+
+        if(teacher == null || teacher.getRole() != 1){
+            // 若用户身份不是教师或用户不存在（一般情况不会出现）
             return null;
         }
         teacher.getUsername();
@@ -88,10 +89,18 @@ public class StudentServiceImpl implements StudentService {
             List<Homework> HomeworkOfOneCourse = new ArrayList<>();
             for(Instruct instruct:instructList){
                 if((course = coursedao.findCourseById(instruct.getCourseId())) == null){
+                    // 找不到这门课
                     continue;
                 }
                 HomeworkOfOneCourse = homeworkdao.findHomeworkByCourseId(course.getCourseId());
                 for(Homework homework:HomeworkOfOneCourse){
+                    homework.setCourseName(course.getName());
+                    StudentHomework SH = studenthomeworkdao.findStudentHomeworkByHomeworkIdAndStudentId(homework.getId(), student.getUserId());
+                    if(SH.getCommitedTime() == null){
+                        homework.setType(0);
+                    }else{
+                        homework.setType(1);
+                    }
                     result.add(homework);
                 }
             }
@@ -108,12 +117,34 @@ public class StudentServiceImpl implements StudentService {
             List<Homework> unSubmittedHomework = new ArrayList<>();
             StudentHomework stuHW;
             for(Homework homework:homeworkList){
-                if((stuHW = studenthomeworkdao.findStudentHomeworkByHomeworkIdAndStudentId(homework.getId(), student.getUserId())) != null){
-                    submittedHomework.add(homework);
+                homework.setCourseName(course.getName());
+                if((stuHW = studenthomeworkdao.findStudentHomeworkByHomeworkIdAndStudentId(homework.getId(), student.getUserId())) == null){
+                    // 未完成（未找到studenthomework）
+                    homework.setType(0);
+                    unSubmittedHomework.add(homework);
                     continue;
                 }
                 else{
-                    unSubmittedHomework.add(homework);
+//                    unSubmittedHomework.add(homework);
+//                    continue;
+
+                    if(stuHW.getCommitedTime() == null){
+                        // 未提交
+                        homework.setType(0);
+                        unSubmittedHomework.add(homework);
+                    }
+                    else{
+                        // 已提交
+                        Date date = new Date();
+                        if(date.compareTo(stuHW.getCommitedTime()) == 1){
+                            // 已超时
+                            homework.setType(2);
+                        }else{
+                            // 正常提交，未超时
+                            homework.setType(1);
+                        }
+                        submittedHomework.add(homework);
+                    }
                     continue;
                 }
             }
@@ -163,7 +194,7 @@ public class StudentServiceImpl implements StudentService {
 //                stu.getUserId()));
         stu_hw.setCommitedTime(new Date());
         stu_hw.setHomeworkId(homework.getHid());
-        stu_hw.setGrade(-1);
+        stu_hw.setGrade(0);
         stu_hw.setContent(homework.getContent());
         stu_hw.setPicture(homework.getPicture());
         stu_hw.setStudentId(stu.getUserId());
@@ -192,13 +223,18 @@ public class StudentServiceImpl implements StudentService {
         int tot_grade = 0;
         int count = 0;
         for(StudentHomework homework:homeworkList){
-            if(homework.getGrade() < 0){
+            if(homework.getCommitedTime() == null){
                 continue;
             }
             tot_grade += homework.getGrade();
             count++;
         }
-        return (float)tot_grade / count;
+
+        if(count == 0){
+            return 0;
+        }else{
+            return (float)tot_grade / count;
+        }
     }
 }
 

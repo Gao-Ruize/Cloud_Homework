@@ -97,4 +97,27 @@ public class Homework {
     public void setCourseId(String courseId) {
         this.courseId = courseId;
     }
+
+    // 0：未提交    1：已提交   2：已超时
+    @Transient
+    int type;
+
+    @Transient
+    String CourseName;
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    public String getCourseName() {
+        return CourseName;
+    }
+
+    public void setCourseName(String courseName) {
+        CourseName = courseName;
+    }
 }
