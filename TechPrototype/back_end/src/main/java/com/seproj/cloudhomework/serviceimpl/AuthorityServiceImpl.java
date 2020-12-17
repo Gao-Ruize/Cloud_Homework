@@ -22,6 +22,10 @@ public class AuthorityServiceImpl implements AuthorityService {
             // 同名或同id用户已存在
             return 1;
         }
+        if(!registerform.getEmail().matches("\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*")) {
+            // 邮箱格式错误
+            return 101;
+        }
         User newUser = new User(registerform.getUsername(),
                 registerform.getPassword(),
                 registerform.getName(),
@@ -40,6 +44,10 @@ public class AuthorityServiceImpl implements AuthorityService {
                 || userdao.findUserByUsername(registerform.getUsername()) != null){
             // 同名或同id用户已存在
             return 1;
+        }
+        if(!registerform.getEmail().matches("\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*")) {
+            // 邮箱格式错误
+            return 2;
         }
         User newUser = new User(registerform.getUsername(),
                 registerform.getPassword(),
@@ -66,6 +74,10 @@ public class AuthorityServiceImpl implements AuthorityService {
 
     @Override
     public int modify(ModifyForm modifyform) {
+        if(!modifyform.getEmail().matches("\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*")) {
+            // 邮箱格式错误
+            return 101;
+        }
         User getUser;
         if((getUser = userdao.findUserById(modifyform.getId())) == null){
             return 1;

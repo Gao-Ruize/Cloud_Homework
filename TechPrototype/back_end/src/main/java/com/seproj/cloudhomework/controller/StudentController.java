@@ -55,8 +55,9 @@ public class StudentController {
                 return new Result(200);
             case 1: // 超时提交
                 return new Result(201);
-            case -1:    // 其他错误
-                return new Result(300);
+            case 2: // 覆盖提交
+                return new Result(202);
+            // 其他错误
             default:
                 return new Result(300);
         }

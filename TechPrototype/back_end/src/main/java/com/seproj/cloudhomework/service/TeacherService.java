@@ -98,6 +98,10 @@ public interface TeacherService {
     int addStudents(int c_id, List<String> stu_list);
 
 
+    int addAStudent(int cid, String sid);
+
+
+
 
     /**
      * <p>教师发布新的作业</p>
@@ -136,6 +140,14 @@ public interface TeacherService {
     List<Homework> getAllHomework(int c_id);
 
     /**
+     * <p>教师获取自己执教课程的所有作业</p>
+     *
+     * @param tid 教师id
+     * @return 作业列表
+     */
+    List<Homework> getHomeworksByTid(int tid);
+
+    /**
      * <p>获取某次作业学生提交列表</p>
      *
      * @param c_id 课程id
@@ -144,6 +156,8 @@ public interface TeacherService {
      * @return 学生提交的简要信息列表
      */
     List<StuHomeworkBrief> getStuHomeworkList(int c_id, String courseId, int h_id);
+
+    StudentHomework getAHomeworkToRate(int hid);
 
     /**
      * <p>获取某一作业某一学生的提交内容</p>
@@ -165,5 +179,6 @@ public interface TeacherService {
      * </pre>
      */
     int rateStuHomework(int sh_id, int grade);
+
 
 }
