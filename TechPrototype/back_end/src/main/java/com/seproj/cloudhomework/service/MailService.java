@@ -10,4 +10,6 @@ import java.io.IOException;
 public interface MailService {
     void sendGradeInformMail(String name, String receiver) throws IOException, TemplateException, MessagingException;
     void sendHomeworkInformMail(String name, String courseName, String receiver) throws IOException, TemplateException, MessagingException;
+    void sendCourseInformMail(String name, String courseName, String receiver) throws IOException, TemplateException, MessagingException;
+
 }

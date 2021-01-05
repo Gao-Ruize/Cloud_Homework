@@ -10,8 +10,11 @@ import com.seproj.cloudhomework.utils.Homework.CreateHomeworkForm;
 import com.seproj.cloudhomework.utils.Homework.GradeStatistic;
 import com.seproj.cloudhomework.utils.Homework.StuHomeworkBrief;
 import com.seproj.cloudhomework.utils.Homework.UpdateHomeworkForm;
+import freemarker.template.TemplateException;
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -95,10 +98,10 @@ public interface TeacherService {
      * 1：存在非法学号
      * </pre>
      */
-    int addStudents(int c_id, List<String> stu_list);
+    int addStudents(int c_id, List<String> stu_list) throws TemplateException, IOException, MessagingException;
 
 
-    int addAStudent(int cid, String sid);
+    int addAStudent(int cid, String sid) throws TemplateException, IOException, MessagingException;
 
 
 
@@ -109,7 +112,7 @@ public interface TeacherService {
      * @param newhomework 新作业内容
      * @return 0表示成功
      */
-    int createHomework(CreateHomeworkForm newhomework);
+    int createHomework(CreateHomeworkForm newhomework) throws TemplateException, IOException, MessagingException;
 
     /**
      * <p>教师更新作业内容</p>
@@ -178,7 +181,7 @@ public interface TeacherService {
      * -1：未找到该次提交内容
      * </pre>
      */
-    int rateStuHomework(int sh_id, int grade);
+    int rateStuHomework(int sh_id, int grade) throws TemplateException, IOException, MessagingException;
 
 
 }
