@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
-import {Button, Card, CardContent, CardHeader, Grid, MenuItem, TextField, Typography} from "@material-ui/core";
+import {Button, Card, CardContent, CardHeader, Grid, TextField, Typography} from "@material-ui/core";
 import {history} from "../../Utils/History";
-import { message } from 'antd';
+import {message} from 'antd';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -123,7 +123,8 @@ export default class Register extends Component {
               _this.showFailMsg();
             }
           }
-        })
+        }
+      })
   };
 
   render() {
@@ -162,34 +163,10 @@ export default class Register extends Component {
               <TextField required variant="outlined" label="邮箱" style={{width: "100%"}}
                          onChange={this.storeMail}/>
             </Grid>
-
-            <Grid item xs={12}>
-              <TextField required variant="outlined" label="班级" style={{width: "100%"}}
-                         onChange={this.storeClass}/>
             </Grid>
-
-            <Grid item xs={12}>
-              <TextField variant="outlined" label="电话" style={{width: "100%"}}
-                         onChange={this.storePhone}/>
-            </Grid>
-
-            <Grid item xs={12}>
-              <FormControl component="fieldset">
-                <FormLabel component="legend">用户类型</FormLabel>
-                <RadioGroup aria-label="type" name="type" value={this.userType} onChange={this.storeUserType}>
-                  <FormControlLabel value="S" control={<Radio />} label="学生" />
-                  <FormControlLabel value="T" control={<Radio />} label="教师" />
-                </RadioGroup>
-              </FormControl>
-            </Grid>
-
-            <Button style={{width: "70%", margin: "auto"}} variant="contained" color="secondary"
-                    size="large" onClick={this.register}>注册</Button>
-
-          </Grid>
-        </CardContent>
-      </Card>
-        </div>
+          </CardContent>
+        </Card>
+      </div>
     );
   }
 }

@@ -2,6 +2,7 @@ package com.seproj.cloudhomework.serviceimpl;
 
 import com.seproj.cloudhomework.dao.*;
 import com.seproj.cloudhomework.entity.*;
+import com.seproj.cloudhomework.service.MailService;
 import com.seproj.cloudhomework.service.TeacherService;
 import com.seproj.cloudhomework.utils.Course.CourseDetail;
 import com.seproj.cloudhomework.utils.Course.UpdateCourseForm;
@@ -9,9 +10,12 @@ import com.seproj.cloudhomework.utils.Homework.CreateHomeworkForm;
 import com.seproj.cloudhomework.utils.Homework.GradeStatistic;
 import com.seproj.cloudhomework.utils.Homework.StuHomeworkBrief;
 import com.seproj.cloudhomework.utils.Homework.UpdateHomeworkForm;
+import freemarker.template.TemplateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +31,8 @@ public class TeacherServiceImpl implements TeacherService {
     private StudentHomeworkDao studentHomeworkDao;
     @Autowired
     private InstructDao instructDao;
+    @Autowired
+    private MailService mailService;
 
     @Override
     public int createCourse(UpdateCourseForm newCourse) {
@@ -116,11 +122,11 @@ public class TeacherServiceImpl implements TeacherService {
      */
     @Override
     public List<User> getAllStudents() {
-        return userDao.findAllUsers();
+        return userDao.findUserByRole(0);
     }
 
     @Override
-    public int addStudents(int c_id, List<String> stu_list) {
+    public int addStudents(int c_id, List<String> stu_list) throws TemplateException, IOException, MessagingException {
         int succ = 0;   // 添加成功：0
         Course course;
         if((course = courseDao.findCourseById(c_id)) == null){
@@ -135,25 +141,67 @@ public class TeacherServiceImpl implements TeacherService {
                 succ = 1;
                 continue;
             }
-            if((instr = instructDao.findDistinctByCourseIdAndStudentId(course.getId(), stu)) == null){
+            if((instr = instructDao.findDistinctByCourseIdAndStudentId(course.getId(), stu)) != null){
                 // 该学生已经在该课程中
                 continue;
             }
             instr = new Instruct(c_id, stu);
             instructDao.saveOrUpdate(instr);
+            mailService.sendCourseInformMail(student.getName(), course.getName(), student.getEmail());
         }
         // 返回-1：未找到课程；返回0：添加成功；返回1：存在非法学号（部分添加成功）
         return succ;
     }
 
     @Override
-    public int createHomework(CreateHomeworkForm newhomework) {
+    public int addAStudent(int cid, String sid) throws TemplateException, IOException, MessagingException {
+        Course course;
+        if((course = courseDao.findCourseById(cid)) == null){
+            // 未找到课程
+            return -1;
+        }
+        User student;
+        Instruct instr;
+        if((student = userDao.findUserByUserId(sid)) == null){
+            // 未找到用户
+            return 1;
+        }
+        if(student.getRole() != 0){
+            // 用户不是学生
+            return 1;
+        }
+        if((instr = instructDao.findDistinctByCourseIdAndStudentId(course.getId(), sid)) != null){
+            // 该学生已经在该课程中
+            return 2;
+        }
+        instr = new Instruct(cid, sid);
+        instructDao.saveOrUpdate(instr);
+        mailService.sendCourseInformMail(student.getName(), course.getName(), student.getEmail());
+        return 0;
+    }
+
+    @Override
+    public int createHomework(CreateHomeworkForm newhomework) throws TemplateException, IOException, MessagingException {
+        // TODO: 检测输入是否有效
         Homework homework = new Homework(newhomework.getName(),
                 newhomework.getReleasetime(),
                 newhomework.getDeadline(),
                 newhomework.getContent(),
                 newhomework.getCourseId());
         homeworkDao.saveOrUpdate(homework);
+        Course course = courseDao.findCourseByCourseId(newhomework.getCourseId());
+        List<Instruct> allStus = instructDao.findInstructByCourseId(course.getId());
+        int hid = homework.getId();
+        for(Instruct instr:allStus){
+            StudentHomework SH = new StudentHomework();
+            SH.setHomeworkId(hid);
+            SH.setStudentId(instr.getStudentId());
+            SH.setGrade(0);
+            studentHomeworkDao.saveOrUpdate(SH);
+            User student = userDao.findUserByUserId(instr.getStudentId());
+            mailService.sendHomeworkInformMail(student.getName(), course.getName(), student.getEmail());
+        }
+
         return 0;
     }
 
@@ -184,7 +232,7 @@ public class TeacherServiceImpl implements TeacherService {
         List<StudentHomework> stuHomework_list = studentHomeworkDao.findStudentHomeworkByHomeworkId(h_id);
         for(StudentHomework stuHomework:stuHomework_list){
             num_submitedstu++;
-            if(stuHomework.getGrade() < 0){
+            if(stuHomework.getCommitedTime() == null){
                 continue;
             }
             int grade = stuHomework.getGrade();
@@ -200,7 +248,11 @@ public class TeacherServiceImpl implements TeacherService {
 
         gradestat.setNum_allstu(num_allstu);
         gradestat.setNum_stu(num_submitedstu);
-        gradestat.setAvg_grade(tot_grade/num_ratedstu);
+        if(num_ratedstu == 0){
+            gradestat.setAvg_grade(0);
+        }else{
+            gradestat.setAvg_grade(tot_grade/num_ratedstu);
+        }
         gradestat.setMax_grade(max_grade);
         gradestat.setMin_grade(min_grade);
         return gradestat;
@@ -214,6 +266,33 @@ public class TeacherServiceImpl implements TeacherService {
         }
 
         return homeworkDao.findHomeworkByCourseId(course.getCourseId());
+    }
+
+    /**
+     * <p>教师获取自己执教课程的所有作业</p>
+     *
+     * @param tid 教师id
+     * @return 作业列表
+     */
+    @Override
+    public List<Homework> getHomeworksByTid(int tid) {
+        User teacher;
+        if((teacher  = userDao.findUserById(tid)) == null){
+            // 未找到该教师
+            return null;
+        }
+        List<Course> courses = courseDao.findCoursesByTeacherId(tid);
+
+        List<Homework> HwOfCourse;
+        List<Homework> result = new ArrayList<>();
+        for(Course course:courses){
+            HwOfCourse = homeworkDao.findHomeworkByCourseId(course.getCourseId());
+            for(Homework homework:HwOfCourse){
+                result.add(homework);
+            }
+        }
+
+        return result;
     }
 
     @Override
@@ -235,18 +314,35 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
+    public StudentHomework getAHomeworkToRate(int hid) {
+        List<StudentHomework> stuHW_list = studentHomeworkDao.findStudentHomeworkByHomeworkId(hid);
+        for(StudentHomework stuHW:stuHW_list){
+            User stu;
+            if((stu = userDao.findUserByUserId(stuHW.getStudentId())) == null){
+                continue;
+            }
+            if(stuHW.getCommitedTime() == null){
+                return stuHW;   // 找到一份未批改的作业
+            }
+        }
+        return null;
+    }
+
+    @Override
     public StudentHomework getStuHomework(int sh_id) {
         return studentHomeworkDao.findStudentHomeworkById(sh_id);
     }
 
     @Override
-    public int rateStuHomework(int sh_id, int grade) {
+    public int rateStuHomework(int sh_id, int grade) throws TemplateException, IOException, MessagingException {
         StudentHomework stuHW;
         if((stuHW = studentHomeworkDao.findStudentHomeworkById(sh_id)) == null){
             return -1;
         }
         stuHW.setGrade(grade);
         studentHomeworkDao.saveOrUpdate(stuHW);
+        User student = userDao.findUserByUserId(stuHW.getStudentId());
+        mailService.sendGradeInformMail(student.getName(), student.getEmail());
         return 0;
     }
 }

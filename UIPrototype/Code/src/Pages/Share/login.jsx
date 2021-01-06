@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
-import {Button, Card, CardContent, CardHeader, Grid, TextField, Typography } from "@material-ui/core";
-import { message } from 'antd';
+import {Button, Card, CardContent, CardHeader, Grid, TextField, Typography} from "@material-ui/core";
+import {message} from 'antd';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -100,12 +100,12 @@ export default class Login extends Component {
 
   render() {
     return (
-        <div>
+      <div>
         <Dialog
-            open={this.state.open}
-            onClose={this.closeErrDialog}
-            aria-labelledby="alert-dialog-title"
-            aria-describedby="alert-dialog-description"
+          open={this.state.open}
+          onClose={this.closeErrDialog}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
         >
           <DialogTitle id="alert-dialog-title">{"登录失败"}</DialogTitle>
           <DialogContent>
@@ -155,18 +155,18 @@ export default class Login extends Component {
               />
             </Grid>
 
-            <Grid item xs={6}>
-              <Button style={{width: "100%"}} variant="contained" color="secondary" size="large"
-                      onClick={this.login}>登录</Button>
+              <Grid item xs={6}>
+                <Button style={{width: "100%"}} variant="contained" color="secondary" size="large"
+                        onClick={this.login}>登录</Button>
+              </Grid>
+              <Grid item xs={6}>
+                <Button style={{width: "100%"}} variant="contained" color="primary" size="large"
+                        onClick={this.redirectToRegister}>注册</Button>
+              </Grid>
             </Grid>
-            <Grid item xs={6}>
-              <Button style={{width: "100%"}} variant="contained" color="primary" size="large"
-                      onClick={this.redirectToRegister}>注册</Button>
-            </Grid>
-          </Grid>
-        </CardContent>
-      </Card>
-        </div>
+          </CardContent>
+        </Card>
+      </div>
     );
   }
 }

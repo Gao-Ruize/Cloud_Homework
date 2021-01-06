@@ -10,8 +10,11 @@ import com.seproj.cloudhomework.utils.Homework.CreateHomeworkForm;
 import com.seproj.cloudhomework.utils.Homework.GradeStatistic;
 import com.seproj.cloudhomework.utils.Homework.StuHomeworkBrief;
 import com.seproj.cloudhomework.utils.Homework.UpdateHomeworkForm;
+import freemarker.template.TemplateException;
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -95,7 +98,11 @@ public interface TeacherService {
      * 1：存在非法学号
      * </pre>
      */
-    int addStudents(int c_id, List<String> stu_list);
+    int addStudents(int c_id, List<String> stu_list) throws TemplateException, IOException, MessagingException;
+
+
+    int addAStudent(int cid, String sid) throws TemplateException, IOException, MessagingException;
+
 
 
 
@@ -105,7 +112,7 @@ public interface TeacherService {
      * @param newhomework 新作业内容
      * @return 0表示成功
      */
-    int createHomework(CreateHomeworkForm newhomework);
+    int createHomework(CreateHomeworkForm newhomework) throws TemplateException, IOException, MessagingException;
 
     /**
      * <p>教师更新作业内容</p>
@@ -136,6 +143,14 @@ public interface TeacherService {
     List<Homework> getAllHomework(int c_id);
 
     /**
+     * <p>教师获取自己执教课程的所有作业</p>
+     *
+     * @param tid 教师id
+     * @return 作业列表
+     */
+    List<Homework> getHomeworksByTid(int tid);
+
+    /**
      * <p>获取某次作业学生提交列表</p>
      *
      * @param c_id 课程id
@@ -144,6 +159,8 @@ public interface TeacherService {
      * @return 学生提交的简要信息列表
      */
     List<StuHomeworkBrief> getStuHomeworkList(int c_id, String courseId, int h_id);
+
+    StudentHomework getAHomeworkToRate(int hid);
 
     /**
      * <p>获取某一作业某一学生的提交内容</p>
@@ -164,6 +181,7 @@ public interface TeacherService {
      * -1：未找到该次提交内容
      * </pre>
      */
-    int rateStuHomework(int sh_id, int grade);
+    int rateStuHomework(int sh_id, int grade) throws TemplateException, IOException, MessagingException;
+
 
 }

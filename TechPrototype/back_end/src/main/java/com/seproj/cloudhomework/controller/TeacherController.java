@@ -10,11 +10,14 @@ import com.seproj.cloudhomework.utils.Course.CourseDetail;
 import com.seproj.cloudhomework.utils.Course.UpdateCourseForm;
 import com.seproj.cloudhomework.utils.Homework.*;
 import com.seproj.cloudhomework.utils.Result;
+import freemarker.template.TemplateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -66,9 +69,27 @@ public class TeacherController {
     @CrossOrigin
     @PostMapping(value = "api/teacher/addstudents")
     @ResponseBody
-    public Result addStudentsToCourse(@RequestBody AddStuToCourseForm form){
+    public Result addStudentsToCourse(@RequestBody AddStuToCourseForm form) throws TemplateException, IOException, MessagingException {
         if(teacherService.addStudents(form.getId(), form.getStu_list()) == 0){
             return new Result(200);
+        }
+        return new Result(400);
+    }
+
+    @CrossOrigin
+    @PostMapping(value = "api/teacher/addAStudent/{cid}/{sid}")
+    @ResponseBody
+    public Result addAStudentToCourse(@PathVariable int cid, @PathVariable String sid) throws TemplateException, IOException, MessagingException {
+//        if(teacherService.addAStudent(cid, sid) == 0){
+//            return new Result(200);
+//        }
+        switch(teacherService.addAStudent(cid, sid)){
+            case 0: // 成功
+                return new Result(200);
+            case 1: // 未找到用户或用户不是学生
+                return new Result(201);
+            case 2: // 学生已在课程中
+                return new Result(202);
         }
         return new Result(400);
     }
@@ -83,7 +104,7 @@ public class TeacherController {
     @CrossOrigin
     @PostMapping(value = "api/teacher/createhomework")
     @ResponseBody
-    public Result createHomework(@RequestBody CreateHomeworkForm newHomework){
+    public Result createHomework(@RequestBody CreateHomeworkForm newHomework) throws TemplateException, IOException, MessagingException {
         if(teacherService.createHomework(newHomework) == 0){
             return new Result(200);
         }
@@ -115,10 +136,24 @@ public class TeacherController {
     }
 
     @CrossOrigin
+    @GetMapping(value = "api/teacher/getHomeworksByTid/{tid}")
+    @ResponseBody
+    public List<Homework> getHomeworksByTid(@PathVariable int tid){
+        return teacherService.getHomeworksByTid(tid);
+    }
+
+    @CrossOrigin
     @GetMapping(value = "api/teacher/getstuhomeworklist/{c_id}/{courseId}/{h_id}")
     @ResponseBody
     public List<StuHomeworkBrief> getStuHomeworkList(@PathVariable int c_id, @PathVariable String courseId, @PathVariable int h_id){
         return teacherService.getStuHomeworkList(c_id, courseId, h_id);
+    }
+
+    @CrossOrigin
+    @GetMapping(value = "api/teacher/getAHomeworkToRate/{hid}")
+    @ResponseBody
+    public StudentHomework getAHomeworkToRate(@PathVariable int hid){
+        return teacherService.getAHomeworkToRate(hid);
     }
 
     @CrossOrigin
@@ -131,7 +166,7 @@ public class TeacherController {
     @CrossOrigin
     @PostMapping(value = "api/teacher/ratestuhomework")
     @ResponseBody
-    public Result rateStuHomework(@RequestBody RateStuHomework rateData) {
+    public Result rateStuHomework(@RequestBody RateStuHomework rateData) throws TemplateException, IOException, MessagingException {
         if(teacherService.rateStuHomework(rateData.getId(), rateData.getGrade()) == 0){
             return new Result(200);
         }

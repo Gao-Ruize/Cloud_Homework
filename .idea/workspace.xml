@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4412c5cd-beb3-4c1b-882a-6c4cad6ca9a3" name="Default Changelist" comment="" />
+    <list default="true" id="4412c5cd-beb3-4c1b-882a-6c4cad6ca9a3" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/TechPrototype/back_end/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/TechPrototype/back_end/src/main/resources/application.properties" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1kPq8Jzs98iO1zFQbxeStBPk0rt" />
   <component name="ProjectViewState">
@@ -17,7 +22,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/TechPrototype/back_end" />
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -30,7 +35,14 @@
       <option name="presentableId" value="Default" />
       <updated>1605612413990</updated>
       <workItem from="1605612418715" duration="5000" />
+      <workItem from="1607239637658" duration="51000" />
     </task>
     <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="860" y="434" key="FileChooserDialogImpl" timestamp="1607239687062">
+      <screen x="0" y="0" width="2160" height="1359" />
+    </state>
+    <state x="860" y="434" key="FileChooserDialogImpl/0.0.2160.1359@0.0.2160.1359" timestamp="1607239687062" />
   </component>
 </project>
