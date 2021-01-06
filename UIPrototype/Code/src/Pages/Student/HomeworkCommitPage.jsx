@@ -33,6 +33,7 @@ export default class StuHomeworkCommit extends React.Component {
             homeworkId: this.props.location.state.hid,
             content: '',
             src: '',
+            showHelp:false
         }
     }
 

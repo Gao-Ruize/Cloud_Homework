@@ -76,7 +76,26 @@ export default class Register extends Component {
     history.replace('/login');
   };
 
+  checkNull = () => {
+    let c_id = this.state.id;
+    let c_username = this.state.userName;
+    let c_name = this.state.name;
+    let c_mail = this.state.mail;
+    let c_phone = this.state.phone;
+    let c_password = this.state.password;
+    let c_userType = this.state.userType;
+    if(c_id === '' || c_username === '' || c_name === '' ||
+       c_mail === '' || c_phone === '' || c_password === '' || c_userType === '')
+      return 1;
+    return 0;
+  };
+
   register = () => {
+    let check = this.checkNull();
+    if(check === 1) {
+      message.error("请填写完整信息");
+      return;
+    }
     let Url = base + "user/register";
     let data = {
       userid: this.state.id,
@@ -96,7 +115,7 @@ export default class Register extends Component {
             if(code === 200) {
               _this.showSuccessMsg();
               _this.toLoginPage();
-            } else if(code === 300) {
+            } else if(code === 400) {
               message.error('邮箱格式错误');
             }
             else

@@ -31,7 +31,8 @@ export default class StuCourseDetail extends React.Component {
             courseData: [],
             studentId: localStorage.getItem('Uid'),
             showModal: false,
-            grade: 0
+            grade: 0,
+            showHelp:false
         };
     }
 
@@ -49,6 +50,14 @@ export default class StuCourseDetail extends React.Component {
 
     closeModal = () => {
         this.setState({showModal: false});
+    };
+
+    showHelp = () => {
+        this.setState({showHelp: true});
+    };
+
+    closeHelp = () => {
+        this.setState({showHelp: false});
     };
 
     getCourseData = () => {
@@ -138,6 +147,15 @@ export default class StuCourseDetail extends React.Component {
                     <p>{this.state.grade}</p>
                 </Modal>
 
+                <Modal
+                    title="帮助"
+                    visible={this.state.showHelp}
+                    onOk={this.closeHelp}
+                    onCancel={this.closeHelp}
+                >
+                    <p>如需帮助请拨打：54749110</p>
+                </Modal>
+
                 <Sider
                     theme={"dark"}
                     style={{
@@ -197,7 +215,9 @@ export default class StuCourseDetail extends React.Component {
                             </Space>
                         </div>
                     </Content>
-                    <Footer style={{ textAlign: 'center' }}>云作业平台</Footer>
+                    <Footer style={{ textAlign: 'center' }}>
+                        <Button onClick = {this.showHelp}>帮助</Button>
+                    </Footer>
                 </Layout>
             </Layout>
         )

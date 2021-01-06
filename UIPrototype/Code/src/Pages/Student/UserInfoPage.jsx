@@ -35,6 +35,7 @@ export default class StuUserInfo extends React.Component {
             Mail: localStorage.getItem('Mail'),
             cPhone: '',
             cMail: '',
+            showHelp:false
         };
     }
 

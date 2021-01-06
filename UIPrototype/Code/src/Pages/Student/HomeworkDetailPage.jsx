@@ -41,6 +41,7 @@ export default class StuHomeworkDetail extends React.Component {
         this.state = {
             info: {},
             id: this.props.location.state.homeworkId,
+            showHelp:false
         };
     }
 

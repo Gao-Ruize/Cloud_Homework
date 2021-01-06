@@ -1,7 +1,7 @@
 import React from 'react';
 import 'antd/dist/antd.css';
 
-import {Layout, Menu, PageHeader, Table} from 'antd';
+import {Layout, Menu, PageHeader, Table, Tag} from 'antd';
 import {
     AppstoreOutlined,
     BarChartOutlined,
@@ -86,7 +86,8 @@ export default class StuHomeworkList extends React.Component {
         super(props);
         this.state = {
             type: this.props.location.state.type,
-            homework: []
+            homework: [],
+            showHelp:false
         };
     }
 
@@ -106,6 +107,8 @@ export default class StuHomeworkList extends React.Component {
             .then(resp => {
                 if(resp && resp.status === 200) {
                     let data = resp.data;
+                    console.log("check output");
+                    console.log(data);
                     _this.setState({
                         homework: data
                     });
@@ -136,6 +139,18 @@ export default class StuHomeworkList extends React.Component {
         if(key === '3') {
             this.toStuHomeworkList();
         }
+    };
+
+    getHomeworkColor = (e) => {
+        if(e === 0) return 'blue';
+        if(e === 1) return 'green';
+        if(e === 2) return 'red';
+    };
+
+    getHomeworkInfo = (e) => {
+        if(e === 0) return '未提交';
+        if(e === 1) return '已提交';
+        if(e === 2) return '已超时';
     };
 
     render(){
@@ -178,6 +193,17 @@ export default class StuHomeworkList extends React.Component {
                         <Column title="课程编号" dataIndex="courseId" key="courseId" />
                         <Column title="课程名称" dataIndex="courseName" key="courseName" />
                         <Column title="作业名称" dataIndex="name" key="name" />
+                        <Column
+                            title="状态"
+                            dataIndex="type"
+                            key="type"
+                            render={type => (
+                                <Tag color = {this.getHomeworkColor(type)} key={type}>
+                                    {this.getHomeworkInfo(type)}
+                                </Tag>
+
+                            )}
+                        />
                         <Column
                             title="详情"
                             render={(text, record) => (

@@ -54,7 +54,8 @@ export default class StuCourseList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            courses:[]
+            courses:[],
+            showHelp:false
         }
     }
 
@@ -100,6 +101,10 @@ export default class StuCourseList extends React.Component {
                     });
                 }
             })
+    };
+
+    showHelp = () => {
+
     };
 
     getColor = (x) => {
@@ -187,7 +192,11 @@ export default class StuCourseList extends React.Component {
                             />
                         </Table>
                     </Content>
-                    <Footer style={{ textAlign: 'center' }}>云作业平台</Footer>
+                    <Footer style={{ textAlign: 'center' }}>
+                        <Button>
+                            帮助
+                        </Button>
+                    </Footer>
                 </Layout>
             </Layout>
         )
