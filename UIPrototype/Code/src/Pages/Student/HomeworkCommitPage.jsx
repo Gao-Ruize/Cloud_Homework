@@ -22,14 +22,16 @@ const normFile = e => {
 };
 
 export default class StuHomeworkCommit extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      fileList: [],
-      uploading: false,
-      homeworkId: this.props.location.state.hid,
-      content: '',
-      src: '',
+    constructor(props) {
+        super(props);
+        this.state = {
+            fileList: [],
+            uploading: false,
+            homeworkId: this.props.location.state.hid,
+            content: '',
+            src: '',
+            showHelp:false
+        }
     }
   }
 
@@ -57,18 +59,24 @@ export default class StuHomeworkCommit extends React.Component {
     message.error("提交失败，请重试！");
   };
 
-  stuMenuRedirect = (event) => {
-    let key = event.key;
-    if (key === '1') {
-      this.toStuInfo();
-    }
-    if (key === '2') {
-      this.toStuCourseList();
-    }
-    if (key === '3') {
-      this.toStuHomeworkList();
-    }
-  };
+
+    showRepeatMsg = () => {
+        message.info("重复提交，已覆盖先前提交！");
+    };
+
+    stuMenuRedirect = (event) => {
+        let key = event.key;
+        if(key === '1') {
+            this.toStuInfo();
+        }
+        if(key === '2') {
+            this.toStuCourseList();
+        }
+        if(key === '3') {
+            this.toStuHomeworkList();
+        }
+    };
+
 
   backToHomeDetail = () => {
     history.goBack()
@@ -101,18 +109,36 @@ export default class StuHomeworkCommit extends React.Component {
     console.log(formData);
   };
 
-  handleCommit = () => {
-    let Url = base + 'api/student/handInHomework';
-    let _this = this;
-    let studentId = localStorage.getItem('Uid');
-    let hId = this.state.homeworkId;
-    let content = this.state.content;
-    let picture = this.state.src;
-    let data = {
-      sid: studentId,
-      hid: hId,
-      content: content,
-      picture: picture
+
+    handleCommit = () => {
+        let Url = base + 'student/handInHomework';
+        let _this = this;
+        let studentId = localStorage.getItem('Uid');
+        let hId = this.state.homeworkId;
+        let content = this.state.content;
+        let picture = this.state.src;
+        let data = {
+            sid: studentId,
+            hid: hId,
+            content: content,
+            picture: picture
+        };
+        axios.post(Url, data)
+            .then(resp => {
+                if(resp && resp.status === 200) {
+                    let code = resp.data.code;
+                    if(code === 200) {
+                        _this.showSuccessMsg();
+                    } else if(code === 201) {
+                        _this.showDelayMsg();
+                    } else if(code === 202) {
+                        _this.showRepeatMsg();
+                    } else {
+                        _this.showOtherErrMsg();
+                    }
+                }
+            })
+
     };
     axios.post(Url, data)
       .then(resp => {

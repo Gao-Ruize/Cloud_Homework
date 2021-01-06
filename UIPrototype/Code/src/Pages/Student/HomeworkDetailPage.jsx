@@ -25,12 +25,32 @@ const homeworks = {
   demands: '请提交一张图片',
 };
 
-export default class StuHomeworkDetail extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      info: {},
-      id: this.props.location.state.homeworkId,
+export default class StuHomeworkDetail extends React.Component 
+    constructor(props) {
+        super(props);
+        this.state = {
+            info: {},
+            id: this.props.location.state.homeworkId,
+            showHelp:false
+        };
+    }
+
+    componentDidMount() {
+        this.getHomework();
+    }
+
+    getHomework = () => {
+        // get homework by id
+        let Url = base + 'student/getHomeworkDetail/' + this.state.id;
+        let _this = this;
+        axios.get(Url)
+            .then(resp => {
+                if(resp && resp.status === 200) {
+                    _this.setState({
+                        info: resp.data
+                    });
+                }
+            })
     };
   }
 
