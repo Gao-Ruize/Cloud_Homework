@@ -500,7 +500,7 @@ class TeacherServiceImplTest {
     }
 
     @Test
-    void addStudents() {
+    void addStudents() throws Exception {
         int exp;
         int c_id;
         List<String> stu_list;
@@ -527,7 +527,7 @@ class TeacherServiceImplTest {
     }
 
     @Test
-    void addAStudent() {
+    void addAStudent() throws Exception {
         int exp;
         int cid;
         String sid;
@@ -564,7 +564,7 @@ class TeacherServiceImplTest {
     }
 
     @Test
-    void createHomework() {
+    void createHomework() throws Exception {
         int exp;
         CreateHomeworkForm newhomework;
 
@@ -695,7 +695,7 @@ class TeacherServiceImplTest {
     }
 
     @Test
-    void rateStuHomework() {
+    void rateStuHomework() throws Exception {
         int exp;
         int sh_id;
         int grade;
