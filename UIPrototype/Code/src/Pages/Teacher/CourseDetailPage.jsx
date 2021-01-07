@@ -69,6 +69,11 @@ export default class TeaCourseDetail extends React.Component {
     history.replace('/teaHomeworkRelease', {courseId: this.state.courseId})
   }
 
+  toTeaHomeworkChoice = () => {
+    console.log("id: ", this.state.id)
+    history.replace('/teaHomeworkChoice' , {id: this.state.id})
+  }
+
   toTeaCheckHomework = () => {
     history.push('/teaCheckHomework')
   }
@@ -159,7 +164,6 @@ export default class TeaCourseDetail extends React.Component {
                   <div>
                     <Title>{this.state.name}</Title>
                     <Title level={2}>{this.state.courseId}</Title>
-                    {/* <Title level={3}>{this.state.time}</Title> */}
                   </div>
                 </Col>
               </Row>
@@ -169,6 +173,7 @@ export default class TeaCourseDetail extends React.Component {
                   <div className='CTBar' style={{float: 'left'}}>
                     <Space>
                       <Button type="primary" size="large" onClick={this.toTeaHomeworkRelease}>发布作业</Button>
+                      <Button type="primary" size="large" onClick={this.toTeaHomeworkChoice}>发布选择题</Button>
                       <Button type="primary" size="large" onClick={this.toTeaCheckHomework}>批改作业</Button>
                       <Button type="primary" size="large" onClick={this.toTeaAddStudent2Course}>添加学生</Button>
                     </Space>

@@ -19,7 +19,7 @@ import TeaHomeworkList from "./Pages/Teacher/HomeworkListPage";
 import TeaHomeworkRelease from "./Pages/Teacher/HomeworkReleasePage";
 import TeaSubmitCourse from "./Pages/Teacher/SubmitCoursePage";
 import TeaUserInfo from "./Pages/Teacher/UserInfoPage";
-
+import TeaHomeworkChoice from "./Pages/Teacher/HomeworkChoicePage";
 
 class BasicRouter extends React.Component {
     render() {
@@ -45,6 +45,7 @@ class BasicRouter extends React.Component {
                 <Route exact path = "/teaHomeworkRelease" component={TeaHomeworkRelease} />
                 <Route exact path = "/teaSubmitCourse" component={TeaSubmitCourse} />
                 <Route exact path = "/teaUserInfo" component={TeaUserInfo} />
+                <Route exact path = "/teaHomeworkChoice" component={TeaHomeworkChoice} />
             </Router>
         );
     }

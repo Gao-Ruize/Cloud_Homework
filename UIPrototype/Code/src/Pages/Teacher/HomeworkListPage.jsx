@@ -132,7 +132,6 @@ export default class TeaHomeworkList extends React.Component {
             选择学生批改
           </Button>
           <Modal
-            title="Basic Modal"
             visible={this.state.visible}
             onOk={this.handleOk}
             onCancel={this.handleCancel}

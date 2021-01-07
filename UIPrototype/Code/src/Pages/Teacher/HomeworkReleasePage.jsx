@@ -18,7 +18,7 @@ export default class TeaHomeworkRelease extends React.Component {
       content: '',
       releasetime: '',
       deadline: '',
-      courseId: this.props.location.state.courseKey,
+      courseId: this.props.location.state.courseId,
     }
   }
 
@@ -38,6 +38,7 @@ export default class TeaHomeworkRelease extends React.Component {
   };
 
   storeDeadline = (date, dateString) => {
+    this.setState({deadline: dateString});
   };
 
   toTeaInfo = () => {
@@ -89,7 +90,6 @@ export default class TeaHomeworkRelease extends React.Component {
       deadline: this.state.deadline,
       courseId: this.state.courseId
     }
-    console.log(data)
     axios.post(Url, data)
       .then(resp => {
         if (resp && resp.status === 200) {
