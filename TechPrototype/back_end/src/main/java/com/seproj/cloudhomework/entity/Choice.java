@@ -14,6 +14,7 @@ public class Choice {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     int id;
+
     String content;
     String choicea;
     String choiceb;

@@ -206,7 +206,7 @@ export default class TeaCheckHomework extends React.Component {
                 //     </Card>
                 // </List.Item>}
                 <Card size="large" style={{width: '100%'}}>
-                  *作业一内容content*
+                  {this.state.picture}
                   <InputNumber
                     min={0}
                     max={item.value}

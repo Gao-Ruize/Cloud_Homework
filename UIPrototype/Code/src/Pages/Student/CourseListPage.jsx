@@ -1,7 +1,7 @@
 import React from 'react';
 import 'antd/dist/antd.css';
 
-import {Layout, Menu, PageHeader, Popconfirm, Table, Tag} from 'antd';
+import {Layout, Menu, PageHeader, Popconfirm, Table, Tag, Button} from 'antd';
 import {AuditOutlined, HighlightOutlined, TableOutlined,} from '@ant-design/icons';
 import {history} from "../../Utils/History";
 import axios from 'axios';
@@ -53,7 +53,6 @@ export default class StuCourseList extends React.Component {
             showHelp:false
         }
     }
-  }
 
   componentDidMount() {
     this.getAllCourses();
@@ -196,11 +195,7 @@ export default class StuCourseList extends React.Component {
                 </Layout>
             </Layout>
         )
-    }
-    if (key === '3') {
-      this.toStuHomeworkList();
-    }
-  };
+  }
 
   getAllCourses = () => {
     let UserId = localStorage.getItem('Uid');
