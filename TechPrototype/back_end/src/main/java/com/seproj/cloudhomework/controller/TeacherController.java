@@ -10,11 +10,14 @@ import com.seproj.cloudhomework.utils.Course.CourseDetail;
 import com.seproj.cloudhomework.utils.Course.UpdateCourseForm;
 import com.seproj.cloudhomework.utils.Homework.*;
 import com.seproj.cloudhomework.utils.Result;
+import freemarker.template.TemplateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -66,7 +69,7 @@ public class TeacherController {
     @CrossOrigin
     @PostMapping(value = "api/teacher/addstudents")
     @ResponseBody
-    public Result addStudentsToCourse(@RequestBody AddStuToCourseForm form){
+    public Result addStudentsToCourse(@RequestBody AddStuToCourseForm form) throws TemplateException, IOException, MessagingException {
         if(teacherService.addStudents(form.getId(), form.getStu_list()) == 0){
             return new Result(200);
         }
@@ -76,7 +79,7 @@ public class TeacherController {
     @CrossOrigin
     @PostMapping(value = "api/teacher/addAStudent/{cid}/{sid}")
     @ResponseBody
-    public Result addAStudentToCourse(@PathVariable int cid, @PathVariable String sid){
+    public Result addAStudentToCourse(@PathVariable int cid, @PathVariable String sid) throws TemplateException, IOException, MessagingException {
 //        if(teacherService.addAStudent(cid, sid) == 0){
 //            return new Result(200);
 //        }
@@ -101,7 +104,7 @@ public class TeacherController {
     @CrossOrigin
     @PostMapping(value = "api/teacher/createhomework")
     @ResponseBody
-    public Result createHomework(@RequestBody CreateHomeworkForm newHomework){
+    public Result createHomework(@RequestBody CreateHomeworkForm newHomework) throws TemplateException, IOException, MessagingException {
         if(teacherService.createHomework(newHomework) == 0){
             return new Result(200);
         }
@@ -163,7 +166,7 @@ public class TeacherController {
     @CrossOrigin
     @PostMapping(value = "api/teacher/ratestuhomework")
     @ResponseBody
-    public Result rateStuHomework(@RequestBody RateStuHomework rateData) {
+    public Result rateStuHomework(@RequestBody RateStuHomework rateData) throws TemplateException, IOException, MessagingException {
         if(teacherService.rateStuHomework(rateData.getId(), rateData.getGrade()) == 0){
             return new Result(200);
         }
