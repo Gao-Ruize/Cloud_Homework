@@ -98,4 +98,10 @@ public class AuthorityServiceImpl implements AuthorityService {
     public User getUserInfo(String userid) {
         return userdao.findUserByUserId(userid);
     }
+
+    @Override
+    public int changeSidtoId(String id) {
+        User user = userdao.findUserByUserId(id);
+        return user.getId();
+    }
 }
