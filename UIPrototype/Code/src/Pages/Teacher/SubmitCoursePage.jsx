@@ -12,14 +12,6 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 
 const {Header, Content, Footer, Sider} = Layout;
 const {TextArea} = Input;
-
-const normFile = e => {
-  console.log('Upload event:', e);
-  if (Array.isArray(e)) {
-    return e;
-  }
-  return e && e.fileList;
-};
 let base = global.data.baseUrl;
 
 export default class TeaSubmitCourse extends React.Component {
@@ -178,37 +170,6 @@ export default class TeaSubmitCourse extends React.Component {
                 </Button>
               </DialogActions>
             </Dialog>
-            {/* <Form style={{marginTop:30, marginBottom:0}}>
-                            <Form.Item
-                                label="Name"
-                                name="name"
-                                rules={[{ required: true, message: '请输入课程名!' }]}
-                            >
-                                <Input value={this.state.name} onChange={this.storeName}/>
-                            </Form.Item>
-
-                            <Form.Item
-                                label="CourseID"
-                                name="CourseID"
-                                rules={[{ required: true, message: '请输入课程编号!' }]}
-                            >
-                                <Input value={this.state.courseId} onChange={this.storeCourseId}/>
-                            </Form.Item>
-
-                            <Form.Item
-                                label="CourseInfo"
-                                name="CourseInfo"
-                                rules={[{ required: true, message: '请输入课程信息！' }]}
-                            >
-                                <Input value={this.state.courseInfo} onChange={this.storeCourseInfo}/>
-                            </Form.Item>
-
-                            <Form.Item >
-                                <Button type="primary" onClick = {this.handleSubmit}>
-                                    Submit
-                                </Button>
-                            </Form.Item>
-                        </Form> */}
             <Card style={{width: "30%", margin: "auto auto"}}>
               <CardContent>
                 <Grid container spacing={3}>
