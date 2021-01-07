@@ -28,6 +28,7 @@ def ConvertToTextByBase64(base):
     for x in result:
         words = x["words"]
         final_result += words
+    print(final_result)
     return final_result
 
 
@@ -39,8 +40,10 @@ def ConvertToTextByImg(path):
     for x in result:
         words = x["words"]
         final_result += words
+    print(final_result)
     return final_result
 
 
 if __name__ == '__main__':
-    ConvertToTextByBase64(sys.argv[1])
+    # ConvertToTextByBase64(sys.argv[1])
+    ConvertToTextByImg("test2.png")

@@ -6,6 +6,7 @@ def getImageVar(imgPath):
     image = cv2.imread(imgPath)
     img2gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     imageVar = cv2.Laplacian(img2gray, cv2.CV_64F).var()
+    print(imageVar)
     return imageVar
 
 
@@ -30,9 +31,10 @@ def test(imgPath, mean):
 
 
 if __name__ == "__main__":
-    mean = train("/train")
+    mean = train("train")
     if test("test.jpg", mean):
         print("pass")
-
+    else:
+        print("failed")
 
 
