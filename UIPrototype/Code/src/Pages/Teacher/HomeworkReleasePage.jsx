@@ -35,12 +35,9 @@ export default class TeaHomeworkRelease extends React.Component {
 
   storeReleasetime = (date, dateString) => {
     this.setState({releasetime: dateString});
-    //  console.log("release:",dateString)
   };
 
   storeDeadline = (date, dateString) => {
-    this.setState({deadline: dateString});
-    // console.log("deadline:",event.target.value)
   };
 
   toTeaInfo = () => {
@@ -126,9 +123,6 @@ export default class TeaHomeworkRelease extends React.Component {
             <Menu.Item key="3" icon={<TableOutlined/>}>
               课程
             </Menu.Item>
-            {/* <Menu.Item key="4" icon={<HighlightOutlined />}>
-                            发布作业
-                        </Menu.Item> */}
             <Menu.Item key="5" icon={<ReadOutlined/>}>
               作业情况
             </Menu.Item>
@@ -146,13 +140,6 @@ export default class TeaHomeworkRelease extends React.Component {
               />
 
               <Form style={{marginTop: 30}}>
-                {/* <Form.Item
-                                    label="课程课号"
-                                    name="id"
-                                    rules={[{ required: true, message: '请输入课程课号!' }]}
-                                > */}
-                {/* <Input value={this.state.id} onChange={this.storeId}/>
-                                </Form.Item> */}
                 <Form.Item
                   label="作业名称"
                   name="name"
@@ -182,31 +169,6 @@ export default class TeaHomeworkRelease extends React.Component {
                     <DatePicker onChange={this.storeDeadline}/>
                   </Form.Item>
                 </Form.Item>
-
-
-                {/* <Form.Item name="checkbox-group" label="Checkbox.Group">
-                                    <Checkbox.Group>
-                                        <Row>
-                                            <Col span={8}>
-                                                <Checkbox value="A" style={{ lineHeight: '32px' }}>
-                                                    文字形式
-                                                </Checkbox>
-                                            </Col>
-                                            <Col span={8}>
-                                                <Checkbox value="B" style={{ lineHeight: '32px' }}>
-                                                    语音形式
-                                                </Checkbox>
-                                            </Col>
-                                            <Col span={8}>
-                                                <Checkbox value="C" style={{ lineHeight: '32px' }}>
-                                                    图片形式
-                                                </Checkbox>
-                                            </Col>
-                                        </Row>
-                                    </Checkbox.Group>
-                                </Form.Item> */}
-
-
                 <Form.Item>
                   <Button type="primary" onClick={this.handleSubmit}>
                     Submit

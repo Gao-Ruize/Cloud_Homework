@@ -54,8 +54,8 @@ export default class TeaHomeworkList extends React.Component {
     this.state = {
       homework: [],
       h_id:'',
-      id:'',
-      courseId:''
+      id:'1',
+      courseId:'1',
     };
   } ;
 
@@ -63,23 +63,6 @@ export default class TeaHomeworkList extends React.Component {
     this.setState({
       visible: true,
     });
-
-    // let UserId = localStorage.getItem('UserId');
-    // let Url = base + 'teacher/getstuhomeworklist';
-    // let _this = this;
-    // let data = {
-    //     name: this.state.homework.id
-    // }
-    // axios.get(Url)
-    //     .then(resp => {
-    //         if(resp && resp.status === 200) {
-    //             let CourseList = resp.data;
-    //             console.log("aaaa",resp.data)
-    //             _this.setState({
-    //                 courses: CourseList
-    //             });
-    //         }
-    //     })
 
   };
 
@@ -101,23 +84,20 @@ export default class TeaHomeworkList extends React.Component {
   }
 
   getstuhomeworklist = ()=>{
-    let Url = base + 'teacher/getstuhomeworklist/';
-    let data = {
-      id: this.state.id,
-      courseId: this.state.courseId,
-      h_id: this.state.h_id
-    };
-    // axios.get(Url, data){
-    //   .then(resp => {
-    //     if (resp && resp.status === 200){
-    //       let homeworklist = resp.data;
-    //       console.log("homeworklist: ", resp.data)
-    //       this.setState({
-    //         homeworklist:homeworklist
-    //       })
-    //     }
-    //   })
-    // }
+    let h_id = this.state.h_id;
+    console.log("h_id", h_id)
+    let Url = base + 'teacher/getstuhomeworklist/100/100/'+ h_id;
+    axios.get(Url)
+      .then(resp => {
+        if (resp && resp.status === 200){
+          let homeworklist = resp.data;
+          console.log("homeworklist: ", resp.data)
+          this.setState({
+            homeworklist:homeworklist
+          })
+          
+        }
+      })
 
   }
 
@@ -139,13 +119,16 @@ export default class TeaHomeworkList extends React.Component {
       dataIndex: 'deadline',
       key: 'deadline',
       sorter: (a, b) => a.name.length - b.name.length,
+      render: text => <a>{text.slice(0,10)}</a>
     },
     {
       title: '完成情况',
       key: 'check',
       render: (text, record) => (
         <Space>
-          <Button type="primary" size="small" onClick={this.showModal}>
+          {/* <Button type="primary" size="small" onClick={this.showModal}> */}
+          <Button type="primary" size="small" onClick={()=> { this.setState({visible: true});this.state.h_id = text.id;this.getstuhomeworklist() }
+    }>
             选择学生批改
           </Button>
           <Modal
@@ -154,15 +137,15 @@ export default class TeaHomeworkList extends React.Component {
             onOk={this.handleOk}
             onCancel={this.handleCancel}
           >
-            <Table dataSource={dataSource}>
-              <Column title="姓名" dataIndex="name" key="name"/>
-              <Column title="学号" dataIndex="studentId" key="studentId"/>
+            <Table dataSource={this.state.homeworklist}>
+              <Column title="姓名" dataIndex="stu_name" key="stu_name"/>
+              <Column title="学号" dataIndex="user_id" key="user_id"/>
               <Column
                 title=""
                 key="action"
                 render={(text, record) => (
                   // 根据数据类型进行修改
-                  <Button title="批改" onClick={this.toCorrectPage}>
+                  <Button title="批改" onClick={()=>{history.push('/teaCheckHomework', {homework_id: text.id})}}>
                     批改
                   </Button>
                 )}
