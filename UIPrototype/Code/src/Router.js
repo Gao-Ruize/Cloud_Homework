@@ -22,6 +22,7 @@ import TeaUserInfo from "./Pages/Teacher/UserInfoPage";
 
 import StuChoice from "./Pages/Student/StuChoicePage";
 
+import TeaHomeworkChoice from "./Pages/Teacher/HomeworkChoicePage";
 
 class BasicRouter extends React.Component {
     render() {
@@ -49,6 +50,7 @@ class BasicRouter extends React.Component {
                 <Route exact path = "/teaUserInfo" component={TeaUserInfo} />
                 {/* choice */}
                 <Route exact path = "/stuChoice" component={StuChoice} />
+                <Route exact path = "/teaHomeworkChoice" component={TeaHomeworkChoice} />
             </Router>
         );
     }

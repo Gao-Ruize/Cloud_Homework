@@ -1,62 +1,44 @@
-import React from 'react'
-import {Layout, Menu, message} from 'antd';
+import React from 'react';
+import 'antd/dist/antd.css';
+
+import {Input, Layout, Menu, message} from 'antd';
 import {FormOutlined, ReadOutlined, TableOutlined, UserOutlined} from '@ant-design/icons';
-import {Button, Card, CardContent, CardHeader, Grid, MenuItem, TextField, Typography} from "@material-ui/core";
+import {Button, Card, CardContent, CardHeader, Grid, TextField, Typography} from "@material-ui/core";
 import {history} from "../../Utils/History";
 import axios from 'axios';
 
-let base = global.data.baseUrl;
 
 const {Header, Content, Footer, Sider} = Layout;
+const {TextArea} = Input;
 
-const currencies = [
-  {
-    value: 'EE',
-    label: '电子信息与电气工程学院',
-  },
-  {
-    value: 'M',
-    label: '机械与动力工程学院',
-  },
-  {
-    value: 'A',
-    label: '安泰经济与管理学院',
-  },
-  {
-    value: 'Y',
-    label: '药学院',
-  },
-  {
-    value: 'K',
-    label: '凯原法学院',
-  },
-  {
-    value: 'MathR',
-    label: '数学科学学院',
-  },
-  {
-    value: 'R',
-    label: '人文学院',
-  },
-];
+const layout = {
+  labelCol: {span: 8},
+  wrapperCol: {span: 16},
+};
+let base = global.data.baseUrl;
 
-
-export default class TeaUserInfo extends React.Component {
+export default class StuUserInfo extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       id: localStorage.getItem('Uid'),
-      name: '',
-      userName: '',
+      userName: localStorage.getItem('UserName'),
       userId: localStorage.getItem('UserId'),
-      Phone: '',
-      Mail: '',
+      Phone: localStorage.getItem('Phone'),
+      Mail: localStorage.getItem('Mail'),
       cPhone: '',
       cMail: '',
+      showHelp: false
     };
   }
 
+  componentDidMount() {
+    this.getUserInfo();
+  }
+
   getUserInfo = () => {
+    console.log("firsttime");
+    console.log(this.state);
     let userId = localStorage.getItem('UserId');
     let Url = base + 'user/getUsrInfo/' + userId;
     let _this = this;
@@ -68,13 +50,13 @@ export default class TeaUserInfo extends React.Component {
           let userid = resp.data.userId;
           let phone = resp.data.phone;
           let mail = resp.data.email;
-          let name = resp.data.name;
+          console.log(username);
+          console.log(userid);
           _this.setState({
             userName: username,
             userId: userid,
             Phone: phone,
-            Mail: mail,
-            name: name
+            Mail: mail
           }, function () {
             console.log(_this.state);
           });
@@ -130,31 +112,31 @@ export default class TeaUserInfo extends React.Component {
   };
 
   handleSubmit = () => {
-    let Url = base + 'api/user/modify';
-    let userId = this.state.user.userid;
+    let Url = base + 'user/modify';
+    let userId = this.state.id;
     let data = {
       id: userId,
       email: this.state.cMail,
       phone: this.state.cPhone
     };
-
-    console.log(data)
     axios.post(Url, data)
       .then(resp => {
         if (resp && resp.status === 200) {
           if (resp.data.code === 200) {
             message.success('修改成功');
+          } else if (resp.data.code === 400) {
+            message.error('邮箱格式错误')
           } else
             message.error('修改失败');
         }
       })
   };
 
-
   render() {
     return (
       <Layout>
         <Sider
+          theme={"dark"}
           style={{
             overflow: 'auto',
             height: '100vh',
@@ -173,19 +155,19 @@ export default class TeaUserInfo extends React.Component {
             <Menu.Item key="3" icon={<TableOutlined/>}>
               课程
             </Menu.Item>
-            {/* <Menu.Item key="4" icon={<HighlightOutlined />}>
-                            发布作业
-                        </Menu.Item> */}
+
             <Menu.Item key="5" icon={<ReadOutlined/>}>
               作业情况
             </Menu.Item>
 
           </Menu>
+
         </Sider>
+
         <Layout className="site-layout" style={{marginLeft: 200}}>
           <Header className="site-layout-background" style={{padding: 0}}/>
           <Content style={{margin: '24px 16px 0', overflow: 'initial'}}>
-            <Card style={{width: "50%", margin: "150px auto"}}>
+            <Card style={{width: "70%", margin: "150px auto"}}>
               <CardHeader
                 title={<Typography variant={"h5"} align={"center"}>
                   个人信息资料
@@ -200,7 +182,7 @@ export default class TeaUserInfo extends React.Component {
                       disabled
                       id="outlined-disabled"
                       label="姓名"
-                      defaultValue={this.state.name}
+                      defaultValue={this.state.userName}
                       variant="outlined"
                       style={{width: "90%"}}
                     />
@@ -209,7 +191,7 @@ export default class TeaUserInfo extends React.Component {
                     <TextField
                       disabled
                       id="outlined-disabled"
-                      label="工号"
+                      label="学号"
                       defaultValue={this.state.userId}
                       variant="outlined"
                       style={{width: "90%"}}
@@ -219,43 +201,18 @@ export default class TeaUserInfo extends React.Component {
                   <Grid item xs={6}>
                     <TextField
                       label="电话"
-                      defaultValue={this.state.cPhone}
-                      variant="outlined"
-                      style={{width: "90%"}}
-                    />
-                  </Grid>
-
-                  <Grid item xs={6}>
-                    <TextField
-                      select
-                      label=""
-                      variant="outlined"
-                      style={{width: "90%"}}
-                    >
-                      {currencies.map((option) => (
-                        <MenuItem key={option.value} value={option.value}>
-                          {option.label}
-                        </MenuItem>
-                      ))}
-                    </TextField>
-                  </Grid>
-
-
-                  <Grid item xs={6}>
-                    <TextField
-                      id="outlined-disabled"
-                      label="昵称"
-                      defaultValue={this.state.userName}
+                      defaultValue={this.state.Phone}
                       variant="outlined"
                       style={{width: "90%"}}
                       onChange={this.storeCPhone}
                     />
                   </Grid>
+
                   <Grid item xs={6}>
                     <TextField
                       id="outlined-disabled"
                       label="邮箱"
-                      defaultValue={this.state.cMail}
+                      defaultValue={this.state.Mail}
                       variant="outlined"
                       style={{width: "90%"}}
                       onChange={this.storeCMail}
@@ -267,7 +224,6 @@ export default class TeaUserInfo extends React.Component {
                       确认修改
                     </Button>
                   </Grid>
-
                 </Grid>
               </CardContent>
             </Card>
