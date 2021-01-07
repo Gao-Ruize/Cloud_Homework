@@ -58,6 +58,7 @@ public class ChoiceController {
             Choice choice = choiceService.findDistinctById(choiceId);
             iter.setCourseid(choice.getCourseid());
             iter.setContent(choice.getContent());
+            iter.setFormalAns(choice.getAnswer());
         }
         // 筛选出courseId相同的题目
         List<Stuchoice> ret = new ArrayList<>();
@@ -81,6 +82,11 @@ public class ChoiceController {
         Choice choice = choiceService.findDistinctById(choiceid);
         String formalAns = choice.getAnswer();
         Stuchoice stuchoice = stuchoiceService.findDistinctByStudentidAndChoiceid(studentid, choiceid);
+        String preAns = stuchoice.getAnswer();
+        if(!preAns.equals("e")) {
+            // 重复提交
+            return new Result(300);
+        }
         int grade = 0;
         if(formalAns.equals(ans)) {
             grade = 1;
@@ -92,5 +98,12 @@ public class ChoiceController {
             return new Result(200);
         }
         return new Result(201);
+    }
+
+    @CrossOrigin
+    @GetMapping(value = "api/stu/choiceitem/{cid}")
+    @ResponseBody
+    public Choice getChoiceItem(@PathVariable int cid) {
+        return choiceService.findDistinctById(cid);
     }
 }
