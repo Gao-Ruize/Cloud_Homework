@@ -60,4 +60,6 @@ public interface AuthorityService {
     * @return 用户信息
     */
    User getUserInfo(String userid);
+
+   int changeSidtoId(String id);
 }
