@@ -33,7 +33,6 @@ export default class StuHomeworkCommit extends React.Component {
             showHelp:false
         }
     }
-  }
 
   toStuInfo = () => {
     history.replace('/stuUserInfo');
@@ -138,8 +137,6 @@ export default class StuHomeworkCommit extends React.Component {
                     }
                 }
             })
-
-    };
     axios.post(Url, data)
       .then(resp => {
         if (resp && resp.status === 200) {
@@ -338,4 +335,4 @@ export default class StuHomeworkCommit extends React.Component {
       </Layout>
     )
   }
-}
+};
