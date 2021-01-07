@@ -90,4 +90,9 @@ public class Stuchoice {
     int courseid;
     public int getCourseid() {return courseid;}
     public void setCourseid(int courseid) {this.courseid = courseid;}
+
+    @Transient
+    String formalAns;
+    public String getFormalAns() {return formalAns; }
+    public void setFormalAns(String formalAns) {this.formalAns = formalAns;}
 }
