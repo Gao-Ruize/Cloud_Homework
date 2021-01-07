@@ -96,7 +96,7 @@ public class StudentServiceImpl implements StudentService {
                 for(Homework homework:HomeworkOfOneCourse){
                     homework.setCourseName(course.getName());
                     StudentHomework SH = studenthomeworkdao.findStudentHomeworkByHomeworkIdAndStudentId(homework.getId(), student.getUserId());
-                    if(SH.getCommitedTime() == null){
+                    if(SH == null || SH.getCommitedTime() == null){
                         homework.setType(0);
                     }else{
                         homework.setType(1);
@@ -176,6 +176,7 @@ public class StudentServiceImpl implements StudentService {
         }
         Date submitDate = new Date();
 //        System.out.println(submitDate.toString());
+//        System.out.println(hw.getDeadline().toString());
         StudentHomework stu_hw;
 //        if((stu_hw = studenthomeworkdao.findStudentHomeworkByHomeworkIdAndStudentId(homework.getHid(), stu.getUserId())) == null){
 //            stu_hw = new StudentHomework();

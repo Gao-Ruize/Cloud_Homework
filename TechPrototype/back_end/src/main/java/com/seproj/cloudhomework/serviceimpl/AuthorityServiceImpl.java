@@ -47,7 +47,7 @@ public class AuthorityServiceImpl implements AuthorityService {
         }
         if(!registerform.getEmail().matches("\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*")) {
             // 邮箱格式错误
-            return 2;
+            return 101;
         }
         User newUser = new User(registerform.getUsername(),
                 registerform.getPassword(),
