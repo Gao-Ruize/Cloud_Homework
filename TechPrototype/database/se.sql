@@ -107,3 +107,33 @@ CREATE TABLE `instruct` (
   `student_id` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for choice
+-- ----------------------------
+DROP TABLE IF EXISTS `choice`;
+CREATE TABLE `choice` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `course_id` int(11) DEFAULT NULL,
+  `content` varchar(255) DEFAULT NULL,
+  `choice_a` varchar(255) DEFAULT NULL,
+  `choice_b` varchar(255) DEFAULT NULL,
+  `choice_c` varchar(255) DEFAULT NULL,
+  `choice_d` varchar(255) DEFAULT NULL,
+  `deadline` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for stuchoice
+-- ----------------------------
+DROP TABLE IF EXISTS `stuchoice`;
+CREATE TABLE `stuchoice` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `student_id` int(11) DEFAULT NULL,
+  `choice_id` int(11) DEFAULT NULL,
+  `answer` int(11) DEFAULT NULL,
+  `commit_time` datetime DEFAULT NULL,
+  `grade` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

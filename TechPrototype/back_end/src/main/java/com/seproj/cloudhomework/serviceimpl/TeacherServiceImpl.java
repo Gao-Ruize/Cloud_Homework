@@ -95,7 +95,7 @@ public class TeacherServiceImpl implements TeacherService {
         if((course = courseDao.findCourseById(cid)) == null){
             return null;
         }
-        User teacher = userDao.findUserById(course.getId());
+        User teacher = userDao.findUserById(course.getTeacherId());
         if(teacher.getRole() != 1){
             // 若用户身份不是教师（一般情况不会出现）
             return null;
