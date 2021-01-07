@@ -25,7 +25,7 @@ const homeworks = {
   demands: '请提交一张图片',
 };
 
-export default class StuHomeworkDetail extends React.Component 
+export default class StuHomeworkDetail extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -52,7 +52,6 @@ export default class StuHomeworkDetail extends React.Component
                 }
             })
     };
-  }
 
   componentDidMount() {
     this.getHomework();

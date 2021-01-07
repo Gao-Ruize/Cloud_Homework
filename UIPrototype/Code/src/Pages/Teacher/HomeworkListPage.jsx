@@ -1,6 +1,6 @@
 import React from 'react'
 import {Button, Layout, Menu, Modal, PageHeader, Select, Space, Table} from 'antd';
-import {FormOutlined, ReadOutlined, TableOutlined, UserOutlined} from '@ant-design/icons';
+import {CustomerServiceFilled, FormOutlined, ReadOutlined, TableOutlined, UserOutlined} from '@ant-design/icons';
 import {history} from "../../Utils/History";
 import axios from 'axios';
 
@@ -8,62 +8,6 @@ const {Header, Content, Footer, Sider} = Layout;
 const {Option} = Select;
 const {Column, ColumnGroup} = Table;
 let base = global.data.baseUrl;
-// const data = [
-//     {
-//         key: '1',
-//         homework_name: '五月20日作业',
-//         release_time: '2020/5/20 8:00',
-//         deadline: '2020/5/21 23:30',
-//         course: '语文',
-//         tot_num: 50,
-//         finish_num: 50,
-//     },
-//     {
-//         key: '2',
-//         homework_name: '五月20日作业',
-//         release_time: '2020/5/20 8:00',
-//         deadline: '2020/5/21 23:00',
-//         course: '数学',
-//         tot_num: 46,
-//         finish_num: 46,
-//     },
-//     {
-//         key: '3',
-//         homework_name: '五月21日作业',
-//         release_time: '2020/5/21 9:00',
-//         deadline: '2020/5/22 23:30',
-//         course: '语文',
-//         tot_num: 50,
-//         finish_num: 48,
-//     },
-//     {
-//         key: '4',
-//         homework_name: '五月21日作业',
-//         release_time: '2020/5/21 8:00',
-//         deadline: '2020/5/21 23:00',
-//         course: '数学',
-//         tot_num: 46,
-//         finish_num: 45,
-//     },
-//     {
-//         key: '5',
-//         homework_name: '第一次作文',
-//         release_time: '2020/5/20 12:00',
-//         deadline: '2020/5/27 12:00',
-//         course: '语文',
-//         tot_num: 50,
-//         finish_num: 12,
-//     },
-//     {
-//         key: '6',
-//         homework_name: '五月22日作业',
-//         release_time: '2020/5/22 9:00',
-//         deadline: '2020/5/22 23:30',
-//         course: '英语',
-//         tot_num: 45,
-//         finish_num: 45,
-//     },
-// ];
 
 const dataSource = [
   {
@@ -101,10 +45,17 @@ const columns = [
 
 
 export default class TeaHomeworkList extends React.Component {
+  // TODO：
+  // 1. 获取该作业学生列表
+  // 2. 点击批改按钮后，跳转到该学生的作业详情页面
+
   constructor(props) {
     super(props);
     this.state = {
-      homework: []
+      homework: [],
+      h_id:'',
+      id:'',
+      courseId:''
     };
   } ;
 
@@ -148,6 +99,28 @@ export default class TeaHomeworkList extends React.Component {
   toCorrectPage = () => {
     history.push('/teaCheckHomework')
   }
+
+  getstuhomeworklist = ()=>{
+    let Url = base + 'teacher/getstuhomeworklist/';
+    let data = {
+      id: this.state.id,
+      courseId: this.state.courseId,
+      h_id: this.state.h_id
+    };
+    // axios.get(Url, data){
+    //   .then(resp => {
+    //     if (resp && resp.status === 200){
+    //       let homeworklist = resp.data;
+    //       console.log("homeworklist: ", resp.data)
+    //       this.setState({
+    //         homeworklist:homeworklist
+    //       })
+    //     }
+    //   })
+    // }
+
+  }
+
   columns = [
     {
       title: '课程编号',
@@ -155,12 +128,6 @@ export default class TeaHomeworkList extends React.Component {
       key: 'courseId',
       render: text => <a>{text}</a>,
     },
-    // {
-    //     title: '课程名称',
-    //     dataIndex: 'courseName',
-    //     key: 'courseName',
-    //     render: text => <a>{text}</a>,
-    // },
     {
       title: '作业名称',
       dataIndex: 'name',

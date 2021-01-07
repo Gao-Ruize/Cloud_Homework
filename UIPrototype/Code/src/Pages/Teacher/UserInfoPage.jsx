@@ -152,14 +152,6 @@ export default class TeaUserInfo extends React.Component {
 
 
   render() {
-    // const {user} = this.state
-    // const formLayout = {
-    //     labelCol: {span: 8},
-    //     wrapperCol: {span: 8}
-    // }
-    // const onFinish = values => {
-    //     console.log('Received values of form:', values);
-    // }
     return (
       <Layout>
         <Sider
