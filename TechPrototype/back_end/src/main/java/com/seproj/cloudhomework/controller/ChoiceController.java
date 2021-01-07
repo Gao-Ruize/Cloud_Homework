@@ -36,12 +36,11 @@ public class ChoiceController {
     public Result submitChoice(@RequestBody Choice choice) {
         Choice c = choiceService.save(choice);
         int choiceId = c.getId();
-        String answer = c.getAnswer();
         // save in stuChoice
         List<Instruct> instructs = instructService.findByCourseId(choice.getCourseid());
         for(Instruct ins: instructs) {
             int stuId = authorityService.changeSidtoId(ins.getStudentId());
-            Stuchoice stuchoice = new Stuchoice(stuId, choiceId, answer, null, -1);
+            Stuchoice stuchoice = new Stuchoice(stuId, choiceId, "e", null, -1);
             stuchoiceService.save(stuchoice);
         }
         return new Result(200);
