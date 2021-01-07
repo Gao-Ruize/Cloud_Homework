@@ -9,7 +9,7 @@ Qangle = 24
 Qstrenth = 3
 Qcoherence = 3
 
-mat = cv2.imread("./train/alp2.jpg")
+mat = cv2.imread("./train/8.png")
 h = np.load("lowR2.npy")
 #h = np.load("Filters.npy")
 
@@ -36,7 +36,7 @@ print("Test is off")
         
 # Show the result
 #mat = cv2.imread("./train/a.jpg")
-mat = cv2.imread("./train/alp2.jpg")
+mat = cv2.imread("./train/8.png")
 mat = cv2.cvtColor(mat, cv2.COLOR_BGR2YCrCb)
 
 fig, axes = plt.subplots(ncols=2,figsize=(15,10))
@@ -50,4 +50,4 @@ LRDirectImage[:,:,2] = LRDirect
 axes[1].imshow(cv2.cvtColor(LRDirectImage, cv2.COLOR_YCrCb2RGB))
 axes[1].set_title('RAISR')
 
-fig.savefig("./fig2.png")
+fig.savefig("./fig4.png")
