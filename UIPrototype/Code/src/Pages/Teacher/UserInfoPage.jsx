@@ -37,8 +37,6 @@ export default class StuUserInfo extends React.Component {
   }
 
   getUserInfo = () => {
-    console.log("firsttime");
-    console.log(this.state);
     let userId = localStorage.getItem('UserId');
     let Url = base + 'user/getUsrInfo/' + userId;
     let _this = this;
@@ -50,8 +48,6 @@ export default class StuUserInfo extends React.Component {
           let userid = resp.data.userId;
           let phone = resp.data.phone;
           let mail = resp.data.email;
-          console.log(username);
-          console.log(userid);
           _this.setState({
             userName: username,
             userId: userid,
@@ -60,6 +56,11 @@ export default class StuUserInfo extends React.Component {
           }, function () {
             console.log(_this.state);
           });
+
+          this.state.cMail = mail;
+          this.state.cPhone = phone;
+          this.state.userId = userid;
+          this.state.userName = username;
         }
       });
   };

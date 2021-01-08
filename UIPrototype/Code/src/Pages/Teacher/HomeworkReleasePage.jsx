@@ -13,7 +13,7 @@ export default class TeaHomeworkRelease extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      id: '',
+      id: this.props.location.state.id,
       name: '',
       content: '',
       releasetime: '',
@@ -90,6 +90,7 @@ export default class TeaHomeworkRelease extends React.Component {
       deadline: this.state.deadline,
       courseId: this.state.courseId
     }
+    console.log("data: ",data)
     axios.post(Url, data)
       .then(resp => {
         if (resp && resp.status === 200) {

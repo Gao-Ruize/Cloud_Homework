@@ -153,13 +153,21 @@ export default class TeaCourseList extends React.Component {
               />
 
               <Column
-                title=""
+                title="操作"
                 key="action"
                 render={(text, record) => (
                   // 根据数据类型进行修改
-                  <Popconfirm title="查看课程详情？" onClick={() => this.toCourseDetail(record.id, record.courseId)}>
+                  <div>
+                  <Popconfirm title="查看课程详情" onClick={() => this.toCourseDetail(record.id, record.courseId)}>
                     <a>课程详情</a>
                   </Popconfirm>
+                  <Popconfirm title="发布作业" onClick={() => history.replace('/teaHomeworkRelease', {courseId: record.courseId, id: record.id})}>
+                    <a style={{marginLeft:"30px"}}>发布作业</a>
+                  </Popconfirm>
+                  <Popconfirm title="发布选择题" onClick={() => {console.log("recordid",record.id);history.replace('/teaHomeworkChoice', {id: record.id})}}>
+                    <a style={{marginLeft:"30px"}}>发布选择题</a>
+                  </Popconfirm>
+                  </div>
                 )}
               />
             </Table>

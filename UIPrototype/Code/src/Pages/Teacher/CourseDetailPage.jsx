@@ -174,7 +174,6 @@ export default class TeaCourseDetail extends React.Component {
                     <Space>
                       <Button type="primary" size="large" onClick={this.toTeaHomeworkRelease}>发布作业</Button>
                       <Button type="primary" size="large" onClick={this.toTeaHomeworkChoice}>发布选择题</Button>
-                      <Button type="primary" size="large" onClick={this.toTeaCheckHomework}>批改作业</Button>
                       <Button type="primary" size="large" onClick={this.toTeaAddStudent2Course}>添加学生</Button>
                     </Space>
                   </div>

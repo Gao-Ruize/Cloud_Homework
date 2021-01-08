@@ -104,6 +104,7 @@ export default class TeaSubmitCourse extends React.Component {
       axios.post(Url, data)
         .then(resp => {
           if (resp && resp.status === 200) {
+            console.log("response成功")
             if (resp.data.code === 200) {
               message.success('提交成功');
             } else

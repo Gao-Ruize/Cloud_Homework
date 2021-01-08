@@ -179,7 +179,7 @@ export default class TeaCheckHomework extends React.Component {
               dataSource={data}
               renderItem={item =>
                 <Card size="large" style={{width: '100%'}}>
-                  <img style={{textAlign: "center"}} src={this.state.picture}/>
+                  <img  style={{textAlign: "center", width:"100%", height:"auto"}} src={this.state.picture}/>
                   <div style={{marginTop:"50px"}}>文字: </div>
                   <div style={{marginTop:"20px",marginLeft:"30px"}}>{this.state.content}</div>
                   <InputNumber

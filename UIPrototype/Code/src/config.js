@@ -1,3 +1,3 @@
 global.data = {
-    baseUrl: 'http://localhost:8443/api/',
+    baseUrl: 'http://localhost:8080/api/',
 };
