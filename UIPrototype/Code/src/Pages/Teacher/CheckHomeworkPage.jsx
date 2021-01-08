@@ -175,21 +175,21 @@ export default class TeaCheckHomework extends React.Component {
                   </Descriptions.Item>
                 </Descriptions>
               </div>}
-              footer={<div><Button type="primary" onClick={this.ratestuhomework}>确认提交</Button></div>}
               dataSource={data}
               renderItem={item =>
                 <Card size="large" style={{width: '100%'}}>
-                  <img  style={{textAlign: "center", width:"100%", height:"auto"}} src={this.state.picture}/>
-                  <div style={{marginTop:"50px"}}>文字: </div>
-                  <div style={{marginTop:"20px",marginLeft:"30px"}}>{this.state.content}</div>
-                  <InputNumber
+                  <div><InputNumber
                     min={0}
                     max={100}
                     style={{margin: '0 16px'}}
                     defaultValue={0}
                     onChange={this.onInputScore}
-                    style={{marginTop:"80px"}}
-                  />
+                    style={{marginTop:"10px"}}
+                  /><Button type="primary" onClick={this.ratestuhomework}>确认提交</Button></div>
+                  
+                  <img style={{textAlign: "center", width:"30%", height:"auto"}} src={this.state.picture}/>
+                  <div style={{marginTop:"50px"}}>文字: </div>
+                  <div style={{marginTop:"20px",marginLeft:"30px"}}>{this.state.content}</div>
                 </Card>
               }
             />
