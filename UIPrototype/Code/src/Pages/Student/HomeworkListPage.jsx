@@ -105,6 +105,8 @@ export default class StuHomeworkList extends React.Component {
         let Url = base + 'student/getHomeworks/' + studentId + '/' + courseId + '/' + type;
         axios.get(Url)
             .then(resp => {
+                console.log("homework");
+                console.log(resp);
                 if(resp && resp.status === 200) {
                     let data = resp.data;
                     console.log("check output");
@@ -142,12 +144,16 @@ export default class StuHomeworkList extends React.Component {
     };
 
     getHomeworkColor = (e) => {
+        console.log("color");
+        console.log(e);
         if(e === 0) return 'blue';
         if(e === 1) return 'green';
         if(e === 2) return 'red';
     };
 
     getHomeworkInfo = (e) => {
+        console.log("info");
+        console.log(e);
         if(e === 0) return '未提交';
         if(e === 1) return '已提交';
         if(e === 2) return '已超时';
