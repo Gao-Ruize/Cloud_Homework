@@ -1,0 +1,234 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: Homework</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">com.seproj.cloudhomework.entity</a> ]
+</div>
+
+<h1>Coverage Summary for Class: Homework (com.seproj.cloudhomework.entity)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Homework</td>
+<td class="coverageStat">
+  <span class="percent">
+    38.1%
+  </span>
+  <span class="absValue">
+    (8/ 21)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    59.1%
+  </span>
+  <span class="absValue">
+    (26/ 44)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">Homework$HibernateProxy$2oG0NHDx</td>
+  </tr>
+  <tr>
+    <td class="name">Homework$HibernateProxy$d118Zhkn</td>
+  </tr>
+  <tr>
+    <td class="name">Homework$HibernateProxy$DSMSIhFV</td>
+  </tr>
+  <tr>
+    <td class="name">Homework$HibernateProxy$jsnjNg6J</td>
+  </tr>
+  <tr>
+    <td class="name">Homework$HibernateProxy$LOCgi1b6</td>
+  </tr>
+  <tr>
+    <td class="name">Homework$HibernateProxy$rIZm1nrP</td>
+  </tr>
+  <tr>
+    <td class="name">Homework$HibernateProxy$tUwy6g3L</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    38.1%
+  </span>
+  <span class="absValue">
+    (8/ 21)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    59.1%
+  </span>
+  <span class="absValue">
+    (26/ 44)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package com.seproj.cloudhomework.entity;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import lombok.Data;
+<i>4</i>&nbsp;
+<i>5</i>&nbsp;import javax.persistence.*;
+<i>6</i>&nbsp;import java.util.Date;
+<i>7</i>&nbsp;import java.util.Objects;
+<i>8</i>&nbsp;
+<b class="nc"><i>9</i>&nbsp;@Data</b>
+<i>10</i>&nbsp;@Entity
+<i>11</i>&nbsp;@Table(name = &quot;homework&quot;)
+<i>12</i>&nbsp;public class Homework {
+<i>13</i>&nbsp;    @Id
+<i>14</i>&nbsp;    @GeneratedValue(strategy = GenerationType.IDENTITY)
+<i>15</i>&nbsp;    @Column(name = &quot;id&quot;)
+<i>16</i>&nbsp;    int id;
+<i>17</i>&nbsp;    String name;
+<i>18</i>&nbsp;    Date releaseTime;
+<i>19</i>&nbsp;    Date deadline;
+<i>20</i>&nbsp;    String content;
+<i>21</i>&nbsp;    String courseId;
+<i>22</i>&nbsp;
+<b class="fc"><i>23</i>&nbsp;    public Homework(String name, Date releaseTime, Date deadline, String content, String courseId) {</b>
+<b class="fc"><i>24</i>&nbsp;        this.name = name;</b>
+<b class="fc"><i>25</i>&nbsp;        this.releaseTime = releaseTime;</b>
+<b class="fc"><i>26</i>&nbsp;        this.deadline = deadline;</b>
+<b class="fc"><i>27</i>&nbsp;        this.content = content;</b>
+<b class="fc"><i>28</i>&nbsp;        this.courseId = courseId;</b>
+<b class="fc"><i>29</i>&nbsp;    }</b>
+<i>30</i>&nbsp;
+<b class="fc"><i>31</i>&nbsp;    public Homework() {</b>
+<i>32</i>&nbsp;
+<b class="fc"><i>33</i>&nbsp;    }</b>
+<i>34</i>&nbsp;
+<i>35</i>&nbsp;    @Override
+<i>36</i>&nbsp;    public boolean equals(Object o) {
+<b class="fc"><i>37</i>&nbsp;        if (this == o) return true;</b>
+<b class="fc"><i>38</i>&nbsp;        if (o == null || getClass() != o.getClass()) return false;</b>
+<b class="fc"><i>39</i>&nbsp;        Homework homework = (Homework) o;</b>
+<b class="fc"><i>40</i>&nbsp;        return id == homework.id &amp;&amp;</b>
+<b class="fc"><i>41</i>&nbsp;                Objects.equals(name, homework.name) &amp;&amp;</b>
+<b class="fc"><i>42</i>&nbsp;                Objects.equals(releaseTime, homework.releaseTime) &amp;&amp;</b>
+<b class="fc"><i>43</i>&nbsp;                Objects.equals(deadline, homework.deadline) &amp;&amp;</b>
+<b class="fc"><i>44</i>&nbsp;                Objects.equals(content, homework.content) &amp;&amp;</b>
+<b class="fc"><i>45</i>&nbsp;                Objects.equals(courseId, homework.courseId);</b>
+<i>46</i>&nbsp;    }
+<i>47</i>&nbsp;
+<i>48</i>&nbsp;    @Override
+<i>49</i>&nbsp;    public int hashCode() {
+<b class="nc"><i>50</i>&nbsp;        return Objects.hash(id, name, releaseTime, deadline, content, courseId);</b>
+<i>51</i>&nbsp;    }
+<i>52</i>&nbsp;
+<i>53</i>&nbsp;    public int getId() {
+<b class="fc"><i>54</i>&nbsp;        return id;</b>
+<i>55</i>&nbsp;    }
+<i>56</i>&nbsp;
+<i>57</i>&nbsp;    public void setId(int id) {
+<b class="fc"><i>58</i>&nbsp;        this.id = id;</b>
+<b class="fc"><i>59</i>&nbsp;    }</b>
+<i>60</i>&nbsp;
+<i>61</i>&nbsp;    public String getName() {
+<b class="nc"><i>62</i>&nbsp;        return name;</b>
+<i>63</i>&nbsp;    }
+<i>64</i>&nbsp;
+<i>65</i>&nbsp;    public void setName(String name) {
+<b class="nc"><i>66</i>&nbsp;        this.name = name;</b>
+<b class="nc"><i>67</i>&nbsp;    }</b>
+<i>68</i>&nbsp;
+<i>69</i>&nbsp;    public Date getReleaseTime() {
+<b class="nc"><i>70</i>&nbsp;        return releaseTime;</b>
+<i>71</i>&nbsp;    }
+<i>72</i>&nbsp;
+<i>73</i>&nbsp;    public void setReleaseTime(Date releaseTime) {
+<b class="nc"><i>74</i>&nbsp;        this.releaseTime = releaseTime;</b>
+<b class="nc"><i>75</i>&nbsp;    }</b>
+<i>76</i>&nbsp;
+<i>77</i>&nbsp;    public Date getDeadline() {
+<b class="fc"><i>78</i>&nbsp;        return deadline;</b>
+<i>79</i>&nbsp;    }
+<i>80</i>&nbsp;
+<i>81</i>&nbsp;    public void setDeadline(Date deadline) {
+<b class="nc"><i>82</i>&nbsp;        this.deadline = deadline;</b>
+<b class="nc"><i>83</i>&nbsp;    }</b>
+<i>84</i>&nbsp;
+<i>85</i>&nbsp;    public String getContent() {
+<b class="nc"><i>86</i>&nbsp;        return content;</b>
+<i>87</i>&nbsp;    }
+<i>88</i>&nbsp;
+<i>89</i>&nbsp;    public void setContent(String content) {
+<b class="nc"><i>90</i>&nbsp;        this.content = content;</b>
+<b class="nc"><i>91</i>&nbsp;    }</b>
+<i>92</i>&nbsp;
+<i>93</i>&nbsp;    public String getCourseId() {
+<b class="nc"><i>94</i>&nbsp;        return courseId;</b>
+<i>95</i>&nbsp;    }
+<i>96</i>&nbsp;
+<i>97</i>&nbsp;    public void setCourseId(String courseId) {
+<b class="nc"><i>98</i>&nbsp;        this.courseId = courseId;</b>
+<b class="nc"><i>99</i>&nbsp;    }</b>
+<i>100</i>&nbsp;
+<i>101</i>&nbsp;    // 0：未提交    1：已提交   2：已超时
+<i>102</i>&nbsp;    @Transient
+<i>103</i>&nbsp;    int type;
+<i>104</i>&nbsp;
+<i>105</i>&nbsp;    @Transient
+<i>106</i>&nbsp;    String CourseName;
+<i>107</i>&nbsp;
+<i>108</i>&nbsp;    public int getType() {
+<b class="nc"><i>109</i>&nbsp;        return type;</b>
+<i>110</i>&nbsp;    }
+<i>111</i>&nbsp;
+<i>112</i>&nbsp;    public void setType(int type) {
+<b class="fc"><i>113</i>&nbsp;        this.type = type;</b>
+<b class="fc"><i>114</i>&nbsp;    }</b>
+<i>115</i>&nbsp;
+<i>116</i>&nbsp;    public String getCourseName() {
+<b class="nc"><i>117</i>&nbsp;        return CourseName;</b>
+<i>118</i>&nbsp;    }
+<i>119</i>&nbsp;
+<i>120</i>&nbsp;    public void setCourseName(String courseName) {
+<b class="fc"><i>121</i>&nbsp;        CourseName = courseName;</b>
+<b class="fc"><i>122</i>&nbsp;    }</b>
+<i>123</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-01-08 11:28</div>
+</div>
+</body>
+</html>

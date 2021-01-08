@@ -1,0 +1,71 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: UserDao</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">com.seproj.cloudhomework.dao</a> ]
+</div>
+
+<h1>Coverage Summary for Class: UserDao (com.seproj.cloudhomework.dao)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+</tr>
+  <tr>
+    <td class="name">UserDao$MockitoMock$2135444572</td>
+  </tr>
+  <tr>
+    <td class="name">UserDao$MockitoMock$2135444572$auxiliary$1wH1nGR7</td>
+  </tr>
+  <tr>
+    <td class="name">UserDao$MockitoMock$2135444572$auxiliary$J64LwT51</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package com.seproj.cloudhomework.dao;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import com.seproj.cloudhomework.entity.User;
+<i>4</i>&nbsp;
+<i>5</i>&nbsp;import java.util.List;
+<i>6</i>&nbsp;
+<i>7</i>&nbsp;public interface UserDao {
+<i>8</i>&nbsp;    User findUserById(int id);
+<i>9</i>&nbsp;    User findUserByUsername(String username);
+<i>10</i>&nbsp;    User findUserByUserId(String userId);
+<i>11</i>&nbsp;    List&lt;User&gt; findUserByRole(int role);
+<i>12</i>&nbsp;    void saveOrUpdate(User user);
+<i>13</i>&nbsp;
+<i>14</i>&nbsp;    List&lt;User&gt; findAllUsers();
+<i>15</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-01-08 11:28</div>
+</div>
+</body>
+</html>

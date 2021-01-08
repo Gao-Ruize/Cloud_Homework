@@ -1,0 +1,137 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: LoginForm</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">com.seproj.cloudhomework.utils.Authority</a> ]
+</div>
+
+<h1>Coverage Summary for Class: LoginForm (com.seproj.cloudhomework.utils.Authority)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">LoginForm</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    33.3%
+  </span>
+  <span class="absValue">
+    (3/ 9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    31.6%
+  </span>
+  <span class="absValue">
+    (6/ 19)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package com.seproj.cloudhomework.utils.Authority;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import java.util.Objects;
+<i>4</i>&nbsp;
+<i>5</i>&nbsp;public class LoginForm {
+<i>6</i>&nbsp;    private String username;
+<i>7</i>&nbsp;    private String password;
+<i>8</i>&nbsp;
+<b class="fc"><i>9</i>&nbsp;    public LoginForm(String username, String password) {</b>
+<b class="fc"><i>10</i>&nbsp;        this.username = username;</b>
+<b class="fc"><i>11</i>&nbsp;        this.password = password;</b>
+<b class="fc"><i>12</i>&nbsp;    }</b>
+<i>13</i>&nbsp;
+<b class="nc"><i>14</i>&nbsp;    public LoginForm() {</b>
+<b class="nc"><i>15</i>&nbsp;    }</b>
+<i>16</i>&nbsp;
+<i>17</i>&nbsp;    @Override
+<i>18</i>&nbsp;    public boolean equals(Object o) {
+<b class="nc"><i>19</i>&nbsp;        if (this == o) return true;</b>
+<b class="nc"><i>20</i>&nbsp;        if (o == null || getClass() != o.getClass()) return false;</b>
+<b class="nc"><i>21</i>&nbsp;        LoginForm loginForm = (LoginForm) o;</b>
+<b class="nc"><i>22</i>&nbsp;        return Objects.equals(username, loginForm.username) &amp;&amp;</b>
+<b class="nc"><i>23</i>&nbsp;                Objects.equals(password, loginForm.password);</b>
+<i>24</i>&nbsp;    }
+<i>25</i>&nbsp;
+<i>26</i>&nbsp;    @Override
+<i>27</i>&nbsp;    public int hashCode() {
+<b class="nc"><i>28</i>&nbsp;        return Objects.hash(username, password);</b>
+<i>29</i>&nbsp;    }
+<i>30</i>&nbsp;
+<i>31</i>&nbsp;    @Override
+<i>32</i>&nbsp;    public String toString() {
+<b class="nc"><i>33</i>&nbsp;        return &quot;LoignForm{&quot; +</b>
+<i>34</i>&nbsp;                &quot;username=&#39;&quot; + username + &#39;\&#39;&#39; +
+<i>35</i>&nbsp;                &quot;, password=&#39;&quot; + password + &#39;\&#39;&#39; +
+<i>36</i>&nbsp;                &#39;}&#39;;
+<i>37</i>&nbsp;    }
+<i>38</i>&nbsp;
+<i>39</i>&nbsp;    public String getUsername() {
+<b class="fc"><i>40</i>&nbsp;        return username;</b>
+<i>41</i>&nbsp;    }
+<i>42</i>&nbsp;
+<i>43</i>&nbsp;    public void setUsername(String username) {
+<b class="nc"><i>44</i>&nbsp;        this.username = username;</b>
+<b class="nc"><i>45</i>&nbsp;    }</b>
+<i>46</i>&nbsp;
+<i>47</i>&nbsp;    public String getPassword() {
+<b class="fc"><i>48</i>&nbsp;        return password;</b>
+<i>49</i>&nbsp;    }
+<i>50</i>&nbsp;
+<i>51</i>&nbsp;    public void setPassword(String password) {
+<b class="nc"><i>52</i>&nbsp;        this.password = password;</b>
+<b class="nc"><i>53</i>&nbsp;    }</b>
+<i>54</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-01-08 11:28</div>
+</div>
+</body>
+</html>

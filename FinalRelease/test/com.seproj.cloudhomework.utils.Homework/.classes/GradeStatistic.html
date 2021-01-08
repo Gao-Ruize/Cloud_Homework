@@ -1,0 +1,174 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: GradeStatistic</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">com.seproj.cloudhomework.utils.Homework</a> ]
+</div>
+
+<h1>Coverage Summary for Class: GradeStatistic (com.seproj.cloudhomework.utils.Homework)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">GradeStatistic</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    53.3%
+  </span>
+  <span class="absValue">
+    (8/ 15)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    76.7%
+  </span>
+  <span class="absValue">
+    (23/ 30)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package com.seproj.cloudhomework.utils.Homework;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import java.util.Objects;
+<i>4</i>&nbsp;
+<i>5</i>&nbsp;public class GradeStatistic {
+<i>6</i>&nbsp;    // TODO: avg_grade应该是float？
+<i>7</i>&nbsp;    int avg_grade;  // 平均成绩
+<i>8</i>&nbsp;    int num_stu;    // 提交数量
+<i>9</i>&nbsp;    int num_allstu; // 学生总人数
+<i>10</i>&nbsp;    int max_grade;  // 最高分
+<i>11</i>&nbsp;    int min_grade;  // 最低分
+<i>12</i>&nbsp;
+<b class="fc"><i>13</i>&nbsp;    public GradeStatistic(int avg_grade, int num_stu, int num_allstu, int max_grade, int min_grade) {</b>
+<b class="fc"><i>14</i>&nbsp;        this.avg_grade = avg_grade;</b>
+<b class="fc"><i>15</i>&nbsp;        this.num_stu = num_stu;</b>
+<b class="fc"><i>16</i>&nbsp;        this.num_allstu = num_allstu;</b>
+<b class="fc"><i>17</i>&nbsp;        this.max_grade = max_grade;</b>
+<b class="fc"><i>18</i>&nbsp;        this.min_grade = min_grade;</b>
+<b class="fc"><i>19</i>&nbsp;    }</b>
+<i>20</i>&nbsp;
+<b class="fc"><i>21</i>&nbsp;    public GradeStatistic() {</b>
+<b class="fc"><i>22</i>&nbsp;    }</b>
+<i>23</i>&nbsp;
+<i>24</i>&nbsp;    @Override
+<i>25</i>&nbsp;    public boolean equals(Object o) {
+<b class="fc"><i>26</i>&nbsp;        if (this == o) return true;</b>
+<b class="fc"><i>27</i>&nbsp;        if (o == null || getClass() != o.getClass()) return false;</b>
+<b class="fc"><i>28</i>&nbsp;        GradeStatistic that = (GradeStatistic) o;</b>
+<b class="fc"><i>29</i>&nbsp;        return avg_grade == that.avg_grade &amp;&amp;</b>
+<i>30</i>&nbsp;                num_stu == that.num_stu &amp;&amp;
+<i>31</i>&nbsp;                num_allstu == that.num_allstu &amp;&amp;
+<i>32</i>&nbsp;                max_grade == that.max_grade &amp;&amp;
+<i>33</i>&nbsp;                min_grade == that.min_grade;
+<i>34</i>&nbsp;    }
+<i>35</i>&nbsp;
+<i>36</i>&nbsp;    @Override
+<i>37</i>&nbsp;    public int hashCode() {
+<b class="nc"><i>38</i>&nbsp;        return Objects.hash(avg_grade, num_stu, num_allstu, max_grade, min_grade);</b>
+<i>39</i>&nbsp;    }
+<i>40</i>&nbsp;
+<i>41</i>&nbsp;    @Override
+<i>42</i>&nbsp;    public String toString() {
+<b class="nc"><i>43</i>&nbsp;        return &quot;GradeStatistic{&quot; +</b>
+<i>44</i>&nbsp;                &quot;avg_grade=&quot; + avg_grade +
+<i>45</i>&nbsp;                &quot;, num_stu=&quot; + num_stu +
+<i>46</i>&nbsp;                &quot;, num_allstu=&quot; + num_allstu +
+<i>47</i>&nbsp;                &quot;, max_grade=&quot; + max_grade +
+<i>48</i>&nbsp;                &quot;, min_grade=&quot; + min_grade +
+<i>49</i>&nbsp;                &#39;}&#39;;
+<i>50</i>&nbsp;    }
+<i>51</i>&nbsp;
+<i>52</i>&nbsp;    public int getAvg_grade() {
+<b class="nc"><i>53</i>&nbsp;        return avg_grade;</b>
+<i>54</i>&nbsp;    }
+<i>55</i>&nbsp;
+<i>56</i>&nbsp;    public void setAvg_grade(int avg_grade) {
+<b class="fc"><i>57</i>&nbsp;        this.avg_grade = avg_grade;</b>
+<b class="fc"><i>58</i>&nbsp;    }</b>
+<i>59</i>&nbsp;
+<i>60</i>&nbsp;    public int getNum_stu() {
+<b class="nc"><i>61</i>&nbsp;        return num_stu;</b>
+<i>62</i>&nbsp;    }
+<i>63</i>&nbsp;
+<i>64</i>&nbsp;    public void setNum_stu(int num_stu) {
+<b class="fc"><i>65</i>&nbsp;        this.num_stu = num_stu;</b>
+<b class="fc"><i>66</i>&nbsp;    }</b>
+<i>67</i>&nbsp;
+<i>68</i>&nbsp;    public int getNum_allstu() {
+<b class="nc"><i>69</i>&nbsp;        return num_allstu;</b>
+<i>70</i>&nbsp;    }
+<i>71</i>&nbsp;
+<i>72</i>&nbsp;    public void setNum_allstu(int num_allstu) {
+<b class="fc"><i>73</i>&nbsp;        this.num_allstu = num_allstu;</b>
+<b class="fc"><i>74</i>&nbsp;    }</b>
+<i>75</i>&nbsp;
+<i>76</i>&nbsp;    public int getMax_grade() {
+<b class="nc"><i>77</i>&nbsp;        return max_grade;</b>
+<i>78</i>&nbsp;    }
+<i>79</i>&nbsp;
+<i>80</i>&nbsp;    public void setMax_grade(int max_grade) {
+<b class="fc"><i>81</i>&nbsp;        this.max_grade = max_grade;</b>
+<b class="fc"><i>82</i>&nbsp;    }</b>
+<i>83</i>&nbsp;
+<i>84</i>&nbsp;    public int getMin_grade() {
+<b class="nc"><i>85</i>&nbsp;        return min_grade;</b>
+<i>86</i>&nbsp;    }
+<i>87</i>&nbsp;
+<i>88</i>&nbsp;    public void setMin_grade(int min_grade) {
+<b class="fc"><i>89</i>&nbsp;        this.min_grade = min_grade;</b>
+<b class="fc"><i>90</i>&nbsp;    }</b>
+<i>91</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-01-08 11:28</div>
+</div>
+</body>
+</html>

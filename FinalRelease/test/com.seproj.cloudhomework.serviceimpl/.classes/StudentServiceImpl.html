@@ -1,0 +1,324 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: StudentServiceImpl</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">com.seproj.cloudhomework.serviceimpl</a> ]
+</div>
+
+<h1>Coverage Summary for Class: StudentServiceImpl (com.seproj.cloudhomework.serviceimpl)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">StudentServiceImpl</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (7/ 7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    93.5%
+  </span>
+  <span class="absValue">
+    (100/ 107)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package com.seproj.cloudhomework.serviceimpl;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import com.seproj.cloudhomework.dao.*;
+<i>4</i>&nbsp;import com.seproj.cloudhomework.entity.*;
+<i>5</i>&nbsp;import com.seproj.cloudhomework.service.StudentService;
+<i>6</i>&nbsp;import com.seproj.cloudhomework.utils.Course.CourseDetail;
+<i>7</i>&nbsp;import com.seproj.cloudhomework.utils.Homework.HandInHomework;
+<i>8</i>&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+<i>9</i>&nbsp;import org.springframework.stereotype.Service;
+<i>10</i>&nbsp;
+<i>11</i>&nbsp;import java.util.ArrayList;
+<i>12</i>&nbsp;import java.util.Date;
+<i>13</i>&nbsp;import java.util.List;
+<i>14</i>&nbsp;
+<i>15</i>&nbsp;/**
+<i>16</i>&nbsp; * 类 {@code StudentServiceImpl} 负责处理和学生的课程、作业相关的业务.
+<i>17</i>&nbsp; *
+<i>18</i>&nbsp; * &lt;p&gt;主要包括学生获取自己所上的课程及其详情、某课所有的作业及详情、提交作业等功能&lt;/p&gt;
+<i>19</i>&nbsp; *
+<i>20</i>&nbsp; * @author Gao-Ruize
+<i>21</i>&nbsp; * @since 2020/11/18
+<i>22</i>&nbsp; */
+<i>23</i>&nbsp;@Service
+<b class="fc"><i>24</i>&nbsp;public class StudentServiceImpl implements StudentService {</b>
+<i>25</i>&nbsp;    @Autowired
+<i>26</i>&nbsp;    private UserDao userdao;
+<i>27</i>&nbsp;    @Autowired
+<i>28</i>&nbsp;    private CourseDao coursedao;
+<i>29</i>&nbsp;    @Autowired
+<i>30</i>&nbsp;    private HomeworkDao homeworkdao;
+<i>31</i>&nbsp;    @Autowired
+<i>32</i>&nbsp;    private StudentHomeworkDao studenthomeworkdao;
+<i>33</i>&nbsp;    @Autowired
+<i>34</i>&nbsp;    private InstructDao instructdao;
+<i>35</i>&nbsp;
+<i>36</i>&nbsp;    @Override
+<i>37</i>&nbsp;    public List&lt;Course&gt; getCoursesBySid(int sid) {
+<i>38</i>&nbsp;        User stu;
+<b class="fc"><i>39</i>&nbsp;        if((stu = userdao.findUserById(sid)) == null){</b>
+<b class="fc"><i>40</i>&nbsp;            return null;</b>
+<i>41</i>&nbsp;        }
+<b class="fc"><i>42</i>&nbsp;        List&lt;Instruct&gt; instructs = instructdao.findInstructByStudentId(stu.getUserId());</b>
+<b class="fc"><i>43</i>&nbsp;        List&lt;Course&gt; courseList = new ArrayList&lt;&gt;();</b>
+<i>44</i>&nbsp;        Course course;
+<b class="fc"><i>45</i>&nbsp;        for(Instruct ins:instructs){</b>
+<b class="fc"><i>46</i>&nbsp;            if((course = coursedao.findCourseById(ins.getCourseId())) != null){</b>
+<b class="fc"><i>47</i>&nbsp;                int Uid = course.getTeacherId();</b>
+<b class="fc"><i>48</i>&nbsp;                String teacherName = userdao.findUserById(Uid).getName();</b>
+<b class="fc"><i>49</i>&nbsp;                course.setTeacherName(teacherName);</b>
+<b class="fc"><i>50</i>&nbsp;                courseList.add(course);</b>
+<i>51</i>&nbsp;            }
+<b class="fc"><i>52</i>&nbsp;        }</b>
+<b class="fc"><i>53</i>&nbsp;        return courseList;</b>
+<i>54</i>&nbsp;    }
+<i>55</i>&nbsp;
+<i>56</i>&nbsp;    @Override
+<i>57</i>&nbsp;    public CourseDetail getCourseDetail(int cid) {
+<i>58</i>&nbsp;        Course course;
+<b class="fc"><i>59</i>&nbsp;        if((course = coursedao.findCourseById(cid)) == null){</b>
+<b class="fc"><i>60</i>&nbsp;            return null;</b>
+<i>61</i>&nbsp;        }
+<b class="fc"><i>62</i>&nbsp;        User teacher = userdao.findUserById(course.getTeacherId());</b>
+<i>63</i>&nbsp;
+<b class="fc"><i>64</i>&nbsp;        if(teacher == null || teacher.getRole() != 1){</b>
+<i>65</i>&nbsp;            // 若用户身份不是教师或用户不存在（一般情况不会出现）
+<b class="nc"><i>66</i>&nbsp;            return null;</b>
+<i>67</i>&nbsp;        }
+<b class="fc"><i>68</i>&nbsp;        teacher.getUsername();</b>
+<b class="fc"><i>69</i>&nbsp;        return new CourseDetail(course.getId(),</b>
+<b class="fc"><i>70</i>&nbsp;                course.getName(),</b>
+<b class="fc"><i>71</i>&nbsp;                course.getCourseId(),</b>
+<b class="fc"><i>72</i>&nbsp;                course.getTeacherId(),</b>
+<b class="fc"><i>73</i>&nbsp;                course.getStatus(),</b>
+<b class="fc"><i>74</i>&nbsp;                teacher.getName());</b>
+<i>75</i>&nbsp;    }
+<i>76</i>&nbsp;
+<i>77</i>&nbsp;    @Override
+<i>78</i>&nbsp;    public List&lt;Homework&gt; getHomeworks(int sid, int cid, int type) {
+<i>79</i>&nbsp;        User student;
+<b class="fc"><i>80</i>&nbsp;        if((student = userdao.findUserById(sid)) == null){</b>
+<b class="fc"><i>81</i>&nbsp;            return null;</b>
+<i>82</i>&nbsp;        }
+<b class="fc"><i>83</i>&nbsp;        if(type == 3){</b>
+<i>84</i>&nbsp;            // 获取所有课程的所有作业
+<i>85</i>&nbsp;            // TODO：应对所有按发布或截止时间进行排序
+<b class="fc"><i>86</i>&nbsp;            List&lt;Homework&gt; result = new ArrayList&lt;&gt;();</b>
+<b class="fc"><i>87</i>&nbsp;            List&lt;Instruct&gt; instructList = instructdao.findInstructByStudentId(student.getUserId());</b>
+<i>88</i>&nbsp;            Course course;
+<b class="fc"><i>89</i>&nbsp;            List&lt;Homework&gt; HomeworkOfOneCourse = new ArrayList&lt;&gt;();</b>
+<b class="fc"><i>90</i>&nbsp;            for(Instruct instruct:instructList){</b>
+<b class="fc"><i>91</i>&nbsp;                if((course = coursedao.findCourseById(instruct.getCourseId())) == null){</b>
+<i>92</i>&nbsp;                    // 找不到这门课
+<b class="nc"><i>93</i>&nbsp;                    continue;</b>
+<i>94</i>&nbsp;                }
+<b class="fc"><i>95</i>&nbsp;                HomeworkOfOneCourse = homeworkdao.findHomeworkByCourseId(course.getCourseId());</b>
+<b class="fc"><i>96</i>&nbsp;                for(Homework homework:HomeworkOfOneCourse){</b>
+<b class="fc"><i>97</i>&nbsp;                    homework.setCourseName(course.getName());</b>
+<b class="fc"><i>98</i>&nbsp;                    StudentHomework SH = studenthomeworkdao.findStudentHomeworkByHomeworkIdAndStudentId(homework.getId(), student.getUserId());</b>
+<b class="fc"><i>99</i>&nbsp;                    if(SH == null || SH.getCommitedTime() == null){</b>
+<b class="fc"><i>100</i>&nbsp;                        homework.setType(0);</b>
+<i>101</i>&nbsp;                    }else{
+<b class="fc"><i>102</i>&nbsp;                        homework.setType(1);</b>
+<i>103</i>&nbsp;                    }
+<b class="fc"><i>104</i>&nbsp;                    result.add(homework);</b>
+<b class="fc"><i>105</i>&nbsp;                }</b>
+<b class="fc"><i>106</i>&nbsp;            }</b>
+<b class="fc"><i>107</i>&nbsp;            return result;</b>
+<i>108</i>&nbsp;        }
+<i>109</i>&nbsp;
+<i>110</i>&nbsp;        Course course;
+<b class="fc"><i>111</i>&nbsp;        if((course = coursedao.findCourseById(cid)) == null){</b>
+<b class="fc"><i>112</i>&nbsp;            return null;</b>
+<i>113</i>&nbsp;        }
+<b class="fc"><i>114</i>&nbsp;        List&lt;Homework&gt; homeworkList = homeworkdao.findHomeworkByCourseId(course.getCourseId());</b>
+<b class="fc"><i>115</i>&nbsp;        if(type == 1 || type == 2){</b>
+<b class="fc"><i>116</i>&nbsp;            List&lt;Homework&gt; submittedHomework = new ArrayList&lt;&gt;();</b>
+<b class="fc"><i>117</i>&nbsp;            List&lt;Homework&gt; unSubmittedHomework = new ArrayList&lt;&gt;();</b>
+<i>118</i>&nbsp;            StudentHomework stuHW;
+<b class="fc"><i>119</i>&nbsp;            for(Homework homework:homeworkList){</b>
+<b class="fc"><i>120</i>&nbsp;                homework.setCourseName(course.getName());</b>
+<b class="fc"><i>121</i>&nbsp;                if((stuHW = studenthomeworkdao.findStudentHomeworkByHomeworkIdAndStudentId(homework.getId(), student.getUserId())) == null){</b>
+<i>122</i>&nbsp;                    // 未完成（未找到studenthomework）
+<b class="fc"><i>123</i>&nbsp;                    homework.setType(0);</b>
+<b class="fc"><i>124</i>&nbsp;                    unSubmittedHomework.add(homework);</b>
+<b class="fc"><i>125</i>&nbsp;                    continue;</b>
+<i>126</i>&nbsp;                }
+<i>127</i>&nbsp;                else{
+<i>128</i>&nbsp;//                    unSubmittedHomework.add(homework);
+<i>129</i>&nbsp;//                    continue;
+<i>130</i>&nbsp;
+<b class="fc"><i>131</i>&nbsp;                    if(stuHW.getCommitedTime() == null){</b>
+<i>132</i>&nbsp;                        // 未提交
+<b class="nc"><i>133</i>&nbsp;                        homework.setType(0);</b>
+<b class="nc"><i>134</i>&nbsp;                        unSubmittedHomework.add(homework);</b>
+<i>135</i>&nbsp;                    }
+<i>136</i>&nbsp;                    else{
+<i>137</i>&nbsp;                        // 已提交
+<b class="fc"><i>138</i>&nbsp;                        Date date = new Date();</b>
+<b class="fc"><i>139</i>&nbsp;                        if(date.compareTo(stuHW.getCommitedTime()) == 1){</b>
+<i>140</i>&nbsp;                            // 已超时
+<b class="fc"><i>141</i>&nbsp;                            homework.setType(2);</b>
+<i>142</i>&nbsp;                        }else{
+<i>143</i>&nbsp;                            // 正常提交，未超时
+<b class="nc"><i>144</i>&nbsp;                            homework.setType(1);</b>
+<i>145</i>&nbsp;                        }
+<b class="fc"><i>146</i>&nbsp;                        submittedHomework.add(homework);</b>
+<i>147</i>&nbsp;                    }
+<b class="fc"><i>148</i>&nbsp;                    continue;</b>
+<i>149</i>&nbsp;                }
+<i>150</i>&nbsp;            }
+<b class="fc"><i>151</i>&nbsp;            if(type == 2){</b>
+<b class="fc"><i>152</i>&nbsp;                return submittedHomework;</b>
+<i>153</i>&nbsp;            }else{
+<b class="fc"><i>154</i>&nbsp;                return unSubmittedHomework;</b>
+<i>155</i>&nbsp;            }
+<i>156</i>&nbsp;        }
+<i>157</i>&nbsp;        // 默认情况，即type == 0
+<b class="fc"><i>158</i>&nbsp;        return homeworkList;</b>
+<i>159</i>&nbsp;    }
+<i>160</i>&nbsp;
+<i>161</i>&nbsp;    @Override
+<i>162</i>&nbsp;    public Homework getHomeworkDetail(int hid) {
+<b class="fc"><i>163</i>&nbsp;        return homeworkdao.findHomeworkById(hid);</b>
+<i>164</i>&nbsp;    }
+<i>165</i>&nbsp;
+<i>166</i>&nbsp;    @Override
+<i>167</i>&nbsp;    public int handInHomework(HandInHomework homework) {
+<i>168</i>&nbsp;        User stu;
+<b class="fc"><i>169</i>&nbsp;        if((stu = userdao.findUserById(homework.getSid())) == null){</b>
+<b class="fc"><i>170</i>&nbsp;            return -1;</b>
+<i>171</i>&nbsp;        }
+<i>172</i>&nbsp;
+<i>173</i>&nbsp;        Homework hw;
+<b class="fc"><i>174</i>&nbsp;        if((hw = homeworkdao.findHomeworkById(homework.getHid())) == null){</b>
+<b class="fc"><i>175</i>&nbsp;            return -1;</b>
+<i>176</i>&nbsp;        }
+<b class="fc"><i>177</i>&nbsp;        Date submitDate = new Date();</b>
+<i>178</i>&nbsp;//        System.out.println(submitDate.toString());
+<i>179</i>&nbsp;//        System.out.println(hw.getDeadline().toString());
+<i>180</i>&nbsp;        StudentHomework stu_hw;
+<i>181</i>&nbsp;//        if((stu_hw = studenthomeworkdao.findStudentHomeworkByHomeworkIdAndStudentId(homework.getHid(), stu.getUserId())) == null){
+<i>182</i>&nbsp;//            stu_hw = new StudentHomework();
+<i>183</i>&nbsp;//        }
+<b class="fc"><i>184</i>&nbsp;        stu_hw = studenthomeworkdao.findStudentHomeworkByHomeworkIdAndStudentId(homework.getHid(), stu.getUserId());</b>
+<b class="fc"><i>185</i>&nbsp;        int flag = 0;</b>
+<b class="fc"><i>186</i>&nbsp;        if(stu_hw == null) {</b>
+<b class="fc"><i>187</i>&nbsp;            flag = 1;</b>
+<b class="fc"><i>188</i>&nbsp;            stu_hw = new StudentHomework();</b>
+<i>189</i>&nbsp;        }
+<i>190</i>&nbsp;//        studenthomeworkdao.saveOrUpdate(new StudentHomework(new Date(),
+<i>191</i>&nbsp;//                homework.getHid(),
+<i>192</i>&nbsp;//                -1,
+<i>193</i>&nbsp;//                homework.getContent(),
+<i>194</i>&nbsp;//                homework.getPicture(),
+<i>195</i>&nbsp;//                stu.getUserId()));
+<b class="fc"><i>196</i>&nbsp;        stu_hw.setCommitedTime(new Date());</b>
+<b class="fc"><i>197</i>&nbsp;        stu_hw.setHomeworkId(homework.getHid());</b>
+<b class="fc"><i>198</i>&nbsp;        stu_hw.setGrade(0);</b>
+<b class="fc"><i>199</i>&nbsp;        stu_hw.setContent(homework.getContent());</b>
+<b class="fc"><i>200</i>&nbsp;        stu_hw.setPicture(homework.getPicture());</b>
+<b class="fc"><i>201</i>&nbsp;        stu_hw.setStudentId(stu.getUserId());</b>
+<b class="fc"><i>202</i>&nbsp;        studenthomeworkdao.saveOrUpdate(stu_hw);</b>
+<b class="fc"><i>203</i>&nbsp;        if(hw.getDeadline().compareTo(submitDate) &lt; 0){</b>
+<i>204</i>&nbsp;            // 超时
+<b class="fc"><i>205</i>&nbsp;            return 1;</b>
+<i>206</i>&nbsp;        }
+<i>207</i>&nbsp;        else {
+<b class="fc"><i>208</i>&nbsp;            if(flag == 0)</b>
+<b class="fc"><i>209</i>&nbsp;                return 2;   // 覆盖提交</b>
+<b class="fc"><i>210</i>&nbsp;            return 0; // 第一次提交</b>
+<i>211</i>&nbsp;        }
+<i>212</i>&nbsp;    }
+<i>213</i>&nbsp;
+<i>214</i>&nbsp;    // TODO： 若StudentHomework数据库修改增加status成员，该方法实现需要修改
+<i>215</i>&nbsp;    @Override
+<i>216</i>&nbsp;    public float getGrade(int sid, int cid) {
+<i>217</i>&nbsp;        User stu;
+<b class="fc"><i>218</i>&nbsp;        if((stu = userdao.findUserById(sid)) == null){</b>
+<b class="fc"><i>219</i>&nbsp;            return 0;</b>
+<i>220</i>&nbsp;        }
+<i>221</i>&nbsp;
+<b class="fc"><i>222</i>&nbsp;        List&lt;StudentHomework&gt; homeworkList = studenthomeworkdao.findStudentHomeworkByStudentId(stu.getUserId());</b>
+<i>223</i>&nbsp;
+<b class="fc"><i>224</i>&nbsp;        int tot_grade = 0;</b>
+<b class="fc"><i>225</i>&nbsp;        int count = 0;</b>
+<b class="fc"><i>226</i>&nbsp;        for(StudentHomework homework:homeworkList){</b>
+<b class="fc"><i>227</i>&nbsp;            if(homework.getCommitedTime() == null){</b>
+<b class="nc"><i>228</i>&nbsp;                continue;</b>
+<i>229</i>&nbsp;            }
+<b class="fc"><i>230</i>&nbsp;            tot_grade += homework.getGrade();</b>
+<b class="fc"><i>231</i>&nbsp;            count++;</b>
+<b class="fc"><i>232</i>&nbsp;        }</b>
+<i>233</i>&nbsp;
+<b class="fc"><i>234</i>&nbsp;        if(count == 0){</b>
+<b class="nc"><i>235</i>&nbsp;            return 0;</b>
+<i>236</i>&nbsp;        }else{
+<b class="fc"><i>237</i>&nbsp;            return (float)tot_grade / count;</b>
+<i>238</i>&nbsp;        }
+<i>239</i>&nbsp;    }
+<i>240</i>&nbsp;}
+<i>241</i>&nbsp;
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-01-08 11:28</div>
+</div>
+</body>
+</html>
