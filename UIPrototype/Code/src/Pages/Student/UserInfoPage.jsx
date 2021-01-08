@@ -52,6 +52,7 @@ export default class StuUserInfo extends React.Component {
         axios.get(Url)
             .then(resp => {
                 if(resp && resp.status === 200) {
+                    console.log(resp);
                     // let User = resp.data;
                     let username = resp.data.username;
                     let userid = resp.data.userId;
@@ -105,18 +106,33 @@ export default class StuUserInfo extends React.Component {
     };
 
     handleSubmit = () => {
+        let _this = this;
         let Url = base + 'user/modify';
         let userId = this.state.id;
         let data = {
             id: userId,
-            email: this.state.cMail,
-            phone: this.state.cPhone
+            email: this.state.Mail,
+            phone: this.state.Phone
         };
         axios.post(Url, data)
             .then(resp => {
+                console.log(data);
+                console.log(resp);
                 if(resp && resp.status === 200) {
                     if(resp.data.code === 200) {
                         message.success('修改成功');
+                        let repPhone = _this.state.Phone;
+                        let repMail = _this.state.Mail;
+                        if(_this.state.cMail !== '') {
+                            repMail = _this.state.cMail;
+                        }
+                        if(_this.state.cPhone !== '') {
+                            repPhone = _this.state.cPhone;
+                        }
+                        console.log(repPhone);
+                        console.log(repMail);
+                        localStorage.setItem('Phone', repPhone);
+                        localStorage.setItem('Mail', repMail);
                     } else if(resp.data.code === 400) {
                         message.error('邮箱格式错误')
                     } else

@@ -51,7 +51,7 @@ public class ChoiceController {
     @GetMapping(value = "api/stu/allchoice/{studentid}/{courseid}")
     @ResponseBody
     public List<Stuchoice> allStuChoice(@PathVariable int studentid, @PathVariable int courseid) {
-        List<Stuchoice> stuchoices = stuchoiceService.findAllByStudentid(2);
+        List<Stuchoice> stuchoices = stuchoiceService.findAllByStudentid(studentid);
         // 将content与courseId加入stuChoice
         for(Stuchoice iter: stuchoices) {
             int choiceId = iter.getChoiceid();

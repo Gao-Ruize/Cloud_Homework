@@ -175,6 +175,11 @@ export default class Register extends Component {
             </Grid>
 
             <Grid item xs={12}>
+              <TextField required variant="outlined" label="电话" style={{width: "100%"}}
+                         onChange={this.storePhone}/>
+            </Grid>
+
+            <Grid item xs={12}>
               <TextField required variant="outlined" label="邮箱" style={{width: "100%"}}
                          onChange={this.storeMail}/>
             </Grid>

@@ -131,25 +131,12 @@ export default class StuHomeworkCommit extends React.Component {
                     } else if(code === 201) {
                         _this.showDelayMsg();
                     } else if(code === 202) {
-                        _this.showRepeatMsg();
+                        _this.showSuccessMsg();
                     } else {
                         _this.showOtherErrMsg();
                     }
                 }
-            })
-    axios.post(Url, data)
-      .then(resp => {
-        if (resp && resp.status === 200) {
-          let code = resp.data.code;
-          if (code === 200) {
-            _this.showSuccessMsg();
-          } else if (code === 201) {
-            _this.showDelayMsg();
-          } else {
-            _this.showOtherErrMsg();
-          }
-        }
-      })
+            });
   };
 
   storeContent = event => {
