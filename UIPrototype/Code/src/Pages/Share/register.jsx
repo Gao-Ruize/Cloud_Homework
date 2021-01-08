@@ -85,12 +85,27 @@ export default class Register extends Component {
     let c_password = this.state.password;
     let c_userType = this.state.userType;
     if(c_id === '' || c_username === '' || c_name === '' ||
-       c_mail === '' || c_phone === '' || c_password === '' || c_userType === '')
+       c_mail === '' || c_password === '' || c_userType === '')
       return 1;
     return 0;
   };
 
   register = () => {
+    let c_id = this.state.id;
+    let c_username = this.state.userName;
+    let c_name = this.state.name;
+    let c_mail = this.state.mail;
+    let c_phone = this.state.phone;
+    let c_password = this.state.password;
+    let c_userType = this.state.userType;
+    console.log("attention");
+    console.log(c_id);
+    console.log(c_username);
+    console.log(c_name);
+    console.log(c_mail);
+    console.log(c_phone);
+    console.log(c_password);
+    console.log(c_userType);
     let check = this.checkNull();
     if(check === 1) {
       message.error("请填写完整信息");
@@ -160,8 +175,28 @@ export default class Register extends Component {
             </Grid>
 
             <Grid item xs={12}>
+              <TextField required variant="outlined" label="电话" style={{width: "100%"}}
+                         onChange={this.storePhone}/>
+            </Grid>
+
+            <Grid item xs={12}>
               <TextField required variant="outlined" label="邮箱" style={{width: "100%"}}
                          onChange={this.storeMail}/>
+            </Grid>
+            <Grid item xs={12}>
+              <FormControl component="fieldset">
+                <FormLabel component="legend">用户类型</FormLabel>
+                <RadioGroup aria-label="type" name="type" value={this.userType} onChange={this.storeUserType}>
+                  <FormControlLabel value="S" control={<Radio />} label="学生" />
+                  <FormControlLabel value="T" control={<Radio />} label="教师" />
+                </RadioGroup>
+              </FormControl>
+            </Grid>
+            <Grid item xs={12}>
+              <Button style={{width: "100%", margin: "auto"}} variant="contained" color="secondary"
+                      size="large" onClick={this.register}>
+                注册
+              </Button>
             </Grid>
             </Grid>
           </CardContent>

@@ -99,8 +99,10 @@ export default class StuChoice extends React.Component {
         let sid = this.state.studentId;
         let cid = this.state.courseId;
         let url = base + "/stu/allchoice/" + sid + "/" + cid;
+        console.log(url);
         axios.get(url).then(
             resp => {
+                console.log(resp);
                 if(resp && resp.status === 200) {
                     let data = resp.data;
                     console.log(data);
