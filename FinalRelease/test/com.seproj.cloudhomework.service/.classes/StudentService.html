@@ -1,0 +1,130 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: StudentService</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">com.seproj.cloudhomework.service</a> ]
+</div>
+
+<h1>Coverage Summary for Class: StudentService (com.seproj.cloudhomework.service)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+</tr>
+<tr>
+  <td class="name">StudentService</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package com.seproj.cloudhomework.service;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import com.seproj.cloudhomework.entity.Course;
+<i>4</i>&nbsp;import com.seproj.cloudhomework.entity.Homework;
+<i>5</i>&nbsp;import com.seproj.cloudhomework.utils.Course.CourseDetail;
+<i>6</i>&nbsp;import com.seproj.cloudhomework.utils.Homework.HandInHomework;
+<i>7</i>&nbsp;import org.springframework.stereotype.Service;
+<i>8</i>&nbsp;
+<i>9</i>&nbsp;import java.util.List;
+<i>10</i>&nbsp;
+<i>11</i>&nbsp;/**
+<i>12</i>&nbsp; * &lt;p&gt;类 {@code StudentService} 负责处理与学生的课程、作业相关的业务&lt;/p&gt;
+<i>13</i>&nbsp; *
+<i>14</i>&nbsp; * &lt;p&gt;主要包括学生获取自己所上的课程及其详情、某课所有的作业及详情、提交作业等功能&lt;/p&gt;
+<i>15</i>&nbsp; *
+<i>16</i>&nbsp; * @author Gao-Ruize
+<i>17</i>&nbsp; * @since 2020/11/18 version1.0
+<i>18</i>&nbsp; * @version 1.0
+<i>19</i>&nbsp; */
+<i>20</i>&nbsp;@Service
+<i>21</i>&nbsp;public interface StudentService {
+<i>22</i>&nbsp;    /**
+<i>23</i>&nbsp;     * &lt;p&gt;获取某个学生相关的所有课程&lt;/p&gt;
+<i>24</i>&nbsp;     *
+<i>25</i>&nbsp;     * @param sid 学生的id
+<i>26</i>&nbsp;     * @return 课程列表
+<i>27</i>&nbsp;     */
+<i>28</i>&nbsp;    List&lt;Course&gt; getCoursesBySid(int sid);
+<i>29</i>&nbsp;
+<i>30</i>&nbsp;    /**
+<i>31</i>&nbsp;     * &lt;p&gt;获取一门课的详细信息&lt;/p&gt;
+<i>32</i>&nbsp;     *
+<i>33</i>&nbsp;     * @param cid 课程的id
+<i>34</i>&nbsp;     * @return 课程详细信息
+<i>35</i>&nbsp;     */
+<i>36</i>&nbsp;    CourseDetail getCourseDetail(int cid);
+<i>37</i>&nbsp;
+<i>38</i>&nbsp;    /**
+<i>39</i>&nbsp;     * &lt;p&gt;获取一门课的作业列表&lt;/p&gt;
+<i>40</i>&nbsp;     *
+<i>41</i>&nbsp;     * @param sid 学生的用户id
+<i>42</i>&nbsp;     * @param cid 课程的id
+<i>43</i>&nbsp;     * @param type
+<i>44</i>&nbsp;     * &lt;pre&gt;
+<i>45</i>&nbsp;     * 获取作业的类型
+<i>46</i>&nbsp;     * 0：该课程所有作业（默认）
+<i>47</i>&nbsp;     * 1：该课程未完成作业
+<i>48</i>&nbsp;     * 2：该课程已完成作业
+<i>49</i>&nbsp;     * 3：所有课程所有作业
+<i>50</i>&nbsp;     * &lt;/pre&gt;
+<i>51</i>&nbsp;     * @return 作业列表
+<i>52</i>&nbsp;     */
+<i>53</i>&nbsp;    List&lt;Homework&gt; getHomeworks(int sid, int cid, int type);
+<i>54</i>&nbsp;
+<i>55</i>&nbsp;    /**
+<i>56</i>&nbsp;     * &lt;p&gt;获取某次作业详细内容&lt;/p&gt;
+<i>57</i>&nbsp;     *
+<i>58</i>&nbsp;     * @param hid 作业id
+<i>59</i>&nbsp;     * @return 作业详细内容
+<i>60</i>&nbsp;     */
+<i>61</i>&nbsp;    Homework getHomeworkDetail(int hid);
+<i>62</i>&nbsp;
+<i>63</i>&nbsp;    /**
+<i>64</i>&nbsp;     * &lt;p&gt;提交作业&lt;/p&gt;
+<i>65</i>&nbsp;     *
+<i>66</i>&nbsp;     * @param homework 被提交的作业
+<i>67</i>&nbsp;     * @return &lt;pre&gt;
+<i>68</i>&nbsp;     * 0：提交成功；
+<i>69</i>&nbsp;     * 1：作业超出截止日期；
+<i>70</i>&nbsp;     * -1：提交失败
+<i>71</i>&nbsp;     * &lt;/pre&gt;
+<i>72</i>&nbsp;     */
+<i>73</i>&nbsp;    int handInHomework(HandInHomework homework);
+<i>74</i>&nbsp;
+<i>75</i>&nbsp;    /**
+<i>76</i>&nbsp;     * &lt;p&gt;学生获取一门课的作业平均分&lt;/p&gt;
+<i>77</i>&nbsp;     *
+<i>78</i>&nbsp;     * @param sid 学生id
+<i>79</i>&nbsp;     * @param cid 课程id
+<i>80</i>&nbsp;     * @return 该学生在该门课程已批改作业的平均分
+<i>81</i>&nbsp;     */
+<i>82</i>&nbsp;    float getGrade(int sid, int cid);
+<i>83</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-01-08 11:28</div>
+</div>
+</body>
+</html>

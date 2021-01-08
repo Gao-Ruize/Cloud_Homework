@@ -1,0 +1,234 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: TeacherService</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">com.seproj.cloudhomework.service</a> ]
+</div>
+
+<h1>Coverage Summary for Class: TeacherService (com.seproj.cloudhomework.service)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+</tr>
+<tr>
+  <td class="name">TeacherService</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package com.seproj.cloudhomework.service;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import com.seproj.cloudhomework.entity.Course;
+<i>4</i>&nbsp;import com.seproj.cloudhomework.entity.Homework;
+<i>5</i>&nbsp;import com.seproj.cloudhomework.entity.StudentHomework;
+<i>6</i>&nbsp;import com.seproj.cloudhomework.entity.User;
+<i>7</i>&nbsp;import com.seproj.cloudhomework.utils.Course.CourseDetail;
+<i>8</i>&nbsp;import com.seproj.cloudhomework.utils.Course.UpdateCourseForm;
+<i>9</i>&nbsp;import com.seproj.cloudhomework.utils.Homework.CreateHomeworkForm;
+<i>10</i>&nbsp;import com.seproj.cloudhomework.utils.Homework.GradeStatistic;
+<i>11</i>&nbsp;import com.seproj.cloudhomework.utils.Homework.StuHomeworkBrief;
+<i>12</i>&nbsp;import com.seproj.cloudhomework.utils.Homework.UpdateHomeworkForm;
+<i>13</i>&nbsp;import freemarker.template.TemplateException;
+<i>14</i>&nbsp;import org.springframework.stereotype.Service;
+<i>15</i>&nbsp;
+<i>16</i>&nbsp;import javax.mail.MessagingException;
+<i>17</i>&nbsp;import java.io.IOException;
+<i>18</i>&nbsp;import java.util.List;
+<i>19</i>&nbsp;
+<i>20</i>&nbsp;/**
+<i>21</i>&nbsp; * &lt;p&gt;类 {@code TeacherService} 负责处理与教师的课程、作业相关的业务&lt;/p&gt;
+<i>22</i>&nbsp; *
+<i>23</i>&nbsp; * &lt;p&gt;课程方面主要包括教师开设/更新/删除课程以及获取课程列表、添加学生到课程功能，
+<i>24</i>&nbsp; * 作业方面主要包括创建/更新/读取作业以及评分、查看成绩等功能.&lt;/p&gt;
+<i>25</i>&nbsp; *
+<i>26</i>&nbsp; * @author Gao-Ruize
+<i>27</i>&nbsp; * @since 2020/11/19 version1.0
+<i>28</i>&nbsp; * @version 1.0
+<i>29</i>&nbsp; */
+<i>30</i>&nbsp;@Service
+<i>31</i>&nbsp;public interface TeacherService {
+<i>32</i>&nbsp;    /**
+<i>33</i>&nbsp;     * &lt;p&gt;教师申请新的课程&lt;/p&gt;
+<i>34</i>&nbsp;     *
+<i>35</i>&nbsp;     * @param newCourse 申请新课程的信息
+<i>36</i>&nbsp;     * @return
+<i>37</i>&nbsp;     * &lt;pre&gt;
+<i>38</i>&nbsp;     * 0：成功
+<i>39</i>&nbsp;     * -1：未找到申请人对应的用户或该用户不是教师
+<i>40</i>&nbsp;     * &lt;/pre&gt;
+<i>41</i>&nbsp;     */
+<i>42</i>&nbsp;    int createCourse(UpdateCourseForm newCourse);
+<i>43</i>&nbsp;
+<i>44</i>&nbsp;    /**
+<i>45</i>&nbsp;     * &lt;p&gt;教师更新课程信息&lt;/p&gt;
+<i>46</i>&nbsp;     *
+<i>47</i>&nbsp;     * @param newCourse 更新课程的信息
+<i>48</i>&nbsp;     * @return
+<i>49</i>&nbsp;     * &lt;pre&gt;
+<i>50</i>&nbsp;     * 0：成功
+<i>51</i>&nbsp;     * -1：未找到申请人对应的用户或该用户不是教师
+<i>52</i>&nbsp;     * &lt;/pre&gt;
+<i>53</i>&nbsp;     */
+<i>54</i>&nbsp;    int updateCourse(UpdateCourseForm newCourse);
+<i>55</i>&nbsp;
+<i>56</i>&nbsp;    /**
+<i>57</i>&nbsp;     * &lt;p&gt;获取和某教师相关的所有课程&lt;/p&gt;
+<i>58</i>&nbsp;     *
+<i>59</i>&nbsp;     * @param tid 教师的工号
+<i>60</i>&nbsp;     * @return 课程列表
+<i>61</i>&nbsp;     */
+<i>62</i>&nbsp;    List&lt;Course&gt; getAllCourseByTid(String tid);
+<i>63</i>&nbsp;
+<i>64</i>&nbsp;    /**
+<i>65</i>&nbsp;     * &lt;p&gt;获取某课程的详细信息&lt;/p&gt;
+<i>66</i>&nbsp;     *
+<i>67</i>&nbsp;     * @param cid 课程id
+<i>68</i>&nbsp;     * @return 课程详情
+<i>69</i>&nbsp;     */
+<i>70</i>&nbsp;    CourseDetail getCourseDetail(int cid);
+<i>71</i>&nbsp;
+<i>72</i>&nbsp;    /**
+<i>73</i>&nbsp;     * &lt;p&gt;删除某课程&lt;/p&gt;
+<i>74</i>&nbsp;     *
+<i>75</i>&nbsp;     * &lt;p&gt;version 1.0暂未实现&lt;/p&gt;
+<i>76</i>&nbsp;     *
+<i>77</i>&nbsp;     * @param c_id 课程id
+<i>78</i>&nbsp;     * @return 执行结果
+<i>79</i>&nbsp;     */
+<i>80</i>&nbsp;//    int deleteCourse(int c_id);
+<i>81</i>&nbsp;
+<i>82</i>&nbsp;    /**
+<i>83</i>&nbsp;     * &lt;p&gt;获取所有学生&lt;/p&gt;
+<i>84</i>&nbsp;     *
+<i>85</i>&nbsp;     * @return 所有的学生列表
+<i>86</i>&nbsp;     */
+<i>87</i>&nbsp;    List&lt;User&gt; getAllStudents();
+<i>88</i>&nbsp;
+<i>89</i>&nbsp;    /**
+<i>90</i>&nbsp;     * &lt;p&gt;教师拉取学生加入课程&lt;/p&gt;
+<i>91</i>&nbsp;     *
+<i>92</i>&nbsp;     * @param c_id 课程id
+<i>93</i>&nbsp;     * @param stu_list 学生学号列表
+<i>94</i>&nbsp;     * @return
+<i>95</i>&nbsp;     * &lt;pre&gt;
+<i>96</i>&nbsp;     * 0：添加成功
+<i>97</i>&nbsp;     * -1：未找到课程
+<i>98</i>&nbsp;     * 1：存在非法学号
+<i>99</i>&nbsp;     * &lt;/pre&gt;
+<i>100</i>&nbsp;     */
+<i>101</i>&nbsp;    int addStudents(int c_id, List&lt;String&gt; stu_list) throws TemplateException, IOException, MessagingException;
+<i>102</i>&nbsp;
+<i>103</i>&nbsp;
+<i>104</i>&nbsp;    int addAStudent(int cid, String sid) throws TemplateException, IOException, MessagingException;
+<i>105</i>&nbsp;
+<i>106</i>&nbsp;
+<i>107</i>&nbsp;
+<i>108</i>&nbsp;
+<i>109</i>&nbsp;    /**
+<i>110</i>&nbsp;     * &lt;p&gt;教师发布新的作业&lt;/p&gt;
+<i>111</i>&nbsp;     *
+<i>112</i>&nbsp;     * @param newhomework 新作业内容
+<i>113</i>&nbsp;     * @return 0表示成功
+<i>114</i>&nbsp;     */
+<i>115</i>&nbsp;    int createHomework(CreateHomeworkForm newhomework) throws TemplateException, IOException, MessagingException;
+<i>116</i>&nbsp;
+<i>117</i>&nbsp;    /**
+<i>118</i>&nbsp;     * &lt;p&gt;教师更新作业内容&lt;/p&gt;
+<i>119</i>&nbsp;     *
+<i>120</i>&nbsp;     * @param newhomework 新的作业内容
+<i>121</i>&nbsp;     * @return 0表示成功
+<i>122</i>&nbsp;     */
+<i>123</i>&nbsp;    int updateHomework(UpdateHomeworkForm newhomework);
+<i>124</i>&nbsp;
+<i>125</i>&nbsp;    /**
+<i>126</i>&nbsp;     * &lt;p&gt;统计某一次作业的情况&lt;/p&gt;
+<i>127</i>&nbsp;     *
+<i>128</i>&nbsp;     * &lt;p&gt;包括某次作业的总人数、提交人数、已提交部分的平均分、最高分、最低分&lt;/p&gt;
+<i>129</i>&nbsp;     *
+<i>130</i>&nbsp;     * @param c_id 课程id
+<i>131</i>&nbsp;     * @param courseId 课程编号
+<i>132</i>&nbsp;     * @param h_id 作业id
+<i>133</i>&nbsp;     * @return 作业统计情况
+<i>134</i>&nbsp;     */
+<i>135</i>&nbsp;    GradeStatistic getGrade(int c_id, String courseId, int h_id);
+<i>136</i>&nbsp;
+<i>137</i>&nbsp;    /**
+<i>138</i>&nbsp;     * &lt;p&gt;获取一门课所有作业&lt;/p&gt;
+<i>139</i>&nbsp;     *
+<i>140</i>&nbsp;     * @param c_id 课程id
+<i>141</i>&nbsp;     * @return 该门课的所有作业列表
+<i>142</i>&nbsp;     */
+<i>143</i>&nbsp;    List&lt;Homework&gt; getAllHomework(int c_id);
+<i>144</i>&nbsp;
+<i>145</i>&nbsp;    /**
+<i>146</i>&nbsp;     * &lt;p&gt;教师获取自己执教课程的所有作业&lt;/p&gt;
+<i>147</i>&nbsp;     *
+<i>148</i>&nbsp;     * @param tid 教师id
+<i>149</i>&nbsp;     * @return 作业列表
+<i>150</i>&nbsp;     */
+<i>151</i>&nbsp;    List&lt;Homework&gt; getHomeworksByTid(int tid);
+<i>152</i>&nbsp;
+<i>153</i>&nbsp;    /**
+<i>154</i>&nbsp;     * &lt;p&gt;获取某次作业学生提交列表&lt;/p&gt;
+<i>155</i>&nbsp;     *
+<i>156</i>&nbsp;     * @param c_id 课程id
+<i>157</i>&nbsp;     * @param courseId 课程编号
+<i>158</i>&nbsp;     * @param h_id 作业id
+<i>159</i>&nbsp;     * @return 学生提交的简要信息列表
+<i>160</i>&nbsp;     */
+<i>161</i>&nbsp;    List&lt;StuHomeworkBrief&gt; getStuHomeworkList(int c_id, String courseId, int h_id);
+<i>162</i>&nbsp;
+<i>163</i>&nbsp;    StudentHomework getAHomeworkToRate(int hid);
+<i>164</i>&nbsp;
+<i>165</i>&nbsp;    /**
+<i>166</i>&nbsp;     * &lt;p&gt;获取某一作业某一学生的提交内容&lt;/p&gt;
+<i>167</i>&nbsp;     *
+<i>168</i>&nbsp;     * @param st_id 学生提交内容的id
+<i>169</i>&nbsp;     * @return 学生的提交内容
+<i>170</i>&nbsp;     */
+<i>171</i>&nbsp;    StudentHomework getStuHomework(int st_id);
+<i>172</i>&nbsp;
+<i>173</i>&nbsp;    /**
+<i>174</i>&nbsp;     * &lt;p&gt;给学生提交的作业内容评分&lt;/p&gt;
+<i>175</i>&nbsp;     *
+<i>176</i>&nbsp;     * @param sh_id 学生提交内容的id
+<i>177</i>&nbsp;     * @param grade 得分
+<i>178</i>&nbsp;     * @return
+<i>179</i>&nbsp;     * &lt;pre&gt;
+<i>180</i>&nbsp;     * 0：成功
+<i>181</i>&nbsp;     * -1：未找到该次提交内容
+<i>182</i>&nbsp;     * &lt;/pre&gt;
+<i>183</i>&nbsp;     */
+<i>184</i>&nbsp;    int rateStuHomework(int sh_id, int grade) throws TemplateException, IOException, MessagingException;
+<i>185</i>&nbsp;
+<i>186</i>&nbsp;
+<i>187</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-01-08 11:28</div>
+</div>
+</body>
+</html>

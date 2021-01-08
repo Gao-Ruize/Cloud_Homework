@@ -1,0 +1,62 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: MailService</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">com.seproj.cloudhomework.service</a> ]
+</div>
+
+<h1>Coverage Summary for Class: MailService (com.seproj.cloudhomework.service)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+</tr>
+<tr>
+  <td class="name">MailService</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package com.seproj.cloudhomework.service;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import freemarker.template.TemplateException;
+<i>4</i>&nbsp;import org.springframework.stereotype.Service;
+<i>5</i>&nbsp;
+<i>6</i>&nbsp;import javax.mail.MessagingException;
+<i>7</i>&nbsp;import java.io.IOException;
+<i>8</i>&nbsp;
+<i>9</i>&nbsp;@Service
+<i>10</i>&nbsp;public interface MailService {
+<i>11</i>&nbsp;    void sendGradeInformMail(String name, String receiver) throws IOException, TemplateException, MessagingException;
+<i>12</i>&nbsp;    void sendHomeworkInformMail(String name, String courseName, String receiver) throws IOException, TemplateException, MessagingException;
+<i>13</i>&nbsp;    void sendCourseInformMail(String name, String courseName, String receiver) throws IOException, TemplateException, MessagingException;
+<i>14</i>&nbsp;
+<i>15</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-01-08 11:28</div>
+</div>
+</body>
+</html>

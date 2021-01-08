@@ -1,0 +1,161 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: StuHomeworkBrief</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">com.seproj.cloudhomework.utils.Homework</a> ]
+</div>
+
+<h1>Coverage Summary for Class: StuHomeworkBrief (com.seproj.cloudhomework.utils.Homework)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">StuHomeworkBrief</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    15.4%
+  </span>
+  <span class="absValue">
+    (2/ 13)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    42.9%
+  </span>
+  <span class="absValue">
+    (12/ 28)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package com.seproj.cloudhomework.utils.Homework;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import java.util.Objects;
+<i>4</i>&nbsp;
+<i>5</i>&nbsp;public class StuHomeworkBrief {
+<i>6</i>&nbsp;    int id; // stuhomework的自增id
+<i>7</i>&nbsp;    String user_id; // 学生学号
+<i>8</i>&nbsp;    String stu_name;    // 学生姓名
+<i>9</i>&nbsp;    int grade;  // 成绩
+<i>10</i>&nbsp;
+<b class="fc"><i>11</i>&nbsp;    public StuHomeworkBrief(int id, String user_id, String stu_name, int grade) {</b>
+<b class="fc"><i>12</i>&nbsp;        this.id = id;</b>
+<b class="fc"><i>13</i>&nbsp;        this.user_id = user_id;</b>
+<b class="fc"><i>14</i>&nbsp;        this.stu_name = stu_name;</b>
+<b class="fc"><i>15</i>&nbsp;        this.grade = grade;</b>
+<b class="fc"><i>16</i>&nbsp;    }</b>
+<i>17</i>&nbsp;
+<b class="nc"><i>18</i>&nbsp;    public StuHomeworkBrief() {</b>
+<b class="nc"><i>19</i>&nbsp;    }</b>
+<i>20</i>&nbsp;
+<i>21</i>&nbsp;    @Override
+<i>22</i>&nbsp;    public boolean equals(Object o) {
+<b class="fc"><i>23</i>&nbsp;        if (this == o) return true;</b>
+<b class="fc"><i>24</i>&nbsp;        if (o == null || getClass() != o.getClass()) return false;</b>
+<b class="fc"><i>25</i>&nbsp;        StuHomeworkBrief that = (StuHomeworkBrief) o;</b>
+<b class="fc"><i>26</i>&nbsp;        return id == that.id &amp;&amp;</b>
+<i>27</i>&nbsp;                grade == that.grade &amp;&amp;
+<b class="fc"><i>28</i>&nbsp;                Objects.equals(user_id, that.user_id) &amp;&amp;</b>
+<b class="fc"><i>29</i>&nbsp;                Objects.equals(stu_name, that.stu_name);</b>
+<i>30</i>&nbsp;    }
+<i>31</i>&nbsp;
+<i>32</i>&nbsp;    @Override
+<i>33</i>&nbsp;    public int hashCode() {
+<b class="nc"><i>34</i>&nbsp;        return Objects.hash(id, user_id, stu_name, grade);</b>
+<i>35</i>&nbsp;    }
+<i>36</i>&nbsp;
+<i>37</i>&nbsp;    @Override
+<i>38</i>&nbsp;    public String toString() {
+<b class="nc"><i>39</i>&nbsp;        return &quot;StuHomeworkBrief{&quot; +</b>
+<i>40</i>&nbsp;                &quot;id=&quot; + id +
+<i>41</i>&nbsp;                &quot;, user_id=&#39;&quot; + user_id + &#39;\&#39;&#39; +
+<i>42</i>&nbsp;                &quot;, stu_name=&#39;&quot; + stu_name + &#39;\&#39;&#39; +
+<i>43</i>&nbsp;                &quot;, grade=&quot; + grade +
+<i>44</i>&nbsp;                &#39;}&#39;;
+<i>45</i>&nbsp;    }
+<i>46</i>&nbsp;
+<i>47</i>&nbsp;    public int getId() {
+<b class="nc"><i>48</i>&nbsp;        return id;</b>
+<i>49</i>&nbsp;    }
+<i>50</i>&nbsp;
+<i>51</i>&nbsp;    public void setId(int id) {
+<b class="nc"><i>52</i>&nbsp;        this.id = id;</b>
+<b class="nc"><i>53</i>&nbsp;    }</b>
+<i>54</i>&nbsp;
+<i>55</i>&nbsp;    public String getUser_id() {
+<b class="nc"><i>56</i>&nbsp;        return user_id;</b>
+<i>57</i>&nbsp;    }
+<i>58</i>&nbsp;
+<i>59</i>&nbsp;    public void setUser_id(String user_id) {
+<b class="nc"><i>60</i>&nbsp;        this.user_id = user_id;</b>
+<b class="nc"><i>61</i>&nbsp;    }</b>
+<i>62</i>&nbsp;
+<i>63</i>&nbsp;    public String getStu_name() {
+<b class="nc"><i>64</i>&nbsp;        return stu_name;</b>
+<i>65</i>&nbsp;    }
+<i>66</i>&nbsp;
+<i>67</i>&nbsp;    public void setStu_name(String stu_name) {
+<b class="nc"><i>68</i>&nbsp;        this.stu_name = stu_name;</b>
+<b class="nc"><i>69</i>&nbsp;    }</b>
+<i>70</i>&nbsp;
+<i>71</i>&nbsp;    public int getGrade() {
+<b class="nc"><i>72</i>&nbsp;        return grade;</b>
+<i>73</i>&nbsp;    }
+<i>74</i>&nbsp;
+<i>75</i>&nbsp;    public void setGrade(int grade) {
+<b class="nc"><i>76</i>&nbsp;        this.grade = grade;</b>
+<b class="nc"><i>77</i>&nbsp;    }</b>
+<i>78</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-01-08 11:28</div>
+</div>
+</body>
+</html>

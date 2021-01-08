@@ -1,0 +1,197 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: RegisterForm</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">com.seproj.cloudhomework.utils.Authority</a> ]
+</div>
+
+<h1>Coverage Summary for Class: RegisterForm (com.seproj.cloudhomework.utils.Authority)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">RegisterForm</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    36.8%
+  </span>
+  <span class="absValue">
+    (7/ 19)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    34.1%
+  </span>
+  <span class="absValue">
+    (15/ 44)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package com.seproj.cloudhomework.utils.Authority;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import java.util.Objects;
+<i>4</i>&nbsp;
+<i>5</i>&nbsp;public class RegisterForm {
+<i>6</i>&nbsp;    private String userid;
+<i>7</i>&nbsp;    private String username;
+<i>8</i>&nbsp;    private String name;
+<i>9</i>&nbsp;    private String email;
+<i>10</i>&nbsp;    private String phone;
+<i>11</i>&nbsp;    private String password;
+<i>12</i>&nbsp;    private String usertype;
+<i>13</i>&nbsp;
+<b class="fc"><i>14</i>&nbsp;    public RegisterForm(String userid, String username, String name, String email, String phone, String password, String usertype) {</b>
+<b class="fc"><i>15</i>&nbsp;        this.userid = userid;</b>
+<b class="fc"><i>16</i>&nbsp;        this.username = username;</b>
+<b class="fc"><i>17</i>&nbsp;        this.name = name;</b>
+<b class="fc"><i>18</i>&nbsp;        this.email = email;</b>
+<b class="fc"><i>19</i>&nbsp;        this.phone = phone;</b>
+<b class="fc"><i>20</i>&nbsp;        this.password = password;</b>
+<b class="fc"><i>21</i>&nbsp;        this.usertype = usertype;</b>
+<b class="fc"><i>22</i>&nbsp;    }</b>
+<i>23</i>&nbsp;
+<b class="nc"><i>24</i>&nbsp;    public RegisterForm() {</b>
+<b class="nc"><i>25</i>&nbsp;    }</b>
+<i>26</i>&nbsp;
+<i>27</i>&nbsp;    @Override
+<i>28</i>&nbsp;    public boolean equals(Object o) {
+<b class="nc"><i>29</i>&nbsp;        if (this == o) return true;</b>
+<b class="nc"><i>30</i>&nbsp;        if (o == null || getClass() != o.getClass()) return false;</b>
+<b class="nc"><i>31</i>&nbsp;        RegisterForm that = (RegisterForm) o;</b>
+<b class="nc"><i>32</i>&nbsp;        return Objects.equals(userid, that.userid) &amp;&amp;</b>
+<b class="nc"><i>33</i>&nbsp;                Objects.equals(username, that.username) &amp;&amp;</b>
+<b class="nc"><i>34</i>&nbsp;                Objects.equals(name, that.name) &amp;&amp;</b>
+<b class="nc"><i>35</i>&nbsp;                Objects.equals(email, that.email) &amp;&amp;</b>
+<b class="nc"><i>36</i>&nbsp;                Objects.equals(phone, that.phone) &amp;&amp;</b>
+<b class="nc"><i>37</i>&nbsp;                Objects.equals(password, that.password) &amp;&amp;</b>
+<b class="nc"><i>38</i>&nbsp;                Objects.equals(usertype, that.usertype);</b>
+<i>39</i>&nbsp;    }
+<i>40</i>&nbsp;
+<i>41</i>&nbsp;    @Override
+<i>42</i>&nbsp;    public int hashCode() {
+<b class="nc"><i>43</i>&nbsp;        return Objects.hash(userid, username, name, email, phone, password, usertype);</b>
+<i>44</i>&nbsp;    }
+<i>45</i>&nbsp;
+<i>46</i>&nbsp;    @Override
+<i>47</i>&nbsp;    public String toString() {
+<b class="nc"><i>48</i>&nbsp;        return &quot;RegisterForm{&quot; +</b>
+<i>49</i>&nbsp;                &quot;userid=&quot; + userid +
+<i>50</i>&nbsp;                &quot;, username=&#39;&quot; + username + &#39;\&#39;&#39; +
+<i>51</i>&nbsp;                &quot;, name=&#39;&quot; + name + &#39;\&#39;&#39; +
+<i>52</i>&nbsp;                &quot;, email=&#39;&quot; + email + &#39;\&#39;&#39; +
+<i>53</i>&nbsp;                &quot;, phone=&#39;&quot; + phone + &#39;\&#39;&#39; +
+<i>54</i>&nbsp;                &quot;, password=&#39;&quot; + password + &#39;\&#39;&#39; +
+<i>55</i>&nbsp;                &quot;, usertype=&#39;&quot; + usertype + &#39;\&#39;&#39; +
+<i>56</i>&nbsp;                &#39;}&#39;;
+<i>57</i>&nbsp;    }
+<i>58</i>&nbsp;
+<i>59</i>&nbsp;    public String getUserid() {
+<b class="fc"><i>60</i>&nbsp;        return userid;</b>
+<i>61</i>&nbsp;    }
+<i>62</i>&nbsp;
+<i>63</i>&nbsp;    public void setUserid(String userid) {
+<b class="nc"><i>64</i>&nbsp;        this.userid = userid;</b>
+<b class="nc"><i>65</i>&nbsp;    }</b>
+<i>66</i>&nbsp;
+<i>67</i>&nbsp;    public String getUsername() {
+<b class="fc"><i>68</i>&nbsp;        return username;</b>
+<i>69</i>&nbsp;    }
+<i>70</i>&nbsp;
+<i>71</i>&nbsp;    public void setUsername(String username) {
+<b class="nc"><i>72</i>&nbsp;        this.username = username;</b>
+<b class="nc"><i>73</i>&nbsp;    }</b>
+<i>74</i>&nbsp;
+<i>75</i>&nbsp;    public String getName() {
+<b class="fc"><i>76</i>&nbsp;        return name;</b>
+<i>77</i>&nbsp;    }
+<i>78</i>&nbsp;
+<i>79</i>&nbsp;    public void setName(String name) {
+<b class="nc"><i>80</i>&nbsp;        this.name = name;</b>
+<b class="nc"><i>81</i>&nbsp;    }</b>
+<i>82</i>&nbsp;
+<i>83</i>&nbsp;    public String getEmail() {
+<b class="fc"><i>84</i>&nbsp;        return email;</b>
+<i>85</i>&nbsp;    }
+<i>86</i>&nbsp;
+<i>87</i>&nbsp;    public void setEmail(String email) {
+<b class="nc"><i>88</i>&nbsp;        this.email = email;</b>
+<b class="nc"><i>89</i>&nbsp;    }</b>
+<i>90</i>&nbsp;
+<i>91</i>&nbsp;    public String getPhone() {
+<b class="fc"><i>92</i>&nbsp;        return phone;</b>
+<i>93</i>&nbsp;    }
+<i>94</i>&nbsp;
+<i>95</i>&nbsp;    public void setPhone(String phone) {
+<b class="nc"><i>96</i>&nbsp;        this.phone = phone;</b>
+<b class="nc"><i>97</i>&nbsp;    }</b>
+<i>98</i>&nbsp;
+<i>99</i>&nbsp;    public String getPassword() {
+<b class="fc"><i>100</i>&nbsp;        return password;</b>
+<i>101</i>&nbsp;    }
+<i>102</i>&nbsp;
+<i>103</i>&nbsp;    public void setPassword(String password) {
+<b class="nc"><i>104</i>&nbsp;        this.password = password;</b>
+<b class="nc"><i>105</i>&nbsp;    }</b>
+<i>106</i>&nbsp;
+<i>107</i>&nbsp;    public String getUsertype() {
+<b class="nc"><i>108</i>&nbsp;        return usertype;</b>
+<i>109</i>&nbsp;    }
+<i>110</i>&nbsp;
+<i>111</i>&nbsp;    public void setUsertype(String usertype) {
+<b class="nc"><i>112</i>&nbsp;        this.usertype = usertype;</b>
+<b class="nc"><i>113</i>&nbsp;    }</b>
+<i>114</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-01-08 11:28</div>
+</div>
+</body>
+</html>

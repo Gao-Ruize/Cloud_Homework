@@ -1,0 +1,128 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: InstructDaoImpl</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">com.seproj.cloudhomework.daoimpl</a> ]
+</div>
+
+<h1>Coverage Summary for Class: InstructDaoImpl (com.seproj.cloudhomework.daoimpl)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">InstructDaoImpl</td>
+<td class="coverageStat">
+  <span class="percent">
+    20%
+  </span>
+  <span class="absValue">
+    (1/ 5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    16.7%
+  </span>
+  <span class="absValue">
+    (1/ 6)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">InstructDaoImpl$$EnhancerBySpringCGLIB$$ace4b45</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    20%
+  </span>
+  <span class="absValue">
+    (1/ 5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    16.7%
+  </span>
+  <span class="absValue">
+    (1/ 6)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package com.seproj.cloudhomework.daoimpl;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import com.seproj.cloudhomework.dao.InstructDao;
+<i>4</i>&nbsp;import com.seproj.cloudhomework.entity.Instruct;
+<i>5</i>&nbsp;import com.seproj.cloudhomework.repository.InstructRepository;
+<i>6</i>&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+<i>7</i>&nbsp;import org.springframework.stereotype.Repository;
+<i>8</i>&nbsp;
+<i>9</i>&nbsp;import java.util.List;
+<i>10</i>&nbsp;
+<i>11</i>&nbsp;@Repository
+<b class="fc"><i>12</i>&nbsp;public class InstructDaoImpl implements InstructDao {</b>
+<i>13</i>&nbsp;    @Autowired
+<i>14</i>&nbsp;    InstructRepository instructRepository;
+<i>15</i>&nbsp;
+<i>16</i>&nbsp;    @Override
+<i>17</i>&nbsp;    public List&lt;Instruct&gt; findInstructByCourseId(int courseId) {
+<b class="nc"><i>18</i>&nbsp;        return instructRepository.findByCourseId(courseId);</b>
+<i>19</i>&nbsp;    }
+<i>20</i>&nbsp;
+<i>21</i>&nbsp;    @Override
+<i>22</i>&nbsp;    public List&lt;Instruct&gt; findInstructByStudentId(String studentId) {
+<b class="nc"><i>23</i>&nbsp;        return instructRepository.findByStudentId(studentId);</b>
+<i>24</i>&nbsp;    }
+<i>25</i>&nbsp;
+<i>26</i>&nbsp;    @Override
+<i>27</i>&nbsp;    public Instruct findDistinctByCourseIdAndStudentId(int courseId, String studentId) {
+<b class="nc"><i>28</i>&nbsp;        return instructRepository.findDistinctByCourseIdAndStudentId(courseId, studentId);</b>
+<i>29</i>&nbsp;    }
+<i>30</i>&nbsp;
+<i>31</i>&nbsp;    @Override
+<i>32</i>&nbsp;    public void saveOrUpdate(Instruct instruct) {
+<b class="nc"><i>33</i>&nbsp;        instructRepository.save(instruct);</b>
+<b class="nc"><i>34</i>&nbsp;    }</b>
+<i>35</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-01-08 11:28</div>
+</div>
+</body>
+</html>
