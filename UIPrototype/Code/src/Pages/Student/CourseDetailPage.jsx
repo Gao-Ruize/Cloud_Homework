@@ -212,12 +212,12 @@ export default class StuCourseDetail extends React.Component {
                                 <Button type="primary" size='large' onClick={this.getAllHomework}>
                                     查看全部作业
                                 </Button>
-                                <Button type="primary" size='large' onClick={this.getUnfinishedHomework}>
-                                    查看未完成作业
-                                </Button>
-                                <Button type="primary" size='large' onClick={this.getFinishedHomework}>
-                                    查看已完成作业
-                                </Button>
+                                {/*<Button type="primary" size='large' onClick={this.getUnfinishedHomework}>*/}
+                                {/*    查看未完成作业*/}
+                                {/*</Button>*/}
+                                {/*<Button type="primary" size='large' onClick={this.getFinishedHomework}>*/}
+                                {/*    查看已完成作业*/}
+                                {/*</Button>*/}
                                 <Button type="primary" size='large' onClick={this.getGrade}>
                                     查看成绩
                                 </Button>
